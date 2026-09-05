@@ -1,0 +1,4 @@
+{
+  "status": 500,
+  "body": "{\"error\":\"model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details\"}"
+}

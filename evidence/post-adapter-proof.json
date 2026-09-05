@@ -1,0 +1,76 @@
+{
+  "results": [
+    {
+      "id": "zustand-immutable-state-and-merging-nested-objects-831679d7",
+      "document": "zustand-immutable-state-and-merging",
+      "heading": "Nested objects",
+      "text": "Nested objects\nThe `set` function merges state at only one level. If you have a nested object, you need to merge them explicitly. You will use the spread operator pattern like so: ```jsx import { create } from 'zustand' const useCountStore = create((set) => ({ nested: { count: 0 }, inc: () => set((state) => ({ nested: { ...state.nested, count: state.nested.count + 1 }, })), })) ``` For complex use cases, consider using some libraries that help with immutable updates. You can refer to Updating nested state object values.",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/immutable-state-and-merging.md",
+      "tokens": 162,
+      "score": 0.03278688524590164,
+      "vectorRank": 1,
+      "keywordRank": 1
+    },
+    {
+      "id": "zustand-persisting-store-data-merge-db1f4732",
+      "document": "zustand-persisting-store-data",
+      "heading": "merge",
+      "text": "merge\n> Type: `(persistedState: Object, currentState: Object) => Object` > Default: `(persistedState, currentState) => ({ ...currentState, ...persistedState })` In some cases, you might want to use a custom merge function to merge the persisted value with the current state. By default, the middleware does a shallow merge. The shallow merge might not be enough if you have partially persisted nested objects. For instance, if the storage contains the following: ```ts { foo: { bar: 0, } } ``` But your Zustand store contains: ```ts { foo: { bar: 0, baz: 1, } } ``` The shallow merge will erase the `baz` field from the `foo` object. One way to fix this would be to give a custom deep merge function: ```ts export const useBoundStore = create( persist( (set, get) => ({ foo:",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+      "tokens": 220,
+      "score": 0.03225806451612903,
+      "vectorRank": 2,
+      "keywordRank": 2
+    },
+    {
+      "id": "zustand-readme-first-create-a-store-63b3febc",
+      "document": "zustand-readme",
+      "heading": "First create a store",
+      "text": "First create a store\nYour store is a hook! You can put anything in it: primitives, objects, functions. State has to be updated immutably and the `set` function merges state to help it. ```jsx import { create } from 'zustand' const useBearStore = create((set) => ({ bears: 0, increasePopulation: () => set((state) => ({ bears: state.bears + 1 })), removeAllBears: () => set({ bears: 0 }), })) ```",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+      "tokens": 134,
+      "score": 0.015873015873015872,
+      "vectorRank": 3
+    },
+    {
+      "id": "zustand-updating-state-flat-updates-d12659ea",
+      "document": "zustand-updating-state",
+      "heading": "Flat updates",
+      "text": "Flat updates\nUpdating state with Zustand is simple! Call the provided `set` function with the new state, and it will be shallowly merged with the existing state in the store. **Note** See next section for nested state. ```tsx import { create } from 'zustand' type State = { firstName: string lastName: string } type Action = { updateFirstName: (firstName: State['firstName']) => void updateLastName: (lastName: State['lastName']) => void } // Create your store, which includes both state and (optionally) actions const usePersonStore = create()((set) => ({ firstName: '', lastName: '', updateFirstName: (firstName) => set(() => ({ firstName: firstName })), updateLastName: (lastName) => set(() => ({",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+      "tokens": 218,
+      "score": 0.015625,
+      "vectorRank": 4
+    },
+    {
+      "id": "zustand-prevent-rerenders-with-use-shallow-example-e20899ff",
+      "document": "zustand-prevent-rerenders-with-use-shallow",
+      "heading": "Example",
+      "text": "Example\nthe actual output of `names` has not changed according to shallow equal. We can fix that using `useShallow`! ```js import { create } from 'zustand' import { useShallow } from 'zustand/react/shallow' const useMeals = create(() => ({ papaBear: 'large porridge-pot', mamaBear: 'middle-size porridge pot', littleBear: 'A little, small, wee pot', })) export const BearNames = () => { const names = useMeals(useShallow((state) => Object.keys(state))) return {names.join(', ')} } ``` Now they can all order other meals without causing unnecessary rerenders of our `BearNames` component.",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/prevent-rerenders-with-use-shallow.md",
+      "tokens": 188,
+      "score": 0.015384615384615385,
+      "vectorRank": 5
+    }
+  ],
+  "count": 132,
+  "mode": "hybrid",
+  "query": "Zustand nested objects merging set",
+  "elapsedMs": 1149.829899999997,
+  "embedding": {
+    "id": "Xenova/all-MiniLM-L6-v2",
+    "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+    "dimensions": 384,
+    "dtype": "q8",
+    "pooling": "mean",
+    "normalize": true,
+    "maxTokens": 256,
+    "execution": "next-route-handler",
+    "environment": "production",
+    "processId": 12404,
+    "tokenCount": 9,
+    "elapsedMs": 961.3815000000031,
+    "invocation": 1,
+    "vectorDimensions": 384
+  }
+}

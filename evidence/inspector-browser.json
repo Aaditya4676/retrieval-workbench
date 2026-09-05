@@ -1,0 +1,16 @@
+{
+  "testedAt": "2026-09-05T22:02:10.494Z",
+  "client": "MCP Inspector 2.5.0 web UI",
+  "passed": [
+    "initialize",
+    "tools/list",
+    "search_docs",
+    "get_chunk"
+  ],
+  "transport": "stdio",
+  "screenshots": [
+    "screenshots/mcp-inspector-search.png",
+    "screenshots/mcp-inspector-chunk.png"
+  ],
+  "note": "Real Inspector client, not a Codex or Claude conversational demonstration."
+}

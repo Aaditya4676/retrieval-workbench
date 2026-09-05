@@ -1,0 +1,17 @@
+{
+  "testedAt": "2026-09-05T22:03:27.8783899Z",
+  "passed": true,
+  "before": {
+    "status": "ok",
+    "engine": "PGlite",
+    "pid": 19584,
+    "count": 132
+  },
+  "note": "Data owner process terminated, restarted, and all 132 committed rows recovered.",
+  "after": {
+    "status": "ok",
+    "engine": "PGlite",
+    "pid": 29788,
+    "count": 132
+  }
+}

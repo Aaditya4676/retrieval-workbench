@@ -1,0 +1,2001 @@
+{
+  "generatedAt": "2026-09-05T21:37:56.511Z",
+  "status": "final retrieval evaluation; generation evaluation not performed",
+  "datasetHash": "e71667d546cd65a840d6db9c75fa1b1ca671a1b1656a56e93a40172e81f9aaf5",
+  "corpus": {
+    "model": {
+      "id": "Xenova/all-MiniLM-L6-v2",
+      "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+      "dimensions": 384,
+      "dtype": "q8",
+      "pooling": "mean",
+      "normalize": true,
+      "maxTokens": 256
+    },
+    "chunker": "heading-aware; at most 220 wordpieces including heading/special tokens; 20-word overlap",
+    "chunks": 132,
+    "hash": "6850d33375d4a90a5c9784e5fcbda8b27fb71ee852948ece19cc6623b3f06d86"
+  },
+  "conditions": {
+    "os": "win32",
+    "release": "10.0.26200",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+    "ramGB": 24,
+    "node": "v24.19.0",
+    "server": "Next production on localhost:3300",
+    "requests": 60,
+    "concurrency": 1,
+    "k": 5,
+    "note": "One run per question and mode; 20 labeled development queries. No claim of held-out generalization. Unsupported controls excluded from answerable retrieval denominators; no abstention classifier."
+  },
+  "summary": [
+    {
+      "mode": "keyword",
+      "answerable": 18,
+      "hitAt5": 0.4444444444444444,
+      "mrrAt5": 0.4166666666666667,
+      "twoSourceCoverage": 0,
+      "twoSourceDenominator": 2,
+      "unsupportedControls": 2,
+      "unsupportedReturnedResults": 0,
+      "meanLatencyMs": 12.193504999999641
+    },
+    {
+      "mode": "vector",
+      "answerable": 18,
+      "hitAt5": 0.8333333333333334,
+      "mrrAt5": 0.6157407407407409,
+      "twoSourceCoverage": 0,
+      "twoSourceDenominator": 2,
+      "unsupportedControls": 2,
+      "unsupportedReturnedResults": 2,
+      "meanLatencyMs": 16.762675000000673
+    },
+    {
+      "mode": "hybrid",
+      "answerable": 18,
+      "hitAt5": 0.8333333333333334,
+      "mrrAt5": 0.6435185185185186,
+      "twoSourceCoverage": 0,
+      "twoSourceDenominator": 2,
+      "unsupportedControls": 2,
+      "unsupportedReturnedResults": 2,
+      "meanLatencyMs": 18.639230000001042
+    }
+  ],
+  "rows": [
+    {
+      "id": "q01",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "Zustand nested objects merging set",
+      "expected": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7"
+      ],
+      "retrieved": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "zustand-persisting-store-data-merge-db1f4732"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 8.118099999999686,
+      "embedding": null
+    },
+    {
+      "id": "q02",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "How do I replace the entire Zustand state instead of merging it?",
+      "expected": [
+        "zustand-immutable-state-and-merging-replace-flag-1e2b4248"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 10.49500000000262,
+      "embedding": null
+    },
+    {
+      "id": "q03",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "Zustand async actions await fetch",
+      "expected": [
+        "zustand-readme-async-actions-69149259"
+      ],
+      "retrieved": [
+        "zustand-readme-async-actions-69149259"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 11.84429999999702,
+      "embedding": null
+    },
+    {
+      "id": "q04",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "How can I read existing Zustand state from inside an action?",
+      "expected": [
+        "zustand-readme-read-from-state-in-actions-27d88d1a"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 7.459799999996903,
+      "embedding": null
+    },
+    {
+      "id": "q05",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "Can I use a Zustand store without React hooks?",
+      "expected": [
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "retrieved": [
+        "zustand-readme-react-context-f5f76c34",
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.5,
+        "allSources": 1
+      },
+      "elapsedMs": 17.962399999996705,
+      "embedding": null
+    },
+    {
+      "id": "q06",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "persist partialize fields storage",
+      "expected": [
+        "zustand-persisting-store-data-partialize-e30b16f9"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-partialize-e30b16f9",
+        "zustand-persisting-store-data-merge-db1f4732"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 5.81260000000475,
+      "embedding": null
+    },
+    {
+      "id": "q07",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "How do I migrate persisted Zustand data when its schema version changes?",
+      "expected": [
+        "zustand-persisting-store-data-migrate-fe93831b"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 16.772400000001653,
+      "embedding": null
+    },
+    {
+      "id": "q08",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "hasHydrated non reactive getter",
+      "expected": [
+        "zustand-persisting-store-data-hashydrated-53660cba"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-hashydrated-53660cba"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 6.139100000000326,
+      "embedding": null
+    },
+    {
+      "id": "q09",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "Why is my cached query data stale immediately and how can I keep it fresh longer?",
+      "expected": [
+        "query-important-defaults-overview-f57910f4"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 11.081500000000233,
+      "embedding": null
+    },
+    {
+      "id": "q10",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "inactive queries garbage collected gcTime 5 minutes",
+      "expected": [
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 16.59019999999873,
+      "embedding": null
+    },
+    {
+      "id": "q11",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "Which browser events automatically refetch stale queries?",
+      "expected": [
+        "query-important-defaults-overview-f5e51155"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 17.946299999995972,
+      "embedding": null
+    },
+    {
+      "id": "q12",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "query keys hashed deterministically object order",
+      "expected": [
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83"
+      ],
+      "retrieved": [
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 5.072500000002037,
+      "embedding": null
+    },
+    {
+      "id": "q13",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "My query function uses a changing todoId. Where should I put this variable so requests refetch?",
+      "expected": [
+        "query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 12.847999999998137,
+      "embedding": null
+    },
+    {
+      "id": "q14",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "How can pagination keep showing the previous page while the next page loads?",
+      "expected": [
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 18.41870000000199,
+      "embedding": null
+    },
+    {
+      "id": "q15",
+      "kind": "lexical",
+      "mode": "keyword",
+      "query": "invalidateQueries marked stale refetched background",
+      "expected": [
+        "query-query-invalidation-overview-68b8c99b"
+      ],
+      "retrieved": [
+        "query-query-invalidation-overview-68b8c99b"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 8.45839999999589,
+      "embedding": null
+    },
+    {
+      "id": "q16",
+      "kind": "paraphrase",
+      "mode": "keyword",
+      "query": "When should optimistic updates use mutation variables in the UI instead of directly modifying the cache?",
+      "expected": [
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 12.768900000002759,
+      "embedding": null
+    },
+    {
+      "id": "q17",
+      "kind": "two-source",
+      "mode": "keyword",
+      "query": "How do Zustand nested object updates differ from TanStack Query optimistic updates made directly in the UI?",
+      "expected": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 4.565499999996973,
+      "embedding": null
+    },
+    {
+      "id": "q18",
+      "kind": "two-source",
+      "mode": "keyword",
+      "query": "Compare Zustand persist partialize and TanStack Query gcTime: what do they control?",
+      "expected": [
+        "zustand-persisting-store-data-partialize-e30b16f9",
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "retrieved": [],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 24.89879999999539,
+      "embedding": null
+    },
+    {
+      "id": "q19",
+      "kind": "unsupported",
+      "mode": "keyword",
+      "query": "How do I rotate an AWS KMS encryption key for a DynamoDB global table?",
+      "expected": [],
+      "retrieved": [],
+      "metrics": {
+        "answerable": false,
+        "hit": null,
+        "reciprocalRank": null,
+        "allSources": null
+      },
+      "elapsedMs": 18.22520000000077,
+      "embedding": null
+    },
+    {
+      "id": "q20",
+      "kind": "unsupported",
+      "mode": "keyword",
+      "query": "What is the correct Kubernetes ingress certificate renewal command?",
+      "expected": [],
+      "retrieved": [],
+      "metrics": {
+        "answerable": false,
+        "hit": null,
+        "reciprocalRank": null,
+        "allSources": null
+      },
+      "elapsedMs": 8.392400000004272,
+      "embedding": null
+    },
+    {
+      "id": "q01",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "Zustand nested objects merging set",
+      "expected": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7"
+      ],
+      "retrieved": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-readme-first-create-a-store-63b3febc",
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-prevent-rerenders-with-use-shallow-example-e20899ff"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 11.368200000004435,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 9,
+        "elapsedMs": 3.877699999997276,
+        "invocation": 2,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q02",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "How do I replace the entire Zustand state instead of merging it?",
+      "expected": [
+        "zustand-immutable-state-and-merging-replace-flag-1e2b4248"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-readme-first-create-a-store-63b3febc",
+        "zustand-immutable-state-and-merging-nested-objects-831679d7"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 10.25669999999809,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 16,
+        "elapsedMs": 3.8379000000059023,
+        "invocation": 3,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q03",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "Zustand async actions await fetch",
+      "expected": [
+        "zustand-readme-async-actions-69149259"
+      ],
+      "retrieved": [
+        "zustand-readme-async-actions-69149259",
+        "zustand-persisting-store-data-usage-in-next-js-6ce30a8d",
+        "zustand-persisting-store-data-hydration-and-asynchronous-storages-7653da22",
+        "zustand-persisting-store-data-usage-in-next-js-6390a33e",
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 14.944000000003143,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 10,
+        "elapsedMs": 2.876400000001013,
+        "invocation": 4,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q04",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "How can I read existing Zustand state from inside an action?",
+      "expected": [
+        "zustand-readme-read-from-state-in-actions-27d88d1a"
+      ],
+      "retrieved": [
+        "zustand-readme-why-zustand-over-redux-d4e68581",
+        "zustand-readme-why-zustand-over-context-f44f5a42",
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 15.264600000002247,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 15,
+        "elapsedMs": 3.5873999999967054,
+        "invocation": 5,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q05",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "Can I use a Zustand store without React hooks?",
+      "expected": [
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "retrieved": [
+        "zustand-readme-using-zustand-without-react-e92b4091",
+        "zustand-persisting-store-data-usage-in-next-js-6ce30a8d",
+        "zustand-readme-react-context-f5f76c34",
+        "zustand-readme-first-create-a-store-63b3febc",
+        "zustand-readme-comparison-with-other-libraries-2c6fa9b7"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 20.94840000000113,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 13,
+        "elapsedMs": 3.8061999999990803,
+        "invocation": 6,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q06",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "persist partialize fields storage",
+      "expected": [
+        "zustand-persisting-store-data-partialize-e30b16f9"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-migrate-c3109046",
+        "zustand-persisting-store-data-partialize-e30b16f9",
+        "zustand-persisting-store-data-partialize-8e066671",
+        "zustand-persisting-store-data-version-abd2db61",
+        "zustand-persisting-store-data-overview-9c2a2b4b"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.5,
+        "allSources": 1
+      },
+      "elapsedMs": 10.774599999997008,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 7,
+        "elapsedMs": 2.709999999999127,
+        "invocation": 7,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q07",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "How do I migrate persisted Zustand data when its schema version changes?",
+      "expected": [
+        "zustand-persisting-store-data-migrate-fe93831b"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-migrate-c3109046",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-persisting-store-data-migrate-fe93831b",
+        "zustand-persisting-store-data-overview-9c2a2b4b",
+        "zustand-persisting-store-data-version-abd2db61"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 15.30789999999979,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 17,
+        "elapsedMs": 3.695899999998801,
+        "invocation": 8,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q08",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "hasHydrated non reactive getter",
+      "expected": [
+        "zustand-persisting-store-data-hashydrated-53660cba"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-hashydrated-53660cba",
+        "zustand-prevent-rerenders-with-use-shallow-overview-b3841af1",
+        "zustand-readme-selecting-multiple-state-slices-145d02a5",
+        "zustand-readme-selecting-multiple-state-slices-03115628",
+        "zustand-readme-why-zustand-over-redux-d4e68581"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 19.6446999999971,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 9,
+        "elapsedMs": 2.7831999999980326,
+        "invocation": 9,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q09",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "Why is my cached query data stale immediately and how can I keep it fresh longer?",
+      "expected": [
+        "query-important-defaults-overview-f57910f4"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-f57910f4",
+        "query-query-invalidation-overview-98e0c1b2",
+        "query-paginated-queries-lagging-infinite-query-results-with-placeholderdata-32214ab2",
+        "query-important-defaults-overview-c1dfd84d",
+        "query-important-defaults-overview-3bd36d5e"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 28.835900000005495,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 20,
+        "elapsedMs": 4.746999999995751,
+        "invocation": 10,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q10",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "inactive queries garbage collected gcTime 5 minutes",
+      "expected": [
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-c1dfd84d",
+        "query-important-defaults-overview-f5e51155",
+        "query-important-defaults-overview-f57910f4",
+        "query-paginated-queries-lagging-infinite-query-results-with-placeholderdata-32214ab2",
+        "query-important-defaults-overview-3bd36d5e"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 22.104700000003504,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 12,
+        "elapsedMs": 2.9703999999983353,
+        "invocation": 11,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q11",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "Which browser events automatically refetch stale queries?",
+      "expected": [
+        "query-important-defaults-overview-f5e51155"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-c1dfd84d",
+        "query-query-invalidation-overview-98e0c1b2",
+        "query-important-defaults-overview-f5e51155",
+        "query-important-defaults-overview-3bd36d5e",
+        "query-important-defaults-overview-f57910f4"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 11.05789999999979,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 13,
+        "elapsedMs": 2.700299999996787,
+        "invocation": 12,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q12",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "query keys hashed deterministically object order",
+      "expected": [
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83"
+      ],
+      "retrieved": [
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83",
+        "query-query-keys-query-keys-are-hashed-deterministically-96172d30",
+        "query-query-invalidation-query-matching-with-invalidatequeries-1294555f",
+        "query-query-keys-further-reading-c1fc2067",
+        "query-query-keys-simple-query-keys-96189f5e"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 17.16859999999724,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 12,
+        "elapsedMs": 2.895600000003469,
+        "invocation": 13,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q13",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "My query function uses a changing todoId. Where should I put this variable so requests refetch?",
+      "expected": [
+        "query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9"
+      ],
+      "retrieved": [
+        "query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9",
+        "query-important-defaults-overview-3bd36d5e",
+        "query-optimistic-updates-updating-a-single-todo-87b1dcdf",
+        "query-optimistic-updates-via-the-ui-b88c0e8e",
+        "query-optimistic-updates-updating-a-list-of-todos-when-adding-a-new-todo-3dc170fc"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 16.166599999996834,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 23,
+        "elapsedMs": 4.834999999999127,
+        "invocation": 14,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q14",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "How can pagination keep showing the previous page while the next page loads?",
+      "expected": [
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e"
+      ],
+      "retrieved": [
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-8d41666b",
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-7350b22e",
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e",
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-04ad63c4",
+        "query-paginated-queries-overview-c0b5e505"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 14.803100000004633,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 18,
+        "elapsedMs": 4.669999999998254,
+        "invocation": 15,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q15",
+      "kind": "lexical",
+      "mode": "vector",
+      "query": "invalidateQueries marked stale refetched background",
+      "expected": [
+        "query-query-invalidation-overview-68b8c99b"
+      ],
+      "retrieved": [
+        "query-query-invalidation-overview-68b8c99b",
+        "query-important-defaults-overview-3bd36d5e",
+        "query-important-defaults-overview-f5e51155",
+        "query-important-defaults-overview-c1dfd84d",
+        "query-query-invalidation-overview-98e0c1b2"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 15.775800000003073,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 11,
+        "elapsedMs": 3.0116999999954714,
+        "invocation": 16,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q16",
+      "kind": "paraphrase",
+      "mode": "vector",
+      "query": "When should optimistic updates use mutation variables in the UI instead of directly modifying the cache?",
+      "expected": [
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba"
+      ],
+      "retrieved": [
+        "query-optimistic-updates-via-the-cache-c18953ee",
+        "query-optimistic-updates-overview-fc484a5c",
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba",
+        "query-optimistic-updates-if-the-mutation-and-the-query-don-t-live-in-the-same-component-decfc31b",
+        "query-optimistic-updates-further-reading-6b45424c"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 16.12120000000141,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 19,
+        "elapsedMs": 3.553699999996752,
+        "invocation": 17,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q17",
+      "kind": "two-source",
+      "mode": "vector",
+      "query": "How do Zustand nested object updates differ from TanStack Query optimistic updates made directly in the UI?",
+      "expected": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba"
+      ],
+      "retrieved": [
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-readme-why-zustand-over-context-f44f5a42",
+        "query-query-invalidation-overview-68b8c99b",
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "query-query-invalidation-overview-98e0c1b2"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.25,
+        "allSources": 0
+      },
+      "elapsedMs": 19.78910000000178,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 24,
+        "elapsedMs": 4.397300000004179,
+        "invocation": 18,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q18",
+      "kind": "two-source",
+      "mode": "vector",
+      "query": "Compare Zustand persist partialize and TanStack Query gcTime: what do they control?",
+      "expected": [
+        "zustand-persisting-store-data-partialize-e30b16f9",
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "retrieved": [
+        "query-query-invalidation-overview-68b8c99b",
+        "zustand-persisting-store-data-overview-9c2a2b4b",
+        "query-important-defaults-overview-f57910f4",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "query-query-keys-overview-47a688ad"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 19.775199999996403,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 22,
+        "elapsedMs": 4.226299999994808,
+        "invocation": 19,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q19",
+      "kind": "unsupported",
+      "mode": "vector",
+      "query": "How do I rotate an AWS KMS encryption key for a DynamoDB global table?",
+      "expected": [],
+      "retrieved": [
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-persisting-store-data-how-can-i-use-a-custom-storage-engine-9eee67f8",
+        "query-query-keys-query-keys-are-hashed-deterministically-96172d30",
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83",
+        "query-query-keys-simple-query-keys-96189f5e"
+      ],
+      "metrics": {
+        "answerable": false,
+        "hit": null,
+        "reciprocalRank": null,
+        "allSources": null
+      },
+      "elapsedMs": 21.392800000001444,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 20,
+        "elapsedMs": 3.923399999999674,
+        "invocation": 20,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q20",
+      "kind": "unsupported",
+      "mode": "vector",
+      "query": "What is the correct Kubernetes ingress certificate renewal command?",
+      "expected": [],
+      "retrieved": [
+        "zustand-persisting-store-data-migrate-fe93831b",
+        "zustand-persisting-store-data-createjsonstorage-e0e818e8",
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-persisting-store-data-setoptions-e704a234",
+        "zustand-persisting-store-data-clearstorage-82bf1388"
+      ],
+      "metrics": {
+        "answerable": false,
+        "hit": null,
+        "reciprocalRank": null,
+        "allSources": null
+      },
+      "elapsedMs": 13.753499999998894,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 16,
+        "elapsedMs": 3.6247999999977765,
+        "invocation": 21,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q01",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "Zustand nested objects merging set",
+      "expected": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7"
+      ],
+      "retrieved": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-readme-first-create-a-store-63b3febc",
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-prevent-rerenders-with-use-shallow-example-e20899ff"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 20.953999999997905,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 9,
+        "elapsedMs": 3.110500000002503,
+        "invocation": 22,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q02",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "How do I replace the entire Zustand state instead of merging it?",
+      "expected": [
+        "zustand-immutable-state-and-merging-replace-flag-1e2b4248"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-readme-first-create-a-store-63b3febc",
+        "zustand-immutable-state-and-merging-nested-objects-831679d7"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 19.001400000001013,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 16,
+        "elapsedMs": 3.6159000000043306,
+        "invocation": 23,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q03",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "Zustand async actions await fetch",
+      "expected": [
+        "zustand-readme-async-actions-69149259"
+      ],
+      "retrieved": [
+        "zustand-readme-async-actions-69149259",
+        "zustand-persisting-store-data-usage-in-next-js-6ce30a8d",
+        "zustand-persisting-store-data-hydration-and-asynchronous-storages-7653da22",
+        "zustand-persisting-store-data-usage-in-next-js-6390a33e",
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 21.12569999999687,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 10,
+        "elapsedMs": 3.0190999999977066,
+        "invocation": 24,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q04",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "How can I read existing Zustand state from inside an action?",
+      "expected": [
+        "zustand-readme-read-from-state-in-actions-27d88d1a"
+      ],
+      "retrieved": [
+        "zustand-readme-why-zustand-over-redux-d4e68581",
+        "zustand-readme-why-zustand-over-context-f44f5a42",
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 13.313199999996868,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 15,
+        "elapsedMs": 3.2490000000034343,
+        "invocation": 25,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q05",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "Can I use a Zustand store without React hooks?",
+      "expected": [
+        "zustand-readme-using-zustand-without-react-e92b4091"
+      ],
+      "retrieved": [
+        "zustand-readme-using-zustand-without-react-e92b4091",
+        "zustand-readme-react-context-f5f76c34",
+        "zustand-persisting-store-data-usage-in-next-js-6ce30a8d",
+        "zustand-readme-first-create-a-store-63b3febc",
+        "zustand-readme-comparison-with-other-libraries-2c6fa9b7"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 14.205999999998312,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 13,
+        "elapsedMs": 3.525500000003376,
+        "invocation": 26,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q06",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "persist partialize fields storage",
+      "expected": [
+        "zustand-persisting-store-data-partialize-e30b16f9"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-partialize-e30b16f9",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-persisting-store-data-migrate-c3109046",
+        "zustand-persisting-store-data-partialize-8e066671",
+        "zustand-persisting-store-data-version-abd2db61"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 21.984000000004016,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 7,
+        "elapsedMs": 3.6761999999944237,
+        "invocation": 27,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q07",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "How do I migrate persisted Zustand data when its schema version changes?",
+      "expected": [
+        "zustand-persisting-store-data-migrate-fe93831b"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-migrate-c3109046",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "zustand-persisting-store-data-migrate-fe93831b",
+        "zustand-persisting-store-data-overview-9c2a2b4b",
+        "zustand-persisting-store-data-version-abd2db61"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 30.108100000004924,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 17,
+        "elapsedMs": 4.8474999999962165,
+        "invocation": 28,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q08",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "hasHydrated non reactive getter",
+      "expected": [
+        "zustand-persisting-store-data-hashydrated-53660cba"
+      ],
+      "retrieved": [
+        "zustand-persisting-store-data-hashydrated-53660cba",
+        "zustand-prevent-rerenders-with-use-shallow-overview-b3841af1",
+        "zustand-readme-selecting-multiple-state-slices-145d02a5",
+        "zustand-readme-selecting-multiple-state-slices-03115628",
+        "zustand-readme-why-zustand-over-redux-d4e68581"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 20.186000000001513,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 9,
+        "elapsedMs": 3.405400000003283,
+        "invocation": 29,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q09",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "Why is my cached query data stale immediately and how can I keep it fresh longer?",
+      "expected": [
+        "query-important-defaults-overview-f57910f4"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-f57910f4",
+        "query-query-invalidation-overview-98e0c1b2",
+        "query-paginated-queries-lagging-infinite-query-results-with-placeholderdata-32214ab2",
+        "query-important-defaults-overview-c1dfd84d",
+        "query-important-defaults-overview-3bd36d5e"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 14.733500000002095,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 20,
+        "elapsedMs": 3.855999999999767,
+        "invocation": 30,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q10",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "inactive queries garbage collected gcTime 5 minutes",
+      "expected": [
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-c1dfd84d",
+        "query-important-defaults-overview-f5e51155",
+        "query-important-defaults-overview-f57910f4",
+        "query-paginated-queries-lagging-infinite-query-results-with-placeholderdata-32214ab2",
+        "query-important-defaults-overview-3bd36d5e"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 16.99539999999979,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 12,
+        "elapsedMs": 3.3954999999987194,
+        "invocation": 31,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q11",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "Which browser events automatically refetch stale queries?",
+      "expected": [
+        "query-important-defaults-overview-f5e51155"
+      ],
+      "retrieved": [
+        "query-important-defaults-overview-c1dfd84d",
+        "query-query-invalidation-overview-98e0c1b2",
+        "query-important-defaults-overview-f5e51155",
+        "query-important-defaults-overview-3bd36d5e",
+        "query-important-defaults-overview-f57910f4"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 20.81420000000071,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 13,
+        "elapsedMs": 3.40060000000085,
+        "invocation": 32,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q12",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "query keys hashed deterministically object order",
+      "expected": [
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83"
+      ],
+      "retrieved": [
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83",
+        "query-query-keys-query-keys-are-hashed-deterministically-96172d30",
+        "query-query-invalidation-query-matching-with-invalidatequeries-1294555f",
+        "query-query-keys-further-reading-c1fc2067",
+        "query-query-keys-simple-query-keys-96189f5e"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 21.92720000000554,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 12,
+        "elapsedMs": 2.839400000004389,
+        "invocation": 33,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q13",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "My query function uses a changing todoId. Where should I put this variable so requests refetch?",
+      "expected": [
+        "query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9"
+      ],
+      "retrieved": [
+        "query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9",
+        "query-important-defaults-overview-3bd36d5e",
+        "query-optimistic-updates-updating-a-single-todo-87b1dcdf",
+        "query-optimistic-updates-via-the-ui-b88c0e8e",
+        "query-optimistic-updates-updating-a-list-of-todos-when-adding-a-new-todo-3dc170fc"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 13.68409999999858,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 23,
+        "elapsedMs": 3.693299999998999,
+        "invocation": 34,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q14",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "How can pagination keep showing the previous page while the next page loads?",
+      "expected": [
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e"
+      ],
+      "retrieved": [
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-8d41666b",
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-7350b22e",
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e",
+        "query-paginated-queries-better-paginated-queries-with-placeholderdata-04ad63c4",
+        "query-paginated-queries-overview-c0b5e505"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 21.247800000004645,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 18,
+        "elapsedMs": 2.80290000000241,
+        "invocation": 35,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q15",
+      "kind": "lexical",
+      "mode": "hybrid",
+      "query": "invalidateQueries marked stale refetched background",
+      "expected": [
+        "query-query-invalidation-overview-68b8c99b"
+      ],
+      "retrieved": [
+        "query-query-invalidation-overview-68b8c99b",
+        "query-important-defaults-overview-3bd36d5e",
+        "query-important-defaults-overview-f5e51155",
+        "query-important-defaults-overview-c1dfd84d",
+        "query-query-invalidation-overview-98e0c1b2"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 1,
+        "allSources": 1
+      },
+      "elapsedMs": 16.686000000001513,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 11,
+        "elapsedMs": 3.002200000002631,
+        "invocation": 36,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q16",
+      "kind": "paraphrase",
+      "mode": "hybrid",
+      "query": "When should optimistic updates use mutation variables in the UI instead of directly modifying the cache?",
+      "expected": [
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba"
+      ],
+      "retrieved": [
+        "query-optimistic-updates-via-the-cache-c18953ee",
+        "query-optimistic-updates-overview-fc484a5c",
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba",
+        "query-optimistic-updates-if-the-mutation-and-the-query-don-t-live-in-the-same-component-decfc31b",
+        "query-optimistic-updates-further-reading-6b45424c"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.3333333333333333,
+        "allSources": 1
+      },
+      "elapsedMs": 20.340100000001257,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 19,
+        "elapsedMs": 3.212599999998929,
+        "invocation": 37,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q17",
+      "kind": "two-source",
+      "mode": "hybrid",
+      "query": "How do Zustand nested object updates differ from TanStack Query optimistic updates made directly in the UI?",
+      "expected": [
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "query-optimistic-updates-when-to-use-what-e8d6c7ba"
+      ],
+      "retrieved": [
+        "zustand-updating-state-flat-updates-d12659ea",
+        "zustand-readme-why-zustand-over-context-f44f5a42",
+        "query-query-invalidation-overview-68b8c99b",
+        "zustand-immutable-state-and-merging-nested-objects-831679d7",
+        "query-query-invalidation-overview-98e0c1b2"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 1,
+        "reciprocalRank": 0.25,
+        "allSources": 0
+      },
+      "elapsedMs": 12.525099999998929,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 24,
+        "elapsedMs": 3.4086999999999534,
+        "invocation": 38,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q18",
+      "kind": "two-source",
+      "mode": "hybrid",
+      "query": "Compare Zustand persist partialize and TanStack Query gcTime: what do they control?",
+      "expected": [
+        "zustand-persisting-store-data-partialize-e30b16f9",
+        "query-important-defaults-overview-c1dfd84d"
+      ],
+      "retrieved": [
+        "query-query-invalidation-overview-68b8c99b",
+        "zustand-persisting-store-data-overview-9c2a2b4b",
+        "query-important-defaults-overview-f57910f4",
+        "zustand-persisting-store-data-merge-db1f4732",
+        "query-query-keys-overview-47a688ad"
+      ],
+      "metrics": {
+        "answerable": true,
+        "hit": 0,
+        "reciprocalRank": 0,
+        "allSources": 0
+      },
+      "elapsedMs": 20.50590000000375,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 22,
+        "elapsedMs": 3.9552999999941676,
+        "invocation": 39,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q19",
+      "kind": "unsupported",
+      "mode": "hybrid",
+      "query": "How do I rotate an AWS KMS encryption key for a DynamoDB global table?",
+      "expected": [],
+      "retrieved": [
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-persisting-store-data-how-can-i-use-a-custom-storage-engine-9eee67f8",
+        "query-query-keys-query-keys-are-hashed-deterministically-96172d30",
+        "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83",
+        "query-query-keys-simple-query-keys-96189f5e"
+      ],
+      "metrics": {
+        "answerable": false,
+        "hit": null,
+        "reciprocalRank": null,
+        "allSources": null
+      },
+      "elapsedMs": 16.72500000000582,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 20,
+        "elapsedMs": 3.5907999999981257,
+        "invocation": 40,
+        "vectorDimensions": 384
+      }
+    },
+    {
+      "id": "q20",
+      "kind": "unsupported",
+      "mode": "hybrid",
+      "query": "What is the correct Kubernetes ingress certificate renewal command?",
+      "expected": [],
+      "retrieved": [
+        "zustand-persisting-store-data-migrate-fe93831b",
+        "zustand-persisting-store-data-createjsonstorage-e0e818e8",
+        "zustand-persisting-store-data-name-2d686629",
+        "zustand-persisting-store-data-setoptions-e704a234",
+        "zustand-persisting-store-data-clearstorage-82bf1388"
+      ],
+      "metrics": {
+        "answerable": false,
+        "hit": null,
+        "reciprocalRank": null,
+        "allSources": null
+      },
+      "elapsedMs": 15.721899999996822,
+      "embedding": {
+        "id": "Xenova/all-MiniLM-L6-v2",
+        "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+        "dimensions": 384,
+        "dtype": "q8",
+        "pooling": "mean",
+        "normalize": true,
+        "maxTokens": 256,
+        "execution": "next-route-handler",
+        "environment": "production",
+        "processId": 10468,
+        "tokenCount": 16,
+        "elapsedMs": 3.1353000000017346,
+        "invocation": 41,
+        "vectorDimensions": 384
+      }
+    }
+  ]
+}

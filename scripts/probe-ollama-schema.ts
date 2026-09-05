@@ -1,0 +1,4 @@
+import {writeFile} from 'node:fs/promises';
+const response=await fetch('http://127.0.0.1:11434/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'qwen2.5-coder:7b',messages:[{role:'user',content:'Return answer "Works" and citations [].'}],stream:false,format:{type:'object',properties:{answer:{type:'string'},citations:{type:'array',items:{type:'object',properties:{chunkId:{type:'string'},quote:{type:'string'}},required:['chunkId','quote'],additionalProperties:false}}},required:['answer','citations'],additionalProperties:false},options:{temperature:0,num_ctx:4096,num_predict:32},keep_alive:'15m'}),signal:AbortSignal.timeout(120000)});
+const text=await response.text();await writeFile('evidence/ollama-structural-schema-probe.json',JSON.stringify({status:response.status,body:text},null,2));console.log(response.status,text);
+

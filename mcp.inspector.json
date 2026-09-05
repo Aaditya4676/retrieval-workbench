@@ -1,0 +1,1 @@
+{"mcpServers":{"retrieval-workbench":{"command":"C:/nvm4w/nodejs/node.exe","args":["--import","tsx","Z:/STUDY/res/Portfolio/apps/rag/packages/mcp-server/index.ts"],"cwd":"Z:/STUDY/res/Portfolio/apps/rag","env":{"RAG_API_URL":"http://127.0.0.1:3300"}}}}

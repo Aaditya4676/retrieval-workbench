@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.cache/
+.data/
+.env*
+!.env.example
+*.tsbuildinfo
+evidence/*.webm
+evidence/videos/
+evidence/*server.log

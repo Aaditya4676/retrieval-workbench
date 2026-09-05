@@ -1,0 +1,16 @@
+{
+  "testedAt": "2026-09-05T22:24:25.322Z",
+  "command": "C:\\nvm4w\\nodejs\\node.exe",
+  "args": [
+    "--import",
+    "file:///Z:/STUDY/res/Portfolio/apps/rag/node_modules/tsx/dist/loader.mjs",
+    "Z:\\STUDY\\res\\Portfolio\\apps\\rag\\packages\\mcp-server\\index.ts"
+  ],
+  "workingDirectory": "Z:\\STUDY\\res\\Portfolio\\work\\lane-c",
+  "initialized": true,
+  "tools": [
+    "search_docs",
+    "get_chunk"
+  ],
+  "note": "Verified absolute-loader launch from another directory. This is not a Codex/Claude conversation."
+}
