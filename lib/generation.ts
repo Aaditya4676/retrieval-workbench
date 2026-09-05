@@ -7,7 +7,15 @@ export const generationFormat = {
   type: "object",
   properties: {
     answer: { type: "string" },
-    citations: { type: "array", items: { type: "object", properties: { chunkId: { type: "string" }, quote: { type: "string" } }, required: ["chunkId", "quote"], additionalProperties: false } },
+    citations: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: { chunkId: { type: "string" }, quote: { type: "string" } },
+        required: ["chunkId", "quote"],
+        additionalProperties: false,
+      },
+    },
   },
   required: ["answer", "citations"],
   additionalProperties: false,

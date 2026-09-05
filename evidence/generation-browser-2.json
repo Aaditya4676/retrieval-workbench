@@ -1,0 +1,26 @@
+{
+  "testedAt": "2026-09-05T22:44:17.326Z",
+  "browser": "152.0.4191.66",
+  "draftVisibleBeforeFinal": true,
+  "draftLabel": "Unvalidated draft",
+  "retrievalStatusSeparatesGeneration": true,
+  "exactQuoteInInspectedSource": true,
+  "answerText": "Zustand updates nested objects by merging them explicitly using the spread operator pattern. For complex cases, libraries like Immer can be used to simplify updating deeply nested state.\n\nInspect cited passage 1\nYou will use the spread operator pattern like so:\nInspect cited passage 2\nMany people use Immer to update nested values.",
+  "checks": [
+    {
+      "width": 390,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "axeViolations": 0
+    },
+    {
+      "width": 1280,
+      "overflow": false,
+      "axeViolations": 0
+    }
+  ]
+}

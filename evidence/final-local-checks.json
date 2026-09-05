@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-09-05T22:45:46.7209020Z",
+  "productionBuildId": "hL4VlRqxPQrYbltVF7POf",
+  "commands": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "test": "pass: six focused tests",
+    "build": "pass: Next 16.3.4 webpack production"
+  },
+  "finalBrowserEvidence": "evidence/generation-browser-2.json",
+  "screenshotsVisuallyReviewed": [
+    "generation-pass-2-390.png",
+    "generation-pass-2-768.png",
+    "generation-pass-2-1280.png"
+  ],
+  "finalRetrievalSha256": "695c5e69839e7e3e87be7f42ac62a5ffe70882408f72c5264f436140c5a2f36a",
+  "frozenLabelsSha256": "e71667d546cd65a840d6db9c75fa1b1ca671a1b1656a56e93a40172e81f9aaf5",
+  "designTokenSha256": "286415b8d5e3c1ed47afd9429687d2a005a685d7d6030ec342525b4f49df9d5e",
+  "localServices": {
+    "next": 28108,
+    "dataOwner": 29788
+  },
+  "inference": "idle after final streamed browser verification",
+  "hostedChecks": "deferred; see DEPLOYMENT.md"
+}

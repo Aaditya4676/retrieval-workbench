@@ -34,9 +34,13 @@ describe("retrieval contract", () => {
     });
   });
   it("stable IDs survive unrelated document insertion but change with source content", () => {
-    const initial=sections("# Heading\nOriginal paragraph");
-    const edited=sections("# New section\nUnrelated paragraph\n# Heading\nOriginal paragraph");
-    expect(stableId("doc", initial[0].heading, initial[0].text)).toBe(stableId("doc", edited[1].heading, edited[1].text));
+    const initial = sections("# Heading\nOriginal paragraph");
+    const edited = sections(
+      "# New section\nUnrelated paragraph\n# Heading\nOriginal paragraph",
+    );
+    expect(stableId("doc", initial[0].heading, initial[0].text)).toBe(
+      stableId("doc", edited[1].heading, edited[1].text),
+    );
     expect(stableId("doc", "Heading", "a")).not.toBe(
       stableId("doc", "Heading", "b"),
     );

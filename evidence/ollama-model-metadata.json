@@ -1,0 +1,104 @@
+{
+  "recordedAt": "2026-09-05T22:40:35.6955416Z",
+  "source": "Read-only Ollama /api/tags, /api/show and /api/version; no inference or model changes",
+  "ollamaVersion": "0.17.1",
+  "installedModel": {
+    "name": "qwen2.5-coder:7b",
+    "model": "qwen2.5-coder:7b",
+    "modified_at": "2026-01-15T02:35:00.6010559+05:30",
+    "size": 4683087561,
+    "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "Q4_K_M"
+    }
+  },
+  "modelInfo": {
+    "general.architecture": "qwen2",
+    "general.base_model.0.name": "Qwen2.5 Coder 7B",
+    "general.base_model.0.organization": "Qwen",
+    "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B",
+    "general.base_model.count": 1,
+    "general.basename": "Qwen2.5-Coder",
+    "general.file_type": 15,
+    "general.finetune": "Instruct",
+    "general.languages": null,
+    "general.license": "apache-2.0",
+    "general.license.link": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct/blob/main/LICENSE",
+    "general.parameter_count": 7615616512,
+    "general.quantization_version": 2,
+    "general.size_label": "7B",
+    "general.tags": null,
+    "general.type": "model",
+    "qwen2.attention.head_count": 28,
+    "qwen2.attention.head_count_kv": 4,
+    "qwen2.attention.layer_norm_rms_epsilon": 1E-06,
+    "qwen2.block_count": 28,
+    "qwen2.context_length": 32768,
+    "qwen2.embedding_length": 3584,
+    "qwen2.feed_forward_length": 18944,
+    "qwen2.rope.freq_base": 1000000,
+    "tokenizer.ggml.add_bos_token": false,
+    "tokenizer.ggml.bos_token_id": 151643,
+    "tokenizer.ggml.eos_token_id": 151645,
+    "tokenizer.ggml.merges": null,
+    "tokenizer.ggml.model": "gpt2",
+    "tokenizer.ggml.padding_token_id": 151643,
+    "tokenizer.ggml.pre": "qwen2",
+    "tokenizer.ggml.token_type": null,
+    "tokenizer.ggml.tokens": null
+  },
+  "capabilities": [
+    "completion",
+    "tools",
+    "insert"
+  ],
+  "hardware": {
+    "video": [
+      {
+        "Name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+        "AdapterRAM": 4293918720,
+        "DriverVersion": "32.0.16.1062"
+      },
+      {
+        "Name": "Intel(R) UHD Graphics",
+        "AdapterRAM": 1073741824,
+        "DriverVersion": "30.0.100.9864"
+      }
+    ],
+    "cpu": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+    "logicalProcessors": 12,
+    "memoryBytes": 25521610752,
+    "os": "Microsoft Windows NT 10.0.26200.0"
+  },
+  "conditions": "One application answer request at a time; shared local Windows laptop. No-passage requests skip model inference. No hosted quality or latency is claimed.",
+  "loadedModelSnapshot": {
+    "models": [
+      {
+        "name": "qwen2.5-coder:7b",
+        "model": "qwen2.5-coder:7b",
+        "size": 5371275264,
+        "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-09-06T04:25:45.7951305+05:30",
+        "size_vram": 3282036736,
+        "context_length": 4096
+      }
+    ]
+  }
+}

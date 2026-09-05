@@ -40,7 +40,9 @@ export default function Workbench({
 }) {
   const [query, setQuery] = useState(initialQuery ?? samples[0]);
   const [mode, setMode] = useState(initialMode);
-  const [busy, setBusy] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const busy = searching || generating;
   const [error, setError] = useState("");
   const [response, setResponse] = useState<SearchResponse | null>(null);
   const [selected, setSelected] = useState<Result | null>(null);
@@ -48,7 +50,8 @@ export default function Workbench({
   const detail = useRef<HTMLElement>(null);
   async function search(event?: FormEvent, nextQuery = query) {
     event?.preventDefault();
-    setBusy(true);
+    if (busy) return;
+    setSearching(true);
     setError("");
     setSelected(null);
     setSubmitted(nextQuery);
@@ -77,7 +80,7 @@ export default function Workbench({
       );
       setResponse(null);
     } finally {
-      setBusy(false);
+      setSearching(false);
     }
   }
   function inspect(result: Result) {
@@ -118,6 +121,7 @@ export default function Workbench({
               autoComplete="off"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
+              minLength={2}
               maxLength={800}
               required
               rows={3}
@@ -139,7 +143,7 @@ export default function Workbench({
                 </select>
               </div>
               <button className="primary" type="submit" disabled={busy}>
-                {busy ? "Searching…" : "Search passages"}
+                {searching ? "Searching…" : "Search passages"}
               </button>
             </div>
             <p id="query-help" className="help">
@@ -165,7 +169,7 @@ export default function Workbench({
           </details>
         </section>
         <div className="status" role="status" aria-live="polite">
-          {busy
+          {searching
             ? "Searching the committed corpus…"
             : response
               ? `${response.results.length} passages found with ${response.mode} search in ${(response.elapsedMs / 1000).toFixed(2)} seconds.`
@@ -180,7 +184,7 @@ export default function Workbench({
           query={query}
           mode={mode}
           busy={busy}
-          onBusy={setBusy}
+          onBusy={setGenerating}
           onSources={(sources) => {
             setResponse(sources);
             setSubmitted(query);

@@ -35,7 +35,7 @@ Measured 6 September 2026 in India (raw timestamp 2026-09-05T21:37:56.511Z), Win
 
 [Raw final retrieval results](evidence/retrieval-eval.json), [frozen labels](evals/questions.json), [model/corpus hash](corpus/manifest.json), [production route proof](evidence/production-route-proof.json), [MCP round-trip evidence](evidence/mcp-client.json).
 
-MRR uses the reciprocal rank of the first expected chunk, or zero for a miss. The complete-source score requires every listed expected ID. Unsupported controls have no expected IDs and are excluded from the answerable denominator; their returned results are reported rather than treated as correct rejections. Retrieval evaluations are final for this model and corpus. Generation evaluations have not been run and must be measured separately after tomorrow's hosted chat model.
+MRR uses the reciprocal rank of the first expected chunk, or zero for a miss. The complete-source score requires every listed expected ID. Unsupported controls have no expected IDs and are excluded from the answerable denominator; their returned results are reported rather than treated as correct rejections. Retrieval evaluations are final for this model and corpus. Local generation is measured separately below; rerun generation evaluations after tomorrow's hosted chat model.
 
 ## What I would change with more time
 
@@ -102,7 +102,17 @@ The production smoke question “How does Zustand update nested objects?” prod
 
 An observed compatibility correction: the local runner stopped when given the full Zod min/max-length JSON schema. A structural object/array/string decoder schema succeeded at the same context size. Full bounds remain enforced on the final application object. Both failed and successful probes are preserved in `evidence/ollama-schema-probe.json` and `evidence/ollama-structural-schema-probe.json`.
 
-The one full local generation evaluation writes partial raw progress after each request to `evidence/generation-eval-progress.json` and final results to `evidence/generation-eval.json`. Its citation coverage is separate from retrieval hit@5 and must be rerun after tomorrow's hosted chat model. The final generation table will be added after that local pass finishes.
+The one full local generation evaluation completed 60 application requests: the same 20 frozen questions in each retrieval mode, with no failed cases removed. [Final raw events and report](evidence/generation-eval.json) preserve the unchanged retrieval and label hashes. Checkpoints remain on disk. `pnpm eval:generation` deliberately starts a new pass; `pnpm exec tsx scripts/report-generation.ts` only derives diagnostics from saved events, with no inference.
+
+| Retrieval mode | Expected citation (18 answerable) | Both required sources | Unsupported no-citation finals | Completed validated responses | Invalid citations withheld |
+| --- | --- | --- | --- | --- | --- |
+| Keyword | 7/18 = 38.9% | 0/2 | 2/2 | 19/20 | 1/8 observed model outputs |
+| Vector | 12/18 = 66.7% | 0/2 | 2/2 | 17/20 | 3/20 observed model outputs |
+| Hybrid | 12/18 = 66.7% | 0/2 | 2/2 | 17/20 | 3/20 observed model outputs |
+
+Seven of 48 outputs observed at citation validation failed the source-ID or exact-quote check (14.6%) and were withheld. The denominator counts validated model finals plus explicit citation-validation errors; twelve keyword requests had no passages and skipped generation. Completed responses include those no-passage messages. There were no other failed requests in this pass. Every failure remains in the eighteen-answerable citation-coverage denominator. Coverage checks whether a final answer cited at least one expected chunk; it does not establish semantic entailment or overall answer accuracy. The two unsupported controls are too few to establish a general abstention policy.
+
+Measured on 6 September 2026 in India with Ollama 0.17.1, `qwen2.5-coder:7b`, GGUF 7.6B Q4_K_M, digest `dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364`. [Read-only runtime metadata](evidence/ollama-model-metadata.json) records the Intel i5-11400H, 24 GB RAM and RTX 3050 laptop GPU; the loaded-model snapshot reported a 4096-token context and about 3.28 GB in VRAM. Mean application request times were 8.0 s keyword, 29.6 s vector and 27.2 s hybrid on the shared laptop, including the fast no-passage requests. These are observations, not latency guarantees. Local generation results are provisional and must be rerun for tomorrow's hosted chat model; the permanent MiniLM retrieval measurements remain final.
 
 ## Sources and design
 
