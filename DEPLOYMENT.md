@@ -31,7 +31,8 @@ Local build: `pnpm install --frozen-lockfile`, `pnpm build`. Local start: `pnpm 
 | `MODEL_CACHE_DIR` | Writable pinned-model cache directory | `.cache/transformers` under the app |
 | `DATABASE_URL` | Server-only node-postgres connection through `postgresAdapter` | Unset selects PGlite transport; hosted connection untested |
 | `INGEST_TOKEN` | Data-owner and ingestion CLI bearer credential | Unset denies ingestion |
-| Hosted chat key/model settings | Future answer generation provider only | None required for retrieval |
+| `ANSWER_BASE_URL` | Base URL of an Ollama-compatible streaming `/api/chat` service | `http://127.0.0.1:11434` |
+| `ANSWER_MODEL` | Answer-generation model name | `qwen2.5-coder:7b` |
 
 ## Hosted acceptance checklist
 
@@ -47,6 +48,8 @@ The final retrieval measurements are in `evidence/retrieval-eval.json`; preserve
 
 ## Local answer-generation implementation
 
-`app/api/answer/route.ts` currently uses the local Ollama `/api/chat` endpoint and the existing `qwen2.5-coder:7b`; it never changes the embedder. Replace only that answer-provider transport tomorrow, retain `lib/generation.ts` final validation, and run a new generation evaluation. The route emits NDJSON source, unvalidated-draft, final, and error events. It permits one active local model request, including cancellation cleanup, and uses 4096 context tokens with at most 320 generated tokens. The existing Ollama service is not owned or stopped by this project.
+`app/api/answer/route.ts` reads `ANSWER_BASE_URL` and `ANSWER_MODEL`, with the existing Ollama service/model as defaults. The configured service must speak Ollama's streaming `/api/chat` protocol; these variables do not turn it into an OpenAI-compatible client. Both search and answer routes call `lib/search.ts` directly, which embeds in the Next process and runs `searchDatabase` through the selected server-only client. No HTTP request back to the application's own search route is needed.
+
+NDJSON source, unvalidated-draft, final and error events retain the same schema and exact citation validation. Every answer request owns its cancellation and 120-second model timeout, with 4096 context tokens and at most 320 generated tokens. There is no process-wide concurrency claim: a persistent hosted quota/limiter remains a hosting prerequisite. The existing Ollama service is not owned or stopped by this project. A changed answer model requires a separate generation evaluation; the permanent embedder and frozen retrieval reference stay unchanged.
 
 The structural decoder schema intentionally omits grammar-level string-length bounds because the current local runner stopped with the full Zod schema. Strict final Zod bounds, source-ID membership and exact quote checks remain active. Hosted model support for its chosen structured-output API must be verified independently.

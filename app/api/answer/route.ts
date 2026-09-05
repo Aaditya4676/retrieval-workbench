@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { searchInput, type Result } from "@/lib/types";
+import { search as searchPassages } from "@/lib/search";
 import {
   generationFormat,
   completedAnswerDraft,
@@ -7,7 +8,6 @@ import {
 } from "@/lib/generation";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-let active = false;
 export async function POST(request: Request) {
   const parsed = searchInput.safeParse(await request.json().catch(() => null));
   if (!parsed.success)
@@ -18,15 +18,11 @@ export async function POST(request: Request) {
       },
       { status: 400 },
     );
-  if (active)
-    return NextResponse.json(
-      {
-        error:
-          "One local answer is already running. Wait for it to finish, then retry.",
-      },
-      { status: 429 },
-    );
-  active = true;
+  // Each request owns its cancellation and timeout. A module flag cannot limit serverless instances.
+  const model = process.env.ANSWER_MODEL ?? "qwen2.5-coder:7b";
+  const base = (
+    process.env.ANSWER_BASE_URL ?? "http://127.0.0.1:11434"
+  ).replace(/\/$/, "");
   const controller = new AbortController();
   const started = performance.now();
   const stream = new ReadableStream({
@@ -35,21 +31,7 @@ export async function POST(request: Request) {
       const send = (event: unknown) =>
         output.enqueue(encode.encode(JSON.stringify(event) + "\n"));
       try {
-        const retrieved = await fetch(
-          `${process.env.RAG_API_URL ?? "http://127.0.0.1:3300"}/api/search`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(parsed.data),
-            signal: AbortSignal.any([
-              request.signal,
-              controller.signal,
-              AbortSignal.timeout(180000),
-            ]),
-          },
-        );
-        const search = await retrieved.json();
-        if (!retrieved.ok) throw new Error(search.error ?? "Retrieval failed");
+        const search = await searchPassages(parsed.data);
         const chunks: Result[] = search.results;
         send({ type: "sources", ...search });
         if (!chunks.length) {
@@ -64,11 +46,11 @@ export async function POST(request: Request) {
           return;
         }
         const schema = generationFormat;
-        const response = await fetch("http://127.0.0.1:11434/api/chat", {
+        const response = await fetch(`${base}/api/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            model: "qwen2.5-coder:7b",
+            model,
             stream: true,
             format: schema,
             keep_alive: "15m",
@@ -100,7 +82,7 @@ export async function POST(request: Request) {
         });
         if (!response.ok || !response.body)
           throw new Error(
-            "Local answer model is unavailable. Keep using passage search, or check Ollama and retry.",
+            "The answer model is unavailable. Keep using passage search, or check its endpoint and retry.",
           );
         const decoder = new TextDecoder();
         let lines = "";
@@ -137,7 +119,7 @@ export async function POST(request: Request) {
         send({
           type: "final",
           ...answer,
-          model: "qwen2.5-coder:7b",
+          model,
           validation:
             "schema + known chunk IDs + exact quote substrings; not a semantic entailment check",
           elapsedMs: performance.now() - started,
@@ -153,7 +135,6 @@ export async function POST(request: Request) {
                 : "Answer generation failed. Inspect the retrieved sources and retry.",
           });
       } finally {
-        active = false;
         try {
           output.close();
         } catch {
