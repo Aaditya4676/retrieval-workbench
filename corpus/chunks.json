@@ -1,0 +1,1058 @@
+[
+  {
+    "id": "zustand-readme-overview-834703b9",
+    "document": "zustand-readme",
+    "heading": "Overview",
+    "text": "Overview\nA small, fast and scalable bearbones state-management solution using simplified flux principles. Has a comfy API based on hooks, isn't boilerplatey or opinionated. Don't disregard it because it's cute. It has quite the claws, lots of time was spent dealing with common pitfalls, like the dreaded zombie child problem, react concurrency, and context loss between mixed renderers. It may be the one state-manager in the React space that gets all of these right. You can try a live demo and read the docs. ```bash npm install zustand ``` :warning: This readme is written for JavaScript users. If you are a TypeScript user, be sure to check out our TypeScript Usage section.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 163
+  },
+  {
+    "id": "zustand-readme-first-create-a-store-63b3febc",
+    "document": "zustand-readme",
+    "heading": "First create a store",
+    "text": "First create a store\nYour store is a hook! You can put anything in it: primitives, objects, functions. State has to be updated immutably and the `set` function merges state to help it. ```jsx import { create } from 'zustand' const useBearStore = create((set) => ({ bears: 0, increasePopulation: () => set((state) => ({ bears: state.bears + 1 })), removeAllBears: () => set({ bears: 0 }), })) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 134
+  },
+  {
+    "id": "zustand-readme-then-bind-your-components-and-that-s-it-d10fe059",
+    "document": "zustand-readme",
+    "heading": "Then bind your components, and that's it!",
+    "text": "Then bind your components, and that's it!\nUse the hook anywhere, no providers are needed. Select your state and the component will re-render on changes. ```jsx function BearCounter() { const bears = useBearStore((state) => state.bears) return {bears} around here ... } function Controls() { const increasePopulation = useBearStore((state) => state.increasePopulation) return one up } ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 112
+  },
+  {
+    "id": "zustand-readme-why-zustand-over-redux-d4e68581",
+    "document": "zustand-readme",
+    "heading": "Why zustand over redux?",
+    "text": "Why zustand over redux?\n- Simple and un-opinionated - Makes hooks the primary means of consuming state - Doesn't wrap your app in context providers - Can inform components transiently (without causing render)",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 46
+  },
+  {
+    "id": "zustand-readme-why-zustand-over-context-f44f5a42",
+    "document": "zustand-readme",
+    "heading": "Why zustand over context?",
+    "text": "Why zustand over context?\n- Less boilerplate - Renders components only on changes - Centralized, action-based state management ---",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 30
+  },
+  {
+    "id": "zustand-readme-fetching-everything-483c5db8",
+    "document": "zustand-readme",
+    "heading": "Fetching everything",
+    "text": "Fetching everything\nYou can, but bear in mind that it will cause the component to update on every state change! ```jsx const state = useBearStore() ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 44
+  },
+  {
+    "id": "zustand-readme-selecting-multiple-state-slices-145d02a5",
+    "document": "zustand-readme",
+    "heading": "Selecting multiple state slices",
+    "text": "Selecting multiple state slices\nIt detects changes with strict-equality (old === new) by default, this is efficient for atomic state picks. ```jsx const nuts = useBearStore((state) => state.nuts) const honey = useBearStore((state) => state.honey) ``` If you want to construct a single object with multiple state-picks inside, similar to redux's mapStateToProps, you can use useShallow to prevent unnecessary rerenders when the selector output does not change according to shallow equal. ```jsx import { create } from 'zustand' import { useShallow } from 'zustand/react/shallow' const useBearStore = create((set) => ({ nuts: 0, honey: 0, treats: {}, // ... })) // Object pick, re-renders the component when either state.nuts or state.honey change const {",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-readme-selecting-multiple-state-slices-03115628",
+    "document": "zustand-readme",
+    "heading": "Selecting multiple state slices",
+    "text": "Selecting multiple state slices\n0, treats: {}, // ... })) // Object pick, re-renders the component when either state.nuts or state.honey change const { nuts, honey } = useBearStore( useShallow((state) => ({ nuts: state.nuts, honey: state.honey })), ) // Array pick, re-renders the component when either state.nuts or state.honey change const [nuts, honey] = useBearStore( useShallow((state) => [state.nuts, state.honey]), ) // Mapped picks, re-renders the component when state.treats changes in order, count or keys const treats = useBearStore(useShallow((state) => Object.keys(state.treats))) ``` For more control over re-rendering, you may provide any custom equality function (this example requires the use of",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 212
+  },
+  {
+    "id": "zustand-readme-selecting-multiple-state-slices-40d079e8",
+    "document": "zustand-readme",
+    "heading": "Selecting multiple state slices",
+    "text": "Selecting multiple state slices\nObject.keys(state.treats))) ``` For more control over re-rendering, you may provide any custom equality function (this example requires the use of `createWithEqualityFn`). ```jsx const treats = useBearStore( (state) => state.treats, (oldTreats, newTreats) => compare(oldTreats, newTreats), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 102
+  },
+  {
+    "id": "zustand-readme-overwriting-state-665da9bb",
+    "document": "zustand-readme",
+    "heading": "Overwriting state",
+    "text": "Overwriting state\nThe `set` function has a second argument, `false` by default. Instead of merging, it will replace the state model. Be careful not to wipe out parts you rely on, like actions. ```jsx const useFishStore = create((set) => ({ salmon: 1, tuna: 2, deleteEverything: () => set({}, true), // clears the entire store, actions included deleteTuna: () => set(({ tuna, ...rest }) => rest, true), })) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 137
+  },
+  {
+    "id": "zustand-readme-async-actions-69149259",
+    "document": "zustand-readme",
+    "heading": "Async actions",
+    "text": "Async actions\nJust call `set` when you're ready, zustand doesn't care if your actions are async or not. ```jsx const useFishStore = create((set) => ({ fishies: {}, fetch: async (pond) => { const response = await fetch(pond) set({ fishies: await response.json() }) }, })) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 104
+  },
+  {
+    "id": "zustand-readme-read-from-state-in-actions-27d88d1a",
+    "document": "zustand-readme",
+    "heading": "Read from state in actions",
+    "text": "Read from state in actions\n`set` allows fn-updates `set(state => result)`, but you still have access to state outside of it through `get`. ```jsx const useSoundStore = create((set, get) => ({ sound: 'grunt', action: () => { const sound = get().sound ... ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 92
+  },
+  {
+    "id": "zustand-readme-reading-writing-state-and-reacting-to-changes-outside-of-components-46b36eee",
+    "document": "zustand-readme",
+    "heading": "Reading/writing state and reacting to changes outside of components",
+    "text": "Reading/writing state and reacting to changes outside of components\nSometimes you need to access state in a non-reactive way or act upon the store. For these cases, the resulting hook has utility functions attached to its prototype. :warning: This technique is not recommended for adding state in React Server Components (typically in Next.js 13 and above). It can lead to unexpected bugs and privacy issues for your users. For more details, see #2200. ```jsx const useDogStore = create(() => ({ paw: true, snout: true, fur: true })) // Getting non-reactive fresh state const paw = useDogStore.getState().paw // Listening to all changes, fires synchronously on every change const unsub1 = useDogStore.subscribe(console.log) // Updating state, will trigger listeners useDogStore.setState({ paw: false }) // Unsubscribe listeners",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 218
+  },
+  {
+    "id": "zustand-readme-reading-writing-state-and-reacting-to-changes-outside-of-components-9e1f8927",
+    "document": "zustand-readme",
+    "heading": "Reading/writing state and reacting to changes outside of components",
+    "text": "Reading/writing state and reacting to changes outside of components\non every change const unsub1 = useDogStore.subscribe(console.log) // Updating state, will trigger listeners useDogStore.setState({ paw: false }) // Unsubscribe listeners unsub1() // You can of course use the hook as you always would function Component() { const paw = useDogStore((state) => state.paw) ... ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 114
+  },
+  {
+    "id": "zustand-readme-using-subscribe-with-selector-64e72335",
+    "document": "zustand-readme",
+    "heading": "Using subscribe with selector",
+    "text": "Using subscribe with selector\nIf you need to subscribe with a selector, `subscribeWithSelector` middleware will help. With this middleware `subscribe` accepts an additional signature: ```ts subscribe(selector, callback, options?: { equalityFn, fireImmediately }): Unsubscribe ``` ```js import { subscribeWithSelector } from 'zustand/middleware' const useDogStore = create( subscribeWithSelector(() => ({ paw: true, snout: true, fur: true })), ) // Listening to selected changes, in this case when \"paw\" changes const unsub2 = useDogStore.subscribe((state) => state.paw, console.log) // Subscribe also exposes the previous value const unsub3 = useDogStore.subscribe( (state) => state.paw, (paw,",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-readme-using-subscribe-with-selector-cc03a369",
+    "document": "zustand-readme",
+    "heading": "Using subscribe with selector",
+    "text": "Using subscribe with selector\n= useDogStore.subscribe((state) => state.paw, console.log) // Subscribe also exposes the previous value const unsub3 = useDogStore.subscribe( (state) => state.paw, (paw, previousPaw) => console.log(paw, previousPaw), ) // Subscribe also supports an optional equality function const unsub4 = useDogStore.subscribe( (state) => [state.paw, state.fur], console.log, { equalityFn: shallow }, ) // Subscribe and fire immediately const unsub5 = useDogStore.subscribe((state) => state.paw, console.log, { fireImmediately: true, }) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 186
+  },
+  {
+    "id": "zustand-readme-using-zustand-without-react-e92b4091",
+    "document": "zustand-readme",
+    "heading": "Using zustand without React",
+    "text": "Using zustand without React\nZustand core can be imported and used without the React dependency. The only difference is that the create function does not return a hook, but the API utilities. ```jsx import { createStore } from 'zustand/vanilla' const store = createStore((set) => ...) const { getState, setState, subscribe, getInitialState } = store export default store ``` You can use a vanilla store with `useStore` hook available since v4. ```jsx import { useStore } from 'zustand' import { vanillaStore } from './vanillaStore' const useBoundStore = (selector) => useStore(vanillaStore, selector) ``` :warning: Note that middlewares that modify `set` or `get` are not applied to `getState` and `setState`.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 201
+  },
+  {
+    "id": "zustand-readme-transient-updates-for-often-occurring-state-changes-43701391",
+    "document": "zustand-readme",
+    "heading": "Transient updates (for often occurring state-changes)",
+    "text": "Transient updates (for often occurring state-changes)\nThe subscribe function allows components to bind to a state-portion without forcing re-render on changes. Best combine it with useEffect for automatic unsubscribe on unmount. This can make a drastic performance impact when you are allowed to mutate the view directly. ```jsx const useScratchStore = create((set) => ({ scratches: 0, ... })) const Component = () => { // Fetch initial state const scratchRef = useRef(useScratchStore.getState().scratches) // Connect to the store on mount, disconnect on unmount, catch state-changes in a reference useEffect(() => useScratchStore.subscribe( state => (scratchRef.current = state.scratches) ), []) ... ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 200
+  },
+  {
+    "id": "zustand-readme-sick-of-reducers-and-changing-nested-states-use-immer-61301f7f",
+    "document": "zustand-readme",
+    "heading": "Sick of reducers and changing nested states? Use Immer!",
+    "text": "Sick of reducers and changing nested states? Use Immer!\nReducing nested structures is tiresome. Have you tried immer? ```jsx import { produce } from 'immer' const useLushStore = create((set) => ({ lush: { forest: { contains: { a: 'bear' } } }, clearForest: () => set( produce((state) => { state.lush.forest.contains = null }), ), })) const clearForest = useLushStore((state) => state.clearForest) clearForest() ``` Alternatively, there are some other solutions.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 152
+  },
+  {
+    "id": "zustand-readme-persist-middleware-77068ea9",
+    "document": "zustand-readme",
+    "heading": "Persist middleware",
+    "text": "Persist middleware\nYou can persist your store's data using any kind of storage. ```jsx import { create } from 'zustand' import { persist, createJSONStorage } from 'zustand/middleware' const useFishStore = create( persist( (set, get) => ({ fishes: 0, addAFish: () => set({ fishes: get().fishes + 1 }), }), { name: 'food-storage', // name of the item in the storage (must be unique) storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used }, ), ) ``` See the full documentation for this middleware.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 174
+  },
+  {
+    "id": "zustand-readme-immer-middleware-ab3b9029",
+    "document": "zustand-readme",
+    "heading": "Immer middleware",
+    "text": "Immer middleware\nImmer is available as middleware too. ```jsx import { create } from 'zustand' import { immer } from 'zustand/middleware/immer' const useBeeStore = create( immer((set) => ({ bees: 0, addBees: (by) => set((state) => { state.bees += by }), })), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 103
+  },
+  {
+    "id": "zustand-readme-can-t-live-without-redux-like-reducers-and-action-types-2cfdd5cc",
+    "document": "zustand-readme",
+    "heading": "Can't live without redux-like reducers and action types?",
+    "text": "Can't live without redux-like reducers and action types?\n```jsx const types = { increase: 'INCREASE', decrease: 'DECREASE' } const reducer = (state, { type, by = 1 }) => { switch (type) { case types.increase: return { grumpiness: state.grumpiness + by } case types.decrease: return { grumpiness: state.grumpiness - by } } } const useGrumpyStore = create((set) => ({ grumpiness: 0, dispatch: (args) => set((state) => reducer(state, args)), })) const dispatch = useGrumpyStore((state) => state.dispatch) dispatch({ type: types.increase, by: 2 }) ``` Or, just use our redux-middleware. It wires up your main-reducer, sets the initial state, and adds a dispatch",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-readme-can-t-live-without-redux-like-reducers-and-action-types-2db665d1",
+    "document": "zustand-readme",
+    "heading": "Can't live without redux-like reducers and action types?",
+    "text": "Can't live without redux-like reducers and action types?\n}) ``` Or, just use our redux-middleware. It wires up your main-reducer, sets the initial state, and adds a dispatch function to the state itself and the vanilla API. ```jsx import { redux } from 'zustand/middleware' const useGrumpyStore = create(redux(reducer, initialState)) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 103
+  },
+  {
+    "id": "zustand-readme-redux-devtools-5822b37d",
+    "document": "zustand-readme",
+    "heading": "Redux devtools",
+    "text": "Redux devtools\nInstall the Redux DevTools Chrome extension to use the devtools middleware. ```jsx import { devtools } from 'zustand/middleware' // Usage with a plain action store, it will log actions as \"setState\" const usePlainStore = create(devtools((set) => ...)) // Usage with a redux store, it will log full action types const useReduxStore = create(devtools(redux(reducer, initialState))) ``` One redux devtools connection for multiple stores ```jsx import { devtools } from 'zustand/middleware' // Usage with a plain action store, it will log actions as \"setState\" const usePlainStore1 = create(devtools((set) => ..., { name, store: storeName1 })) const usePlainStore2 =",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-readme-redux-devtools-04a77c78",
+    "document": "zustand-readme",
+    "heading": "Redux devtools",
+    "text": "Redux devtools\nit will log actions as \"setState\" const usePlainStore1 = create(devtools((set) => ..., { name, store: storeName1 })) const usePlainStore2 = create(devtools((set) => ..., { name, store: storeName2 })) // Usage with a redux store, it will log full action types const useReduxStore1 = create(devtools(redux(reducer, initialState)), { name, store: storeName3 }) const useReduxStore2 = create(devtools(redux(reducer, initialState)), { name, store: storeName4 }) ``` Assigning different connection names will separate stores in redux devtools. This also helps group different stores into separate redux devtools connections. devtools takes the store function as its first argument, optionally you can",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-readme-redux-devtools-b01e6721",
+    "document": "zustand-readme",
+    "heading": "Redux devtools",
+    "text": "Redux devtools\ngroup different stores into separate redux devtools connections. devtools takes the store function as its first argument, optionally you can name the store or configure serialize options with a second argument. Name store: `devtools(..., {name: \"MyStore\"})`, which will create a separate instance named \"MyStore\" in the devtools. Serialize options: `devtools(..., { serialize: { options: true } })`.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 119
+  },
+  {
+    "id": "zustand-readme-logging-actions-2e540b47",
+    "document": "zustand-readme",
+    "heading": "Logging Actions",
+    "text": "Logging Actions\ndevtools will only log actions from each separated store unlike in a typical _combined reducers_ redux store. See an approach to combining stores https://github.com/pmndrs/zustand/issues/163 You can log a specific action type for each `set` function by passing a third parameter: ```jsx const useBearStore = create(devtools((set) => ({ ... eatFish: () => set( (prev) => ({ fishes: prev.fishes > 1 ? prev.fishes - 1 : 0 }), undefined, 'bear/eatFish' ), ... ``` You can also log the action's type along with its payload: ```jsx ... addFishes: (count) => set( (prev) => ({ fishes: prev.fishes + count }), undefined, { type:",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 215
+  },
+  {
+    "id": "zustand-readme-logging-actions-3ea6e21a",
+    "document": "zustand-readme",
+    "heading": "Logging Actions",
+    "text": "Logging Actions\nwith its payload: ```jsx ... addFishes: (count) => set( (prev) => ({ fishes: prev.fishes + count }), undefined, { type: 'bear/addFishes', count, } ), ... ``` If an action type is not provided, it is defaulted to \"anonymous\". You can customize this default value by providing an `anonymousActionType` parameter: ```jsx devtools(..., { anonymousActionType: 'unknown', ... }) ``` If you wish to disable devtools (on production for instance). You can customize this setting by providing the `enabled` parameter: ```jsx devtools(..., { enabled: false, ... }) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 195
+  },
+  {
+    "id": "zustand-readme-react-context-f5f76c34",
+    "document": "zustand-readme",
+    "heading": "React context",
+    "text": "React context\nThe store created with `create` doesn't require context providers. In some cases, you may want to use contexts for dependency injection or if you want to initialize your store with props from a component. Because the normal store is a hook, passing it as a normal context value may violate the rules of hooks. The recommended method available since v4 is to use the vanilla store. ```jsx import { createContext, useContext } from 'react' import { createStore, useStore } from 'zustand' const store = createStore(...) // vanilla store without hooks const StoreContext = createContext() const App = () => ( ... ) const Component = () => { const store = useContext(StoreContext) const slice = useStore(store, selector) ... ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 194
+  },
+  {
+    "id": "zustand-readme-typescript-usage-682c1dd8",
+    "document": "zustand-readme",
+    "heading": "TypeScript Usage",
+    "text": "TypeScript Usage\nBasic typescript usage doesn't require anything special except for writing `create()(...)` instead of `create(...)`... ```ts import { create } from 'zustand' import { devtools, persist } from 'zustand/middleware' import type {} from '@redux-devtools/extension' // required for devtools typing interface BearState { bears: number increase: (by: number) => void } const useBearStore = create()( devtools( persist( (set) => ({ bears: 0, increase: (by) => set((state) => ({ bears: state.bears + by })), }), { name: 'bear-storage', }, ), ), ) ``` A more detailed TypeScript guide is here and there.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 200
+  },
+  {
+    "id": "zustand-readme-best-practices-f6397630",
+    "document": "zustand-readme",
+    "heading": "Best practices",
+    "text": "Best practices\n- You may wonder how to organize your code for better maintenance: Splitting the store into separate slices. - Recommended usage for this unopinionated library: Flux inspired practice. - Calling actions outside a React event handler in pre-React 18. - Testing - For more, have a look in the docs folder",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 67
+  },
+  {
+    "id": "zustand-readme-third-party-libraries-3065a031",
+    "document": "zustand-readme",
+    "heading": "Third-Party Libraries",
+    "text": "Third-Party Libraries\nSome users may want to extend Zustand's feature set which can be done using third-party libraries made by the community. For information regarding third-party libraries with Zustand, visit the doc.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 47
+  },
+  {
+    "id": "zustand-readme-comparison-with-other-libraries-2c6fa9b7",
+    "document": "zustand-readme",
+    "heading": "Comparison with other libraries",
+    "text": "Comparison with other libraries\n- Difference between zustand and other state management libraries for React",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+    "tokens": 18
+  },
+  {
+    "id": "zustand-immutable-state-and-merging-overview-ba1301f1",
+    "document": "zustand-immutable-state-and-merging",
+    "heading": "Overview",
+    "text": "Overview\nLike with React's `useState`, we need to update state immutably. Here's a typical example: ```jsx import { create } from 'zustand' const useCountStore = create((set) => ({ count: 0, inc: () => set((state) => ({ count: state.count + 1 })), })) ``` The `set` function is to update state in the store. Because the state is immutable, it should have been like this: ```js set((state) => ({ ...state, count: state.count + 1 })) ``` However, as this is a common pattern, `set` actually merges state, and we can skip the `...state` part: ```js set((state) => ({ count: state.count + 1 })) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/immutable-state-and-merging.md",
+    "tokens": 214
+  },
+  {
+    "id": "zustand-immutable-state-and-merging-nested-objects-831679d7",
+    "document": "zustand-immutable-state-and-merging",
+    "heading": "Nested objects",
+    "text": "Nested objects\nThe `set` function merges state at only one level. If you have a nested object, you need to merge them explicitly. You will use the spread operator pattern like so: ```jsx import { create } from 'zustand' const useCountStore = create((set) => ({ nested: { count: 0 }, inc: () => set((state) => ({ nested: { ...state.nested, count: state.nested.count + 1 }, })), })) ``` For complex use cases, consider using some libraries that help with immutable updates. You can refer to Updating nested state object values.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/immutable-state-and-merging.md",
+    "tokens": 162
+  },
+  {
+    "id": "zustand-immutable-state-and-merging-replace-flag-1e2b4248",
+    "document": "zustand-immutable-state-and-merging",
+    "heading": "Replace flag",
+    "text": "Replace flag\nTo disable the merging behavior, you can specify a `replace` boolean value for `set` like so: ```js set((state) => newState, true) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/immutable-state-and-merging.md",
+    "tokens": 48
+  },
+  {
+    "id": "zustand-updating-state-flat-updates-d12659ea",
+    "document": "zustand-updating-state",
+    "heading": "Flat updates",
+    "text": "Flat updates\nUpdating state with Zustand is simple! Call the provided `set` function with the new state, and it will be shallowly merged with the existing state in the store. **Note** See next section for nested state. ```tsx import { create } from 'zustand' type State = { firstName: string lastName: string } type Action = { updateFirstName: (firstName: State['firstName']) => void updateLastName: (lastName: State['lastName']) => void } // Create your store, which includes both state and (optionally) actions const usePersonStore = create()((set) => ({ firstName: '', lastName: '', updateFirstName: (firstName) => set(() => ({ firstName: firstName })), updateLastName: (lastName) => set(() => ({",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 218
+  },
+  {
+    "id": "zustand-updating-state-flat-updates-ca9d809d",
+    "document": "zustand-updating-state",
+    "heading": "Flat updates",
+    "text": "Flat updates\n({ firstName: '', lastName: '', updateFirstName: (firstName) => set(() => ({ firstName: firstName })), updateLastName: (lastName) => set(() => ({ lastName: lastName })), })) // In consuming app function App() { // \"select\" the needed state and actions, in this case, the firstName value // and the action updateFirstName const firstName = usePersonStore((state) => state.firstName) const updateFirstName = usePersonStore((state) => state.updateFirstName) return ( First name updateFirstName(e.currentTarget.value)} value={firstName} /> Hello, {firstName}! ) } ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 197
+  },
+  {
+    "id": "zustand-updating-state-deeply-nested-object-a9986275",
+    "document": "zustand-updating-state",
+    "heading": "Deeply nested object",
+    "text": "Deeply nested object\nIf you have a deep state object like this: ```ts type State = { deep: { nested: { obj: { count: number } } } } ``` Updating nested state requires some effort to ensure the process is completed immutably.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 63
+  },
+  {
+    "id": "zustand-updating-state-normal-approach-80836556",
+    "document": "zustand-updating-state",
+    "heading": "Normal approach",
+    "text": "Normal approach\nSimilar to React or Redux, the normal approach is to copy each level of the state object. This is done with the spread operator `...`, and by manually merging that in with the new state values. Like so: ```ts normalInc: () => set((state) => ({ deep: { ...state.deep, nested: { ...state.deep.nested, obj: { ...state.deep.nested.obj, count: state.deep.nested.obj.count + 1 } } } })), ``` This is very long! Let's explore some alternatives that will make your life easier.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 157
+  },
+  {
+    "id": "zustand-updating-state-with-immer-4215316c",
+    "document": "zustand-updating-state",
+    "heading": "With Immer",
+    "text": "With Immer\nMany people use Immer to update nested values. Immer can be used anytime you need to update nested state such as in React, Redux and of course, Zustand! You can use Immer to shorten your state updates for deeply nested object. Let's take a look at an example: ```ts immerInc: () => set(produce((state: State) => { ++state.deep.nested.obj.count })), ``` What a reduction! Please take note of the gotchas listed here.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 130
+  },
+  {
+    "id": "zustand-updating-state-with-optics-ts-3b72c68c",
+    "document": "zustand-updating-state",
+    "heading": "With optics-ts",
+    "text": "With optics-ts\nThere is another option with optics-ts: ```ts opticsInc: () => set(O.modify(O.optic().path(\"deep.nested.obj.count\"))((c) => c + 1)), ``` Unlike Immer, optics-ts doesn't use proxies or mutation syntax.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 87
+  },
+  {
+    "id": "zustand-updating-state-with-ramda-5a6e38e7",
+    "document": "zustand-updating-state",
+    "heading": "With Ramda",
+    "text": "With Ramda\nYou can also use Ramda: ```ts ramdaInc: () => set(R.modifyPath([\"deep\", \"nested\", \"obj\", \"count\"], (c) => c + 1)), ``` Both ramda and optics-ts also work with types.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 77
+  },
+  {
+    "id": "zustand-updating-state-demo-1e4d923a",
+    "document": "zustand-updating-state",
+    "heading": "Demo",
+    "text": "Demo\nhttps://stackblitz.com/edit/vitejs-vite-j6bjdygu",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+    "tokens": 28
+  },
+  {
+    "id": "zustand-prevent-rerenders-with-use-shallow-overview-b3841af1",
+    "document": "zustand-prevent-rerenders-with-use-shallow",
+    "heading": "Overview",
+    "text": "Overview\nWhen you need to subscribe to a computed state from a store, the recommended way is to use a selector. The computed selector will cause a rerender if the output has changed according to Object.is. In this case you might want to use `useShallow` to avoid a rerender if the computed value is always shallow equal the previous one.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/prevent-rerenders-with-use-shallow.md",
+    "tokens": 77
+  },
+  {
+    "id": "zustand-prevent-rerenders-with-use-shallow-example-e332dd02",
+    "document": "zustand-prevent-rerenders-with-use-shallow",
+    "heading": "Example",
+    "text": "Example\nWe have a store that associates to each bear a meal and we want to render their names. ```js import { create } from 'zustand' const useMeals = create(() => ({ papaBear: 'large porridge-pot', mamaBear: 'middle-size porridge pot', littleBear: 'A little, small, wee pot', })) export const BearNames = () => { const names = useMeals((state) => Object.keys(state)) return {names.join(', ')} } ``` Now papa bear wants a pizza instead: ```js useMeals.setState({ papaBear: 'a large pizza', }) ``` This change causes `BearNames` rerenders even though the actual output of `names` has not changed according to shallow equal. We can fix that using `useShallow`! ```js import",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/prevent-rerenders-with-use-shallow.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-prevent-rerenders-with-use-shallow-example-e20899ff",
+    "document": "zustand-prevent-rerenders-with-use-shallow",
+    "heading": "Example",
+    "text": "Example\nthe actual output of `names` has not changed according to shallow equal. We can fix that using `useShallow`! ```js import { create } from 'zustand' import { useShallow } from 'zustand/react/shallow' const useMeals = create(() => ({ papaBear: 'large porridge-pot', mamaBear: 'middle-size porridge pot', littleBear: 'A little, small, wee pot', })) export const BearNames = () => { const names = useMeals(useShallow((state) => Object.keys(state))) return {names.join(', ')} } ``` Now they can all order other meals without causing unnecessary rerenders of our `BearNames` component.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/prevent-rerenders-with-use-shallow.md",
+    "tokens": 188
+  },
+  {
+    "id": "zustand-persisting-store-data-overview-9c2a2b4b",
+    "document": "zustand-persisting-store-data",
+    "heading": "Overview",
+    "text": "Overview\nThe Persist middleware enables you to store your Zustand state in a storage (e.g., `localStorage`, `AsyncStorage`, `IndexedDB`, etc.), thus persisting its data. Note that this middleware supports both synchronous storages, like `localStorage`, and asynchronous storages, like `AsyncStorage`, but using an asynchronous storage does come with a cost. See Hydration and asynchronous storages for more details.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 122
+  },
+  {
+    "id": "zustand-persisting-store-data-simple-example-78e2d0cb",
+    "document": "zustand-persisting-store-data",
+    "heading": "Simple example",
+    "text": "Simple example\n```ts import { create } from 'zustand' import { persist, createJSONStorage } from 'zustand/middleware' export const useBearStore = create()( persist( (set, get) => ({ bears: 0, addABear: () => set({ bears: get().bears + 1 }), }), { name: 'food-storage', // name of the item in the storage (must be unique) storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 151
+  },
+  {
+    "id": "zustand-persisting-store-data-typescript-simple-example-67323ad3",
+    "document": "zustand-persisting-store-data",
+    "heading": "Typescript simple example",
+    "text": "Typescript simple example\n```ts import { create } from 'zustand' import { persist, createJSONStorage } from 'zustand/middleware' type BearStore = { bears: number addABear: () => void } export const useBearStore = create()( persist( (set, get) => ({ bears: 0, addABear: () => set({ bears: get().bears + 1 }), }), { name: 'food-storage', // name of the item in the storage (must be unique) storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 171
+  },
+  {
+    "id": "zustand-persisting-store-data-name-2d686629",
+    "document": "zustand-persisting-store-data",
+    "heading": "name",
+    "text": "name\nThis is the only required option. The given name is going to be the key used to store your Zustand state in the storage, so it must be unique.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 36
+  },
+  {
+    "id": "zustand-persisting-store-data-storage-a88199c5",
+    "document": "zustand-persisting-store-data",
+    "heading": "storage",
+    "text": "storage\n> Type: `() => StateStorage` The `StateStorage` can be imported with: ```ts import { StateStorage } from 'zustand/middleware' ``` > Default: `createJSONStorage(() => localStorage)` Enables you to use your own storage. Simply pass a function that returns the storage you want to use. It's recommended to use the `createJSONStorage` helper function to create a `storage` object that is compliant with the `StateStorage` interface. Example: ```ts import { persist, createJSONStorage } from 'zustand/middleware' export const useBoundStore = create( persist( (set, get) => ({ // ... }), { // ... storage: createJSONStorage(() => AsyncStorage), }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 209
+  },
+  {
+    "id": "zustand-persisting-store-data-partialize-e30b16f9",
+    "document": "zustand-persisting-store-data",
+    "heading": "partialize",
+    "text": "partialize\n> Type: `(state: Object) => Object` > Default: `(state) => state` Enables you to pick some of the state's fields to be stored in the storage. You could omit multiple fields using the following: ```ts export const useBoundStore = create( persist( (set, get) => ({ foo: 0, bar: 1, }), { // ... partialize: (state) => Object.fromEntries( Object.entries(state).filter(([key]) => !['foo'].includes(key)), ), }, ), ) ``` Or you could allow only specific fields using the following: ```ts export const useBoundStore = create( persist( (set, get) => ({ foo: 0, bar: 1, }), { // ... partialize: (state) => ({ foo: state.foo",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-persisting-store-data-partialize-8e066671",
+    "document": "zustand-persisting-store-data",
+    "heading": "partialize",
+    "text": "partialize\ncreate( persist( (set, get) => ({ foo: 0, bar: 1, }), { // ... partialize: (state) => ({ foo: state.foo }), }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 60
+  },
+  {
+    "id": "zustand-persisting-store-data-onrehydratestorage-e881a921",
+    "document": "zustand-persisting-store-data",
+    "heading": "onRehydrateStorage",
+    "text": "onRehydrateStorage\n> Type: `(state: Object) => ((state?: Object, error?: Error) => void) | void` This option enables you to pass a listener function that will be called when the storage is hydrated. Example: ```ts export const useBoundStore = create( persist( (set, get) => ({ // ... }), { // ... onRehydrateStorage: (state) => { console.log('hydration starts') // optional return (state, error) => { if (error) { console.log('an error happened during hydration', error) } else { console.log('hydration finished') } } }, }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 181
+  },
+  {
+    "id": "zustand-persisting-store-data-version-abd2db61",
+    "document": "zustand-persisting-store-data",
+    "heading": "version",
+    "text": "version\n> Type: `number` > Default: `0` If you want to introduce a breaking change in your storage (e.g. renaming a field), you can specify a new version number. By default, if the version in the storage does not match the version in the code, the stored value won't be used. You can use the migrate function (see below) to handle breaking changes in order to persist previously stored data.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 93
+  },
+  {
+    "id": "zustand-persisting-store-data-migrate-fe93831b",
+    "document": "zustand-persisting-store-data",
+    "heading": "migrate",
+    "text": "migrate\n> Type: `(persistedState: Object, version: number) => Object | Promise` > Default: `(persistedState) => persistedState` You can use this option to handle versions migration. The migrate function takes the persisted state and the version number as arguments. It must return a state that is compliant to the latest version (the version in the code). For instance, if you want to rename a field, you can use the following: ```ts export const useBoundStore = create( persist( (set, get) => ({ newField: 0, // let's say this field was named otherwise in version 0 }), { // ... version: 1, // a migration will be triggered if the version in the storage mismatches this one migrate: (persistedState, version) => { if (version === 0) { // if the stored value is in version 0, we rename the field to the new name",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 217
+  },
+  {
+    "id": "zustand-persisting-store-data-migrate-c3109046",
+    "document": "zustand-persisting-store-data",
+    "heading": "migrate",
+    "text": "migrate\n=== 0) { // if the stored value is in version 0, we rename the field to the new name persistedState.newField = persistedState.oldField delete persistedState.oldField } return persistedState }, }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 65
+  },
+  {
+    "id": "zustand-persisting-store-data-merge-db1f4732",
+    "document": "zustand-persisting-store-data",
+    "heading": "merge",
+    "text": "merge\n> Type: `(persistedState: Object, currentState: Object) => Object` > Default: `(persistedState, currentState) => ({ ...currentState, ...persistedState })` In some cases, you might want to use a custom merge function to merge the persisted value with the current state. By default, the middleware does a shallow merge. The shallow merge might not be enough if you have partially persisted nested objects. For instance, if the storage contains the following: ```ts { foo: { bar: 0, } } ``` But your Zustand store contains: ```ts { foo: { bar: 0, baz: 1, } } ``` The shallow merge will erase the `baz` field from the `foo` object. One way to fix this would be to give a custom deep merge function: ```ts export const useBoundStore = create( persist( (set, get) => ({ foo:",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-persisting-store-data-merge-d82a0b42",
+    "document": "zustand-persisting-store-data",
+    "heading": "merge",
+    "text": "merge\nbe to give a custom deep merge function: ```ts export const useBoundStore = create( persist( (set, get) => ({ foo: { bar: 0, baz: 1, }, }), { // ... merge: (persistedState, currentState) => deepMerge(currentState, persistedState), }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 92
+  },
+  {
+    "id": "zustand-persisting-store-data-skiphydration-7053afbc",
+    "document": "zustand-persisting-store-data",
+    "heading": "skipHydration",
+    "text": "skipHydration\n> Type: `boolean | undefined` > Default: `undefined` By default the store will be hydrated on initialization. In some applications you may need to control when the first hydration occurs. For example, in server-rendered apps. If you set `skipHydration`, the initial call for hydration isn't called, and it is left up to you to manually call `rehydrate()`. ```ts export const useBoundStore = create( persist( () => ({ count: 0, // ... }), { // ... skipHydration: true, }, ), ) ``` ```tsx import { useBoundStore } from './path-to-store'; export function StoreConsumer() { // hydrate persisted store after on mount useEffect(() => { useBoundStore.persist.rehydrate(); },",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-persisting-store-data-skiphydration-b12fab6d",
+    "document": "zustand-persisting-store-data",
+    "heading": "skipHydration",
+    "text": "skipHydration\nuseBoundStore } from './path-to-store'; export function StoreConsumer() { // hydrate persisted store after on mount useEffect(() => { useBoundStore.persist.rehydrate(); }, []) return ( //... ) } ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 80
+  },
+  {
+    "id": "zustand-persisting-store-data-api-04a08a44",
+    "document": "zustand-persisting-store-data",
+    "heading": "API",
+    "text": "API\n> Version: >=3.6.3 The Persist API enables you to do a number of interactions with the Persist middleware from inside or outside of a React component.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 38
+  },
+  {
+    "id": "zustand-persisting-store-data-getoptions-125995be",
+    "document": "zustand-persisting-store-data",
+    "heading": "getOptions",
+    "text": "getOptions\n> Type: `() => Partial` > Returns: Options of the Persist middleware For example, it can be used to obtain the storage name: ```ts useBoundStore.persist.getOptions().name ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 58
+  },
+  {
+    "id": "zustand-persisting-store-data-setoptions-e704a234",
+    "document": "zustand-persisting-store-data",
+    "heading": "setOptions",
+    "text": "setOptions\n> Type: `(newOptions: Partial) => void` Changes the middleware options. Note that the new options will be merged with the current ones. For instance, this can be used to change the storage name: ```ts useBoundStore.persist.setOptions({ name: 'new-name', }) ``` Or even to change the storage engine: ```ts useBoundStore.persist.setOptions({ storage: createJSONStorage(() => sessionStorage), }) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 127
+  },
+  {
+    "id": "zustand-persisting-store-data-clearstorage-82bf1388",
+    "document": "zustand-persisting-store-data",
+    "heading": "clearStorage",
+    "text": "clearStorage\n> Type: `() => void` Clears everything stored under the name key. ```ts useBoundStore.persist.clearStorage() ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 42
+  },
+  {
+    "id": "zustand-persisting-store-data-rehydrate-f85c8ed1",
+    "document": "zustand-persisting-store-data",
+    "heading": "rehydrate",
+    "text": "rehydrate\n> Type: `() => Promise` In some cases, you might want to trigger the rehydration manually. This can be done by calling the `rehydrate` method. ```ts await useBoundStore.persist.rehydrate() ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 68
+  },
+  {
+    "id": "zustand-persisting-store-data-hashydrated-53660cba",
+    "document": "zustand-persisting-store-data",
+    "heading": "hasHydrated",
+    "text": "hasHydrated\n> Type: `() => boolean` This is a non-reactive getter to check if the storage has been hydrated (note that it updates when calling `rehydrate`). ```ts useBoundStore.persist.hasHydrated() ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 67
+  },
+  {
+    "id": "zustand-persisting-store-data-onhydrate-387f6986",
+    "document": "zustand-persisting-store-data",
+    "heading": "onHydrate",
+    "text": "onHydrate\n> Type: `(listener: (state) => void) => () => void` > Returns: Unsubscribe function This listener will be called when the hydration process starts. ```ts const unsub = useBoundStore.persist.onHydrate((state) => { console.log('hydration starts') }) // later on... unsub() ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 104
+  },
+  {
+    "id": "zustand-persisting-store-data-onfinishhydration-e6659d67",
+    "document": "zustand-persisting-store-data",
+    "heading": "onFinishHydration",
+    "text": "onFinishHydration\n> Type: `(listener: (state) => void) => () => void` > Returns: Unsubscribe function This listener will be called when the hydration process ends. ```ts const unsub = useBoundStore.persist.onFinishHydration((state) => { console.log('hydration finished') }) // later on... unsub() ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 108
+  },
+  {
+    "id": "zustand-persisting-store-data-createjsonstorage-e0e818e8",
+    "document": "zustand-persisting-store-data",
+    "heading": "createJSONStorage",
+    "text": "createJSONStorage\n> Type: `(getStorage: () => StateStorage, options?: JsonStorageOptions) => StateStorage` > Returns: `PersistStorage` This helper function enables you to create a `storage` object which is useful when you want to use a custom storage engine. `getStorage` is a function that returns the storage engine with the properties `getItem`, `setItem`, and `removeItem`. `options` is an optional object that can be used to customize the serialization and deserialization of the data. `options.reviver` is a function that is passed to `JSON.parse` to deserialize the data. `options.replacer` is a function that is passed to `JSON.stringify` to serialize the data. ```ts import { createJSONStorage } from 'zustand/middleware' const storage = createJSONStorage(()",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-persisting-store-data-createjsonstorage-903279a7",
+    "document": "zustand-persisting-store-data",
+    "heading": "createJSONStorage",
+    "text": "createJSONStorage\nthat is passed to `JSON.stringify` to serialize the data. ```ts import { createJSONStorage } from 'zustand/middleware' const storage = createJSONStorage(() => sessionStorage, { reviver: (key, value) => { if (value && value.type === 'date') { return new Date(value) } return value }, replacer: (key, value) => { // NOTE: the result of `.toJSON()` is passed to the // replacer function as value if is available so // a Date is always a `string` at this point if (key === 'someDate') return { type: 'date', value } return value }, }) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 185
+  },
+  {
+    "id": "zustand-persisting-store-data-hydration-and-asynchronous-storages-3d93e044",
+    "document": "zustand-persisting-store-data",
+    "heading": "Hydration and asynchronous storages",
+    "text": "Hydration and asynchronous storages\nTo explain what is the \"cost\" of asynchronous storages, you need to understand what is hydration. In a nutshell, hydration is a process of retrieving persisted state from the storage and merging it with the current state. The Persist middleware does two kinds of hydration: synchronous and asynchronous. If the given storage is synchronous (e.g., `localStorage`), hydration will be done synchronously. On the other hand, if the given storage is asynchronous (e.g., `AsyncStorage`), hydration will be done asynchronously (shocking, I know!). But what's the catch? With synchronous hydration, the Zustand store will already have been hydrated at its creation. In contrast, with asynchronous hydration, the Zustand store will be hydrated later on, in",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-persisting-store-data-hydration-and-asynchronous-storages-7653da22",
+    "document": "zustand-persisting-store-data",
+    "heading": "Hydration and asynchronous storages",
+    "text": "Hydration and asynchronous storages\nhave been hydrated at its creation. In contrast, with asynchronous hydration, the Zustand store will be hydrated later on, in a microtask. Why does it matter? Asynchronous hydration can cause some unexpected behaviors. For instance, if you use Zustand in a React app, the store will **not** be hydrated at the initial render. In cases where your app depends on the persisted value at page load, you might want to wait until the store has been hydrated before showing anything. For example, your app might think the user is not logged in because it's the default, but in reality the store has not been hydrated yet. If your app does depends on the persisted state at page load, see _How can I check if my store has been hydrated_ in the FAQ section below.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 192
+  },
+  {
+    "id": "zustand-persisting-store-data-usage-in-next-js-6390a33e",
+    "document": "zustand-persisting-store-data",
+    "heading": "Usage in Next.js",
+    "text": "Usage in Next.js\nNextJS uses Server Side Rendering, and it will compare the rendered component on the server with the one rendered on client. But since you are using data from browser to change your component, the two renders will differ and Next will throw a warning at you. The errors usually are: - Text content does not match server-rendered HTML - Hydration failed because the initial UI does not match what was rendered on the server - There was an error while hydrating. Because the error happened outside of a Suspense boundary, the entire root will switch to client rendering To solve these errors, create a custom hook so that Zustand waits a little before changing your components. Create a file with the following: ```ts // useStore.ts import { useState, useEffect } from 'react' const useStore = ( store: (callback: (state: T) => unknown) => unknown, callback: (state: T) => F, ) => { const result = store(callback)",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 220
+  },
+  {
+    "id": "zustand-persisting-store-data-usage-in-next-js-6ce30a8d",
+    "document": "zustand-persisting-store-data",
+    "heading": "Usage in Next.js",
+    "text": "Usage in Next.js\nstore: (callback: (state: T) => unknown) => unknown, callback: (state: T) => F, ) => { const result = store(callback) as F const [data, setData] = useState() useEffect(() => { setData(result) }, [result]) return data } export default useStore ``` Now in your pages, you will use the hook a little bit differently: ```ts // useBearStore.ts import { create } from 'zustand' import { persist } from 'zustand/middleware' // the store itself does not need any change export const useBearStore = create( persist( (set, get) => ({ bears: 0, addABear: () => set({ bears: get().bears + 1 }), }), { name: 'food-storage', },",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-persisting-store-data-usage-in-next-js-e06b12d9",
+    "document": "zustand-persisting-store-data",
+    "heading": "Usage in Next.js",
+    "text": "Usage in Next.js\n(set, get) => ({ bears: 0, addABear: () => set({ bears: get().bears + 1 }), }), { name: 'food-storage', }, ), ) ``` ```ts // yourComponent.tsx import useStore from './useStore' import { useBearStore } from './stores/useBearStore' const bears = useStore(useBearStore, (state) => state.bears) ``` Credits: This reply to an issue, which points to this blog post.",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 144
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-check-if-my-store-has-been-hydrated-6f3648cf",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I check if my store has been hydrated",
+    "text": "How can I check if my store has been hydrated\nThere are a few different ways to do this. You can use the `onRehydrateStorage` listener function to update a field in the store: ```ts const useBoundStore = create( persist( (set, get) => ({ // ... _hasHydrated: false, setHasHydrated: (state) => { set({ _hasHydrated: state }); } }), { // ... onRehydrateStorage: (state) => { return () => state.setHasHydrated(true) } } ) ); export default function App() { const hasHydrated = useBoundStore(state => state._hasHydrated); if (!hasHydrated) { return Loading... } return ( // ... ); } ``` You can also create a custom `useHydration` hook:",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 218
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-check-if-my-store-has-been-hydrated-5cf54308",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I check if my store has been hydrated",
+    "text": "How can I check if my store has been hydrated\n(!hasHydrated) { return Loading... } return ( // ... ); } ``` You can also create a custom `useHydration` hook: ```ts const useBoundStore = create(persist(...)) const useHydration = () => { const [hydrated, setHydrated] = useState(false) useEffect(() => { // Note: This is just in case you want to take into account manual rehydration. // You can remove the following line if you don't need it. const unsubHydrate = useBoundStore.persist.onHydrate(() => setHydrated(false)) const unsubFinishHydration = useBoundStore.persist.onFinishHydration(() => setHydrated(true))",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 214
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-check-if-my-store-has-been-hydrated-ff5629b4",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I check if my store has been hydrated",
+    "text": "How can I check if my store has been hydrated\nthe following line if you don't need it. const unsubHydrate = useBoundStore.persist.onHydrate(() => setHydrated(false)) const unsubFinishHydration = useBoundStore.persist.onFinishHydration(() => setHydrated(true)) setHydrated(useBoundStore.persist.hasHydrated()) return () => { unsubHydrate() unsubFinishHydration() } }, []) return hydrated } ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 144
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-use-a-custom-storage-engine-9eee67f8",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I use a custom storage engine",
+    "text": "How can I use a custom storage engine\nIf the storage you want to use does not match the expected API, you can create your own storage: ```ts import { create } from 'zustand' import { persist, createJSONStorage, StateStorage } from 'zustand/middleware' import { get, set, del } from 'idb-keyval' // can use anything: IndexedDB, Ionic Storage, etc. // Custom storage object const storage: StateStorage = { getItem: async (name: string): Promise => { console.log(name, 'has been retrieved') return (await get(name)) || null }, setItem: async (name: string, value: string): Promise => { console.log(name, 'with value', value, 'has been saved') await set(name, value) }, removeItem: async (name: string): Promise => {",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 218
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-use-a-custom-storage-engine-eacb57cb",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I use a custom storage engine",
+    "text": "How can I use a custom storage engine\n=> { console.log(name, 'with value', value, 'has been saved') await set(name, value) }, removeItem: async (name: string): Promise => { console.log(name, 'has been deleted') await del(name) }, } export const useBoundStore = create( persist( (set, get) => ({ bears: 0, addABear: () => set({ bears: get().bears + 1 }), }), { name: 'food-storage', // unique name storage: createJSONStorage(() => storage), }, ), ) ``` If you're using a type that `JSON.stringify()` doesn't support, you'll need to write your own serialization/deserialization code. However, if this is tedious, you can use third-party libraries to",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-use-a-custom-storage-engine-a0fbb1e9",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I use a custom storage engine",
+    "text": "How can I use a custom storage engine\nsupport, you'll need to write your own serialization/deserialization code. However, if this is tedious, you can use third-party libraries to serialize and deserialize different types of data. For example, Superjson can serialize data along with its type, allowing the data to be parsed back to its original type upon deserialization ```ts import superjson from 'superjson' // can use anything: serialize-javascript, devalue, etc. import { PersistStorage } from 'zustand/middleware' interface BearState { bear: Map fish: Set time: Date query: RegExp } const storage: PersistStorage = { getItem: (name) => { const str = localStorage.getItem(name) if (!str) return null return superjson.parse(str) }, setItem: (name, value) => {",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-use-a-custom-storage-engine-78d4d28f",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I use a custom storage engine",
+    "text": "How can I use a custom storage engine\ngetItem: (name) => { const str = localStorage.getItem(name) if (!str) return null return superjson.parse(str) }, setItem: (name, value) => { localStorage.setItem(name, superjson.stringify(value)) }, removeItem: (name) => localStorage.removeItem(name), } const initialState: BearState = { bear: new Map(), fish: new Set(), time: new Date(), query: new RegExp(''), } export const useBearStore = create()( persist( (set) => ({ ...initialState, // ... }), { name: 'food-storage', storage, }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 207
+  },
+  {
+    "id": "zustand-persisting-store-data-how-can-i-rehydrate-on-storage-event-b0a1bffa",
+    "document": "zustand-persisting-store-data",
+    "heading": "How can I rehydrate on storage event",
+    "text": "How can I rehydrate on storage event\nYou can use the Persist API to create your own implementation, similar to the example below: ```ts type StoreWithPersist = Mutate, [[\"zustand/persist\", unknown]]> export const withStorageDOMEvents = (store: StoreWithPersist) => { const storageEventCallback = (e: StorageEvent) => { if (e.key === store.persist.getOptions().name && e.newValue) { store.persist.rehydrate() } } window.addEventListener('storage', storageEventCallback) return () => { window.removeEventListener('storage', storageEventCallback) } } const useBoundStore = create(persist(...)) withStorageDOMEvents(useBoundStore) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 213
+  },
+  {
+    "id": "zustand-persisting-store-data-how-do-i-use-it-with-typescript-ff39fb09",
+    "document": "zustand-persisting-store-data",
+    "heading": "How do I use it with TypeScript",
+    "text": "How do I use it with TypeScript\nBasic typescript usage doesn't require anything special except for writing `create()(...)` instead of `create(...)`. ```tsx import { create } from 'zustand' import { persist, createJSONStorage } from 'zustand/middleware' interface MyState { bears: number addABear: () => void } export const useBearStore = create()( persist( (set, get) => ({ bears: 0, addABear: () => set({ bears: get().bears + 1 }), }), { name: 'food-storage', // name of item in the storage (must be unique) storage: createJSONStorage(() => sessionStorage), // (optional) by default the 'localStorage' is used partialize: (state) => ({ bears: state.bears }),",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 219
+  },
+  {
+    "id": "zustand-persisting-store-data-how-do-i-use-it-with-typescript-c582e31e",
+    "document": "zustand-persisting-store-data",
+    "heading": "How do I use it with TypeScript",
+    "text": "How do I use it with TypeScript\nunique) storage: createJSONStorage(() => sessionStorage), // (optional) by default the 'localStorage' is used partialize: (state) => ({ bears: state.bears }), }, ), ) ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 70
+  },
+  {
+    "id": "zustand-persisting-store-data-how-do-i-use-it-with-map-and-set-8d9eeac3",
+    "document": "zustand-persisting-store-data",
+    "heading": "How do I use it with Map and Set",
+    "text": "How do I use it with Map and Set\nIn order to persist object types such as `Map` and `Set`, they will need to be converted to JSON-serializable types such as an `Array` which can be done by defining a custom `storage` engine. Let's say your state uses `Map` to handle a list of `transactions`, then you can convert the `Map` into an `Array` in the `storage` prop which is shown below: ```ts interface BearState { . . . transactions: Map } storage: { getItem: (name) => { const str = localStorage.getItem(name); if (!str) return null; const existingValue = JSON.parse(str); return { ...existingValue, state: { ...existingValue.state, transactions: new Map(existingValue.state.transactions), } } }, setItem: (name,",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 218
+  },
+  {
+    "id": "zustand-persisting-store-data-how-do-i-use-it-with-map-and-set-8ab50266",
+    "document": "zustand-persisting-store-data",
+    "heading": "How do I use it with Map and Set",
+    "text": "How do I use it with Map and Set\nreturn null; const existingValue = JSON.parse(str); return { ...existingValue, state: { ...existingValue.state, transactions: new Map(existingValue.state.transactions), } } }, setItem: (name, newValue: StorageValue) => { // functions cannot be JSON encoded const str = JSON.stringify({ ...newValue, state: { ...newValue.state, transactions: Array.from(newValue.state.transactions.entries()), }, }) localStorage.setItem(name, str) }, removeItem: (name) => localStorage.removeItem(name), }, ```",
+    "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+    "tokens": 189
+  },
+  {
+    "id": "query-important-defaults-overview-f57910f4",
+    "document": "query-important-defaults",
+    "heading": "Overview",
+    "text": "Overview\nOut of the box, TanStack Query is configured with **aggressive but sane** defaults. **Sometimes these defaults can catch new users off guard or make learning/debugging difficult if they are unknown by the user.** Keep them in mind as you continue to learn and use TanStack Query: - Query instances via `useQuery` or `useInfiniteQuery` by default **consider cached data as stale**. > To change this behavior, you can configure your queries both globally and per-query using the `staleTime` option. Specifying a longer `staleTime` means queries will not refetch their data as often - A Query that has a `staleTime` set is considered **fresh** until that `staleTime` has elapsed. - set `staleTime` to e.g. `2 * 60 * 1000` to make sure data is read from the cache, without triggering any kinds of refetches, for 2",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-important-defaults-overview-3bd36d5e",
+    "document": "query-important-defaults",
+    "heading": "Overview",
+    "text": "Overview\n60 * 1000` to make sure data is read from the cache, without triggering any kinds of refetches, for 2 minutes, or until the Query is invalidated manually. - set `staleTime` to `Infinity` to never trigger a refetch until the Query is invalidated manually. - set `staleTime` to `'static'` to **never** trigger a refetch, even if the Query is invalidated manually. > `'static'` and `Infinity` both prevent staleness-based refetches, but `'static'` is stricter: `queryClient.invalidateQueries()` can invalidate a query with `staleTime: Infinity`, but has no effect on `staleTime: 'static'`. `refetchOnMount`, `refetchOnWindowFocus`, and `refetchOnReconnect` set to `\"always\"` are also blocked by `'static'`. Use `'static'` for data that cannot",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-important-defaults-overview-f5e51155",
+    "document": "query-important-defaults",
+    "heading": "Overview",
+    "text": "Overview\n`staleTime: 'static'`. `refetchOnMount`, `refetchOnWindowFocus`, and `refetchOnReconnect` set to `\"always\"` are also blocked by `'static'`. Use `'static'` for data that cannot change while the app is running: feature flags fetched at boot, user permissions loaded at login, static reference tables. Use `Infinity` when you still want manual invalidation to work. - Stale queries are refetched automatically in the background when: - New instances of the query mount - The window is refocused - The network is reconnected > Setting `staleTime` is the recommended way to avoid excessive refetches, but you can also customize the points in time for refetches by setting options like `refetchOnMount`, `refetchOnWindowFocus` and `refetchOnReconnect`. - Queries can optionally be configured with a `refetchInterval` to",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-important-defaults-overview-c1dfd84d",
+    "document": "query-important-defaults",
+    "heading": "Overview",
+    "text": "Overview\nfor refetches by setting options like `refetchOnMount`, `refetchOnWindowFocus` and `refetchOnReconnect`. - Queries can optionally be configured with a `refetchInterval` to trigger refetches periodically, which is independent of the `staleTime` setting. See Polling for details. - Query results that have no more active instances of `useQuery`, `useInfiniteQuery` or query observers are labeled as \"inactive\" and remain in the cache in case they are used again at a later time. - By default, \"inactive\" queries are garbage collected after **5 minutes**. > To change this, you can alter the default `gcTime` for queries to something other than `1000 * 60 * 5` milliseconds. - Queries that fail are **silently retried 3 times, with exponential backoff delay** before capturing and displaying an error to the UI. > To change this, you can",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-important-defaults-overview-5e99e185",
+    "document": "query-important-defaults",
+    "heading": "Overview",
+    "text": "Overview\ntimes, with exponential backoff delay** before capturing and displaying an error to the UI. > To change this, you can alter the default `retry` and `retryDelay` options for queries to something other than `3` and the default exponential backoff function. [//]: # 'StructuralSharing' - Query results by default are **structurally shared to detect if data has actually changed** and if not, **the data reference remains unchanged** to better help with value stabilization with regards to useMemo and useCallback. If this concept sounds foreign, then don't worry about it! 99.9% of the time you will not need to disable this and it makes your app more performant at zero cost to you. [//]: # 'StructuralSharing' > Structural sharing only works with JSON-compatible values, any other value types will always be considered as changed. If you are seeing performance issues because of large responses for example, you can disable this feature with",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-important-defaults-overview-75dfd903",
+    "document": "query-important-defaults",
+    "heading": "Overview",
+    "text": "Overview\nas changed. If you are seeing performance issues because of large responses for example, you can disable this feature with the `config.structuralSharing` flag. If you are dealing with non-JSON compatible values in your query responses and still want to detect if data has changed or not, you can provide your own custom function as `config.structuralSharing` to compute a value from the old and new responses, retaining references as required. [//]: # 'Materials'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 107
+  },
+  {
+    "id": "query-important-defaults-further-reading-fc9663d7",
+    "document": "query-important-defaults",
+    "heading": "Further Reading",
+    "text": "Further Reading\nHave a look at the following articles from our Community Resources for further explanations of the defaults: - Practical React Query - React Query as a State Manager - Thinking in React Query [//]: # 'Materials'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+    "tokens": 48
+  },
+  {
+    "id": "query-query-invalidation-overview-98e0c1b2",
+    "document": "query-query-invalidation",
+    "heading": "Overview",
+    "text": "Overview\nWaiting for queries to become stale before they are fetched again doesn't always work, especially when you know for a fact that a query's data is out of date because of something the user has done. For that purpose, the `QueryClient` has an `invalidateQueries` method that lets you intelligently mark queries as stale and potentially refetch them too! [//]: # 'Example' ```tsx // Invalidate every query in the cache queryClient.invalidateQueries() // Invalidate every query with a key that starts with `todos` queryClient.invalidateQueries({ queryKey: ['todos'] }) ``` [//]: # 'Example' > Note: Where other libraries that use normalized caches would attempt to update local queries with the new data either imperatively or via schema inference, TanStack Query gives you the tools to avoid the manual labor that comes with maintaining normalized caches and",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-query-invalidation-overview-68b8c99b",
+    "document": "query-query-invalidation",
+    "heading": "Overview",
+    "text": "Overview\nschema inference, TanStack Query gives you the tools to avoid the manual labor that comes with maintaining normalized caches and instead prescribes **targeted invalidation, background-refetching and ultimately atomic updates**. When a query is invalidated with `invalidateQueries`, two things happen: - It is marked as stale. This stale state overrides any `staleTime` configurations being used in `useQuery` or related hooks - If the query is currently being rendered via `useQuery` or related hooks, it will also be refetched in the background",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 126
+  },
+  {
+    "id": "query-query-invalidation-query-matching-with-invalidatequeries-6314348f",
+    "document": "query-query-invalidation",
+    "heading": "Query Matching with invalidateQueries",
+    "text": "Query Matching with invalidateQueries\nWhen using APIs like `invalidateQueries` and `removeQueries` (and others that support partial query matching), you can match multiple queries by their prefix, or get really specific and match an exact query. For information on the types of filters you can use, please see Query Filters. In this example, we can use the `todos` prefix to invalidate any queries that start with `todos` in their query key: [//]: # 'Example2' ```tsx import { useQuery, useQueryClient } from '@tanstack/react-query' // Get QueryClient from the context const queryClient = useQueryClient() queryClient.invalidateQueries({ queryKey: ['todos'] }) // Both queries below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos'],",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 217
+  },
+  {
+    "id": "query-query-invalidation-query-matching-with-invalidatequeries-eaae0aec",
+    "document": "query-query-invalidation",
+    "heading": "Query Matching with invalidateQueries",
+    "text": "Query Matching with invalidateQueries\nqueryClient = useQueryClient() queryClient.invalidateQueries({ queryKey: ['todos'] }) // Both queries below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos'], queryFn: fetchTodoList, }) const todoListQuery = useQuery({ queryKey: ['todos', { page: 1 }], queryFn: fetchTodoList, }) ``` [//]: # 'Example2' You can even invalidate queries with specific variables by passing a more specific query key to the `invalidateQueries` method: [//]: # 'Example3' ```tsx queryClient.invalidateQueries({ queryKey: ['todos', { type: 'done' }], }) // The query below will be invalidated",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-query-invalidation-query-matching-with-invalidatequeries-f40c77ac",
+    "document": "query-query-invalidation",
+    "heading": "Query Matching with invalidateQueries",
+    "text": "Query Matching with invalidateQueries\nmethod: [//]: # 'Example3' ```tsx queryClient.invalidateQueries({ queryKey: ['todos', { type: 'done' }], }) // The query below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos', { type: 'done' }], queryFn: fetchTodoList, }) // However, the following query below will NOT be invalidated const todoListQuery = useQuery({ queryKey: ['todos'], queryFn: fetchTodoList, }) ``` [//]: # 'Example3' The `invalidateQueries` API is very flexible, so even if you want to **only** invalidate `todos` queries that don't have any more variables or subkeys, you can pass an `exact: true`",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-query-invalidation-query-matching-with-invalidatequeries-b2a5e8f4",
+    "document": "query-query-invalidation",
+    "heading": "Query Matching with invalidateQueries",
+    "text": "Query Matching with invalidateQueries\nwant to **only** invalidate `todos` queries that don't have any more variables or subkeys, you can pass an `exact: true` option to the `invalidateQueries` method: [//]: # 'Example4' ```tsx queryClient.invalidateQueries({ queryKey: ['todos'], exact: true, }) // The query below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos'], queryFn: fetchTodoList, }) // However, the following query below will NOT be invalidated const todoListQuery = useQuery({ queryKey: ['todos', { type: 'done' }], queryFn: fetchTodoList, }) ``` [//]: # 'Example4' If you find yourself wanting **even more**",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-query-invalidation-query-matching-with-invalidatequeries-8d122d72",
+    "document": "query-query-invalidation",
+    "heading": "Query Matching with invalidateQueries",
+    "text": "Query Matching with invalidateQueries\nqueryKey: ['todos', { type: 'done' }], queryFn: fetchTodoList, }) ``` [//]: # 'Example4' If you find yourself wanting **even more** granularity, you can pass a predicate function to the `invalidateQueries` method. This function will receive each `Query` instance from the query cache and allow you to return `true` or `false` for whether you want to invalidate that query: [//]: # 'Example5' ```tsx queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] === 'todos' && query.queryKey[1]?.version >= 10, }) // The query below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos', { version: 20",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 218
+  },
+  {
+    "id": "query-query-invalidation-query-matching-with-invalidatequeries-1294555f",
+    "document": "query-query-invalidation",
+    "heading": "Query Matching with invalidateQueries",
+    "text": "Query Matching with invalidateQueries\nquery.queryKey[1]?.version >= 10, }) // The query below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos', { version: 20 }], queryFn: fetchTodoList, }) // The query below will be invalidated const todoListQuery = useQuery({ queryKey: ['todos', { version: 10 }], queryFn: fetchTodoList, }) // However, the following query below will NOT be invalidated const todoListQuery = useQuery({ queryKey: ['todos', { version: 5 }], queryFn: fetchTodoList, }) ``` [//]: # 'Example5'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+    "tokens": 189
+  },
+  {
+    "id": "query-paginated-queries-overview-c0b5e505",
+    "document": "query-paginated-queries",
+    "heading": "Overview",
+    "text": "Overview\nRendering paginated data is a very common UI pattern and in TanStack Query, it \"just works\" by including the page information in the query key: [//]: # 'Example' ```tsx const result = useQuery({ queryKey: ['projects', page], queryFn: () => fetchProjects(page), }) ``` [//]: # 'Example' However, if you run this simple example, you might notice something strange: **The UI jumps in and out of the `success` and `pending` states because each new page is treated like a brand new query.** This experience is not optimal and unfortunately is how many tools today insist on working. But not TanStack Query! As you may have guessed, TanStack Query comes with an awesome feature called `placeholderData` that allows us to get around this.",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+    "tokens": 200
+  },
+  {
+    "id": "query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e",
+    "document": "query-paginated-queries",
+    "heading": "Better Paginated Queries with placeholderData",
+    "text": "Better Paginated Queries with placeholderData\nConsider the following example where we would ideally want to increment a pageIndex (or cursor) for a query. If we were to use `useQuery`, **it would still technically work fine**, but the UI would jump in and out of the `success` and `pending` states as different queries are created and destroyed for each page or cursor. By setting `placeholderData` to `(previousData) => previousData` or `keepPreviousData` function exported from TanStack Query, we get a few new things: - **The data from the last successful fetch is available while new data is being requested, even though the query key has changed**. - When the new data arrives, the previous `data` is seamlessly swapped to show the new data. - `isPlaceholderData` is made available to know what data the query is currently providing you [//]: #",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-paginated-queries-better-paginated-queries-with-placeholderdata-04ad63c4",
+    "document": "query-paginated-queries",
+    "heading": "Better Paginated Queries with placeholderData",
+    "text": "Better Paginated Queries with placeholderData\nthe new data. - `isPlaceholderData` is made available to know what data the query is currently providing you [//]: # 'Example2' ```tsx import { keepPreviousData, useQuery } from '@tanstack/react-query' import React from 'react' function Todos() { const [page, setPage] = React.useState(0) const fetchProjects = (page = 0) => fetch('/api/projects?page=' + page).then((res) => res.json()) const { isPending, isError, error, data, isFetching, isPlaceholderData } = useQuery({ queryKey: ['projects', page], queryFn: () => fetchProjects(page), placeholderData: keepPreviousData,",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-paginated-queries-better-paginated-queries-with-placeholderdata-7350b22e",
+    "document": "query-paginated-queries",
+    "heading": "Better Paginated Queries with placeholderData",
+    "text": "Better Paginated Queries with placeholderData\nconst { isPending, isError, error, data, isFetching, isPlaceholderData } = useQuery({ queryKey: ['projects', page], queryFn: () => fetchProjects(page), placeholderData: keepPreviousData, }) return ( {isPending ? ( Loading... ) : isError ? ( Error: {error.message} ) : ( {data.projects.map((project) => ( {project.name} ))} )} Current Page: {page + 1} setPage((old) => Math.max(old - 1, 0))} disabled={page === 0} > Previous Page { if (!isPlaceholderData && data.hasMore) { setPage((old) => old + 1) } }} // Disable the Next Page button until",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-paginated-queries-better-paginated-queries-with-placeholderdata-8d41666b",
+    "document": "query-paginated-queries",
+    "heading": "Better Paginated Queries with placeholderData",
+    "text": "Better Paginated Queries with placeholderData\n{ if (!isPlaceholderData && data.hasMore) { setPage((old) => old + 1) } }} // Disable the Next Page button until we know a next page is available disabled={isPlaceholderData || !data?.hasMore} > Next Page {isFetching ? Loading... : null} ) } ``` [//]: # 'Example2'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+    "tokens": 111
+  },
+  {
+    "id": "query-paginated-queries-lagging-infinite-query-results-with-placeholderdata-32214ab2",
+    "document": "query-paginated-queries",
+    "heading": "Lagging Infinite Query results with placeholderData",
+    "text": "Lagging Infinite Query results with placeholderData\nWhile not as common, the `placeholderData` option also works flawlessly with the `useInfiniteQuery` hook, so you can seamlessly allow your users to continue to see cached data while infinite query keys change over time.",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+    "tokens": 64
+  },
+  {
+    "id": "query-query-keys-overview-47a688ad",
+    "document": "query-query-keys",
+    "heading": "Overview",
+    "text": "Overview\nAt its core, TanStack Query manages query caching for you based on query keys. Query keys have to be an Array at the top level, and can be as simple as an Array with a single string, or as complex as an array of many strings and nested objects. As long as the query key is serializable using `JSON.stringify`, and **unique to the query's data**, you can use it!",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 98
+  },
+  {
+    "id": "query-query-keys-simple-query-keys-96189f5e",
+    "document": "query-query-keys",
+    "heading": "Simple Query Keys",
+    "text": "Simple Query Keys\nThe simplest form of a key is an array with constants values. This format is useful for: - Generic List/Index resources - Non-hierarchical resources [//]: # 'Example' ```tsx // A list of todos useQuery({ queryKey: ['todos'], ... }) // Something else, whatever! useQuery({ queryKey: ['something', 'special'], ... }) ``` [//]: # 'Example'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 119
+  },
+  {
+    "id": "query-query-keys-array-keys-with-variables-0af980d4",
+    "document": "query-query-keys",
+    "heading": "Array Keys with variables",
+    "text": "Array Keys with variables\nWhen a query needs more information to uniquely describe its data, you can use an array with a string and any number of serializable objects to describe it. This is useful for: - Hierarchical or nested resources - It's common to pass an ID, index, or other primitive to uniquely identify the item - Queries with additional parameters - It's common to pass an object of additional options [//]: # 'Example2' ```tsx // An individual todo useQuery({ queryKey: ['todo', 5], ... }) // An individual todo in a \"preview\" format useQuery({ queryKey: ['todo', 5, { preview: true }], ...}) // A list of todos that are \"done\" useQuery({ queryKey: ['todos', { type: 'done' }], ... }) ``` [//]: #",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-query-keys-array-keys-with-variables-3d185c91",
+    "document": "query-query-keys",
+    "heading": "Array Keys with variables",
+    "text": "Array Keys with variables\n// A list of todos that are \"done\" useQuery({ queryKey: ['todos', { type: 'done' }], ... }) ``` [//]: # 'Example2'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 59
+  },
+  {
+    "id": "query-query-keys-query-keys-are-hashed-deterministically-52e3aa83",
+    "document": "query-query-keys",
+    "heading": "Query Keys are hashed deterministically!",
+    "text": "Query Keys are hashed deterministically!\nThis means that no matter the order of keys in objects, all of the following queries are considered equal: [//]: # 'Example3' ```tsx useQuery({ queryKey: ['todos', { status, page }], ... }) useQuery({ queryKey: ['todos', { page, status }], ...}) useQuery({ queryKey: ['todos', { page, status, other: undefined }], ... }) ``` [//]: # 'Example3' The following query keys, however, are not equal. Array item order matters! [//]: # 'Example4' ```tsx useQuery({ queryKey: ['todos', status, page], ... }) useQuery({ queryKey: ['todos', page, status],",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-query-keys-query-keys-are-hashed-deterministically-96172d30",
+    "document": "query-query-keys",
+    "heading": "Query Keys are hashed deterministically!",
+    "text": "Query Keys are hashed deterministically!\nArray item order matters! [//]: # 'Example4' ```tsx useQuery({ queryKey: ['todos', status, page], ... }) useQuery({ queryKey: ['todos', page, status], ...}) useQuery({ queryKey: ['todos', undefined, page, status], ...}) ``` [//]: # 'Example4'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 120
+  },
+  {
+    "id": "query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9",
+    "document": "query-query-keys",
+    "heading": "If your query function depends on a variable, include it in your query key",
+    "text": "If your query function depends on a variable, include it in your query key\nSince query keys uniquely describe the data they are fetching, they should include any variables you use in your query function that **change**. For example: [//]: # 'Example5' ```tsx function Todos({ todoId }) { const result = useQuery({ queryKey: ['todos', todoId], queryFn: () => fetchTodoById(todoId), }) } ``` [//]: # 'Example5' Note that query keys act as dependencies for your query functions. Adding dependent variables to your query key will ensure that queries are cached independently, and that any time a variable changes, _queries will be refetched automatically_ (depending on your `staleTime` settings). See the exhaustive-deps section for more information and examples. [//]: # 'Materials'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 212
+  },
+  {
+    "id": "query-query-keys-further-reading-c1fc2067",
+    "document": "query-query-keys",
+    "heading": "Further reading",
+    "text": "Further reading\nFor tips on organizing Query Keys in larger applications, have a look at Effective React Query Keys and check the Query Key Factory Package from the Community Resources. [//]: # 'Materials'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+    "tokens": 43
+  },
+  {
+    "id": "query-optimistic-updates-overview-fc484a5c",
+    "document": "query-optimistic-updates",
+    "heading": "Overview",
+    "text": "Overview\nReact Query provides two ways to optimistically update your UI before a mutation has completed. You can either use the `onMutate` option to update your cache directly, or leverage the returned `variables` to update your UI from the `useMutation` result.",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 57
+  },
+  {
+    "id": "query-optimistic-updates-via-the-ui-b88c0e8e",
+    "document": "query-optimistic-updates",
+    "heading": "Via the UI",
+    "text": "Via the UI\nThis is the simpler variant, as it doesn't interact with the cache directly. [//]: # 'ExampleUI1' ```tsx const addTodoMutation = useMutation({ mutationFn: (newTodo: string) => axios.post('/api/data', { text: newTodo }), // make sure to _return_ the Promise from the query invalidation // so that the mutation stays in `pending` state until the refetch is finished onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }), }) const { isPending, submittedAt, variables, mutate, isError } = addTodoMutation ``` [//]: # 'ExampleUI1' you will then have access to `addTodoMutation.variables`, which contain the added todo. In your UI list, where the query is rendered,",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-optimistic-updates-via-the-ui-d278d4bf",
+    "document": "query-optimistic-updates",
+    "heading": "Via the UI",
+    "text": "Via the UI\nwill then have access to `addTodoMutation.variables`, which contain the added todo. In your UI list, where the query is rendered, you can append another item to the list while the mutation `isPending`: [//]: # 'ExampleUI2' ```tsx {todoQuery.items.map((todo) => ( {todo.text} ))} {isPending && {variables}} ``` [//]: # 'ExampleUI2' We're rendering a temporary item with a different `opacity` as long as the mutation is pending. Once it completes, the item will automatically no longer be rendered. Given that the refetch succeeded, we should see the item as a \"normal item\" in our list. If the mutation errors, the item will also disappear. But we could continue to show it, if we want, by checking for the `isError` state of the mutation. `variables`",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 220
+  },
+  {
+    "id": "query-optimistic-updates-via-the-ui-6196564a",
+    "document": "query-optimistic-updates",
+    "heading": "Via the UI",
+    "text": "Via the UI\nBut we could continue to show it, if we want, by checking for the `isError` state of the mutation. `variables` are _not_ cleared when the mutation errors, so we can still access them, maybe even show a retry button: [//]: # 'ExampleUI3' ```tsx { isError && ( {variables} mutate(variables)}>Retry ) } ``` [//]: # 'ExampleUI3'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 110
+  },
+  {
+    "id": "query-optimistic-updates-if-the-mutation-and-the-query-don-t-live-in-the-same-component-98042ea3",
+    "document": "query-optimistic-updates",
+    "heading": "If the mutation and the query don't live in the same component",
+    "text": "If the mutation and the query don't live in the same component\nThis approach works very well if the mutation and the query live in the same component. However, you also get access to all mutations in other components via the dedicated `useMutationState` hook. It is best combined with a `mutationKey`: [//]: # 'ExampleUI4' ```tsx // somewhere in your app const { mutate } = useMutation({ mutationFn: (newTodo: string) => axios.post('/api/data', { text: newTodo }), onSettled: () => queryClient.invalidateQueries({ queryKey: ['todos'] }), mutationKey: ['addTodo'], }) // access variables somewhere else const variables = useMutationState({ filters: { mutationKey: ['addTodo'], status: 'pending' }, select: (mutation)",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-optimistic-updates-if-the-mutation-and-the-query-don-t-live-in-the-same-component-decfc31b",
+    "document": "query-optimistic-updates",
+    "heading": "If the mutation and the query don't live in the same component",
+    "text": "If the mutation and the query don't live in the same component\n['addTodo'], }) // access variables somewhere else const variables = useMutationState({ filters: { mutationKey: ['addTodo'], status: 'pending' }, select: (mutation) => mutation.state.variables, }) ``` [//]: # 'ExampleUI4' `variables` will be an `Array`, because there might be multiple mutations running at the same time. If we need a unique key for the items, we can also select `mutation.state.submittedAt`. This will even make displaying concurrent optimistic updates a breeze.",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 148
+  },
+  {
+    "id": "query-optimistic-updates-via-the-cache-c18953ee",
+    "document": "query-optimistic-updates",
+    "heading": "Via the cache",
+    "text": "Via the cache\nWhen you optimistically update your state before performing a mutation, there is a chance that the mutation will fail. In most of these failure cases, you can just trigger a refetch for your optimistic queries to revert them to their true server state. In some circumstances though, refetching may not work correctly and the mutation error could represent some type of server issue that won't make it possible to refetch. In this event, you can instead choose to roll back your update. To do this, `useMutation`'s `onMutate` handler option allows you to return a value that will later be passed to both `onError` and `onSettled` handlers as the last argument. In most cases, it is most useful to pass a rollback function.",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 169
+  },
+  {
+    "id": "query-optimistic-updates-updating-a-list-of-todos-when-adding-a-new-todo-9f4944c9",
+    "document": "query-optimistic-updates",
+    "heading": "Updating a list of todos when adding a new todo",
+    "text": "Updating a list of todos when adding a new todo\n[//]: # 'Example' ```tsx const queryClient = useQueryClient() useMutation({ mutationFn: updateTodo, // When mutate is called: onMutate: async (newTodo, context) => { // Cancel any outgoing refetches // (so they don't overwrite our optimistic update) await context.client.cancelQueries({ queryKey: ['todos'] }) // Snapshot the previous value const previousTodos = context.client.getQueryData(['todos']) // Optimistically update to the new value context.client.setQueryData(['todos'], (old) => [...old, newTodo]) // Return a result with the snapshotted value return { previousTodos } }, // If the mutation",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-optimistic-updates-updating-a-list-of-todos-when-adding-a-new-todo-3dc170fc",
+    "document": "query-optimistic-updates",
+    "heading": "Updating a list of todos when adding a new todo",
+    "text": "Updating a list of todos when adding a new todo\n=> [...old, newTodo]) // Return a result with the snapshotted value return { previousTodos } }, // If the mutation fails, // use the result returned from onMutate to roll back onError: (err, newTodo, onMutateResult, context) => { context.client.setQueryData(['todos'], onMutateResult.previousTodos) }, // Always refetch after error or success: onSettled: (data, error, variables, onMutateResult, context) => context.client.invalidateQueries({ queryKey: ['todos'] }), }) ``` [//]: # 'Example'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 186
+  },
+  {
+    "id": "query-optimistic-updates-updating-a-single-todo-8b994024",
+    "document": "query-optimistic-updates",
+    "heading": "Updating a single todo",
+    "text": "Updating a single todo\n[//]: # 'Example2' ```tsx useMutation({ mutationFn: updateTodo, // When mutate is called: onMutate: async (newTodo, context) => { // Cancel any outgoing refetches // (so they don't overwrite our optimistic update) await context.client.cancelQueries({ queryKey: ['todos', newTodo.id] }) // Snapshot the previous value const previousTodo = context.client.getQueryData(['todos', newTodo.id]) // Optimistically update to the new value context.client.setQueryData(['todos', newTodo.id], newTodo) // Return a result with the previous and new todo return { previousTodo, newTodo } }, // If the mutation fails, use the result we returned above",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 219
+  },
+  {
+    "id": "query-optimistic-updates-updating-a-single-todo-87b1dcdf",
+    "document": "query-optimistic-updates",
+    "heading": "Updating a single todo",
+    "text": "Updating a single todo\nand new todo return { previousTodo, newTodo } }, // If the mutation fails, use the result we returned above onError: (err, newTodo, onMutateResult, context) => { context.client.setQueryData( ['todos', onMutateResult.newTodo.id], onMutateResult.previousTodo, ) }, // Always refetch after error or success: onSettled: (newTodo, error, variables, onMutateResult, context) => context.client.invalidateQueries({ queryKey: ['todos', newTodo.id] }), }) ``` [//]: # 'Example2' You can also use the `onSettled` function in place of the separate `onError` and `onSuccess` handlers if you wish: [//]: #",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 217
+  },
+  {
+    "id": "query-optimistic-updates-updating-a-single-todo-bbd16b49",
+    "document": "query-optimistic-updates",
+    "heading": "Updating a single todo",
+    "text": "Updating a single todo\ncan also use the `onSettled` function in place of the separate `onError` and `onSuccess` handlers if you wish: [//]: # 'Example3' ```tsx useMutation({ mutationFn: updateTodo, // ... onSettled: async (newTodo, error, variables, onMutateResult, context) => { if (error) { // do something } }, }) ``` [//]: # 'Example3'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 126
+  },
+  {
+    "id": "query-optimistic-updates-when-to-use-what-e8d6c7ba",
+    "document": "query-optimistic-updates",
+    "heading": "When to use what",
+    "text": "When to use what\nIf you only have one place where the optimistic result should be shown, using `variables` and updating the UI directly is the approach that requires less code and is generally easier to reason about. For example, you don't need to handle rollbacks at all. However, if you have multiple places on the screen that would require to know about the update, manipulating the cache directly will take care of this for you automatically. [//]: # 'Materials'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 101
+  },
+  {
+    "id": "query-optimistic-updates-further-reading-6b45424c",
+    "document": "query-optimistic-updates",
+    "heading": "Further reading",
+    "text": "Further reading\nHave a look at the guide by TkDodo on Concurrent Optimistic Updates. [//]: # 'Materials'",
+    "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+    "tokens": 29
+  }
+]

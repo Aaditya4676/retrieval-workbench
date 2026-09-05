@@ -1,0 +1,26 @@
+{
+  "frozenBeforeRetrievalRuns": true,
+  "labelPolicy": "18 answerable questions, two unsupported controls. Expected arrays are the required chunks, not alternatives. Hit and MRR count the first required chunk; all-source coverage separately requires every expected ID. Labels were selected from source text before any ranked query was run. This is a development set, not held-out evaluation.",
+  "questions": [
+    {"id":"q01","kind":"lexical","query":"Zustand nested objects merging set","expected":["zustand-immutable-state-and-merging-nested-objects-831679d7"]},
+    {"id":"q02","kind":"paraphrase","query":"How do I replace the entire Zustand state instead of merging it?","expected":["zustand-immutable-state-and-merging-replace-flag-1e2b4248"]},
+    {"id":"q03","kind":"lexical","query":"Zustand async actions await fetch","expected":["zustand-readme-async-actions-69149259"]},
+    {"id":"q04","kind":"paraphrase","query":"How can I read existing Zustand state from inside an action?","expected":["zustand-readme-read-from-state-in-actions-27d88d1a"]},
+    {"id":"q05","kind":"paraphrase","query":"Can I use a Zustand store without React hooks?","expected":["zustand-readme-using-zustand-without-react-e92b4091"]},
+    {"id":"q06","kind":"lexical","query":"persist partialize fields storage","expected":["zustand-persisting-store-data-partialize-e30b16f9"]},
+    {"id":"q07","kind":"paraphrase","query":"How do I migrate persisted Zustand data when its schema version changes?","expected":["zustand-persisting-store-data-migrate-fe93831b"]},
+    {"id":"q08","kind":"lexical","query":"hasHydrated non reactive getter","expected":["zustand-persisting-store-data-hashydrated-53660cba"]},
+    {"id":"q09","kind":"paraphrase","query":"Why is my cached query data stale immediately and how can I keep it fresh longer?","expected":["query-important-defaults-overview-f57910f4"]},
+    {"id":"q10","kind":"lexical","query":"inactive queries garbage collected gcTime 5 minutes","expected":["query-important-defaults-overview-c1dfd84d"]},
+    {"id":"q11","kind":"paraphrase","query":"Which browser events automatically refetch stale queries?","expected":["query-important-defaults-overview-f5e51155"]},
+    {"id":"q12","kind":"lexical","query":"query keys hashed deterministically object order","expected":["query-query-keys-query-keys-are-hashed-deterministically-52e3aa83"]},
+    {"id":"q13","kind":"paraphrase","query":"My query function uses a changing todoId. Where should I put this variable so requests refetch?","expected":["query-query-keys-if-your-query-function-depends-on-a-variable-include-it-in-your-query-key-aa4cd6c9"]},
+    {"id":"q14","kind":"paraphrase","query":"How can pagination keep showing the previous page while the next page loads?","expected":["query-paginated-queries-better-paginated-queries-with-placeholderdata-2c9d196e"]},
+    {"id":"q15","kind":"lexical","query":"invalidateQueries marked stale refetched background","expected":["query-query-invalidation-overview-68b8c99b"]},
+    {"id":"q16","kind":"paraphrase","query":"When should optimistic updates use mutation variables in the UI instead of directly modifying the cache?","expected":["query-optimistic-updates-when-to-use-what-e8d6c7ba"]},
+    {"id":"q17","kind":"two-source","query":"How do Zustand nested object updates differ from TanStack Query optimistic updates made directly in the UI?","expected":["zustand-immutable-state-and-merging-nested-objects-831679d7","query-optimistic-updates-when-to-use-what-e8d6c7ba"]},
+    {"id":"q18","kind":"two-source","query":"Compare Zustand persist partialize and TanStack Query gcTime: what do they control?","expected":["zustand-persisting-store-data-partialize-e30b16f9","query-important-defaults-overview-c1dfd84d"]},
+    {"id":"q19","kind":"unsupported","query":"How do I rotate an AWS KMS encryption key for a DynamoDB global table?","expected":[]},
+    {"id":"q20","kind":"unsupported","query":"What is the correct Kubernetes ingress certificate renewal command?","expected":[]}
+  ]
+}

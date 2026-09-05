@@ -1,0 +1,14 @@
+{
+  "model": {
+    "id": "Xenova/all-MiniLM-L6-v2",
+    "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+    "dimensions": 384,
+    "dtype": "q8",
+    "pooling": "mean",
+    "normalize": true,
+    "maxTokens": 256
+  },
+  "chunker": "heading-aware; at most 220 wordpieces including heading/special tokens; 20-word overlap",
+  "chunks": 132,
+  "hash": "6850d33375d4a90a5c9784e5fcbda8b27fb71ee852948ece19cc6623b3f06d86"
+}

@@ -1,0 +1,75 @@
+{
+  "downloadedAt": "2026-09-05T21:31:16.265Z",
+  "sources": [
+    {
+      "id": "zustand-readme",
+      "file": "corpus/raw/zustand-readme.md",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/README.md",
+      "revision": "b57db4f86ef179285da216eeb291266da82c361c",
+      "license": "MIT"
+    },
+    {
+      "id": "zustand-immutable-state-and-merging",
+      "file": "corpus/raw/zustand-immutable-state-and-merging.md",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/immutable-state-and-merging.md",
+      "revision": "b57db4f86ef179285da216eeb291266da82c361c",
+      "license": "MIT"
+    },
+    {
+      "id": "zustand-updating-state",
+      "file": "corpus/raw/zustand-updating-state.md",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/updating-state.md",
+      "revision": "b57db4f86ef179285da216eeb291266da82c361c",
+      "license": "MIT"
+    },
+    {
+      "id": "zustand-prevent-rerenders-with-use-shallow",
+      "file": "corpus/raw/zustand-prevent-rerenders-with-use-shallow.md",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/learn/guides/prevent-rerenders-with-use-shallow.md",
+      "revision": "b57db4f86ef179285da216eeb291266da82c361c",
+      "license": "MIT"
+    },
+    {
+      "id": "zustand-persisting-store-data",
+      "file": "corpus/raw/zustand-persisting-store-data.md",
+      "source": "https://github.com/pmndrs/zustand/blob/b57db4f86ef179285da216eeb291266da82c361c/docs/reference/integrations/persisting-store-data.md",
+      "revision": "b57db4f86ef179285da216eeb291266da82c361c",
+      "license": "MIT"
+    },
+    {
+      "id": "query-important-defaults",
+      "file": "corpus/raw/query-important-defaults.md",
+      "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/important-defaults.md",
+      "revision": "1893a965d219032207cbe147880d0e9f757a5a56",
+      "license": "MIT"
+    },
+    {
+      "id": "query-query-invalidation",
+      "file": "corpus/raw/query-query-invalidation.md",
+      "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-invalidation.md",
+      "revision": "1893a965d219032207cbe147880d0e9f757a5a56",
+      "license": "MIT"
+    },
+    {
+      "id": "query-paginated-queries",
+      "file": "corpus/raw/query-paginated-queries.md",
+      "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/paginated-queries.md",
+      "revision": "1893a965d219032207cbe147880d0e9f757a5a56",
+      "license": "MIT"
+    },
+    {
+      "id": "query-query-keys",
+      "file": "corpus/raw/query-query-keys.md",
+      "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/query-keys.md",
+      "revision": "1893a965d219032207cbe147880d0e9f757a5a56",
+      "license": "MIT"
+    },
+    {
+      "id": "query-optimistic-updates",
+      "file": "corpus/raw/query-optimistic-updates.md",
+      "source": "https://github.com/TanStack/query/blob/1893a965d219032207cbe147880d0e9f757a5a56/docs/framework/react/guides/optimistic-updates.md",
+      "revision": "1893a965d219032207cbe147880d0e9f757a5a56",
+      "license": "MIT"
+    }
+  ]
+}
