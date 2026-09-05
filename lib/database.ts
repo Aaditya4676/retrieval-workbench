@@ -7,6 +7,12 @@ export interface SqlClient {
 }
 export const chunkColumns =
   "id, document, heading, content AS text, source, tokens";
+export const sqlStatements = {
+  keyword: `SELECT ${chunkColumns}, ts_rank_cd(search_vector,websearch_to_tsquery('english',$1)) AS score FROM chunks WHERE search_vector @@ websearch_to_tsquery('english',$1) ORDER BY score DESC,id LIMIT 20`,
+  vector: `SELECT ${chunkColumns}, 1-(embedding <=> $1::vector) AS score FROM chunks ORDER BY embedding <=> $1::vector,id LIMIT 20`,
+  count: "SELECT COUNT(*)::integer AS count FROM chunks",
+  chunk: `SELECT ${chunkColumns} FROM chunks WHERE id=$1`,
+};
 export async function searchDatabase(
   db: SqlClient,
   input: SearchInput & { vector?: number[] },
@@ -14,12 +20,8 @@ export async function searchDatabase(
   let keyword: Result[] = [];
   let vectors: Result[] = [];
   if (input.mode !== "vector")
-    keyword = (
-      await db.query<Result>(
-        `SELECT ${chunkColumns}, ts_rank_cd(search_vector,websearch_to_tsquery('english',$1)) AS score FROM chunks WHERE search_vector @@ websearch_to_tsquery('english',$1) ORDER BY score DESC,id LIMIT 20`,
-        [input.query],
-      )
-    ).rows;
+    keyword = (await db.query<Result>(sqlStatements.keyword, [input.query]))
+      .rows;
   if (input.mode !== "keyword") {
     if (
       !Array.isArray(input.vector) ||
@@ -28,10 +30,9 @@ export async function searchDatabase(
     )
       throw new Error("A finite 384-dimensional query vector is required");
     vectors = (
-      await db.query<Result>(
-        `SELECT ${chunkColumns}, 1-(embedding <=> $1::vector) AS score FROM chunks ORDER BY embedding <=> $1::vector,id LIMIT 20`,
-        [JSON.stringify(input.vector)],
-      )
+      await db.query<Result>(sqlStatements.vector, [
+        JSON.stringify(input.vector),
+      ])
     ).rows;
   }
   const results =
@@ -40,9 +41,7 @@ export async function searchDatabase(
       : input.mode === "vector"
         ? vectors.slice(0, input.k)
         : rrf(vectors, keyword, input.k);
-  const counts = await db.query<{ count: number }>(
-    "SELECT COUNT(*)::integer AS count FROM chunks",
-  );
+  const counts = await db.query<{ count: number }>(sqlStatements.count);
   return { results, count: counts.rows[0].count };
 }
 

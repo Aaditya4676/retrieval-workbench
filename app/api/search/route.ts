@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { embedding, MODEL } from "@/lib/model";
-import { searchInput, type Result } from "@/lib/types";
-import { dataRequest } from "@/lib/data-client";
+import { searchInput } from "@/lib/types";
+import { searchDatabase } from "@/lib/database";
+import { getDatabase } from "@/lib/db";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
@@ -19,10 +20,10 @@ export async function POST(request: Request) {
     const query = parsed.data;
     const embedded =
       query.mode === "keyword" ? null : await embedding(query.query);
-    const result = await dataRequest<{ results: Result[]; count: number }>(
-      "/search",
-      { ...query, vector: embedded?.vector },
-    );
+    const result = await searchDatabase(getDatabase(), {
+      ...query,
+      vector: embedded?.vector,
+    });
     return NextResponse.json({
       ...result,
       mode: query.mode,

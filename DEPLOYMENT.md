@@ -12,12 +12,12 @@ The ignored local cache lives at `.cache/transformers`; a fresh host does not re
 
 ## Database migration
 
-The local app calls a loopback PGlite owner at port 3301; Vercel must not point to a laptop loopback URL. `lib/database.ts` provides the actual `SqlClient` boundary, shared `searchDatabase` SQL implementation, and a `postgresAdapter` for a node-postgres-compatible Pool/Client. Wire a server-only database connection through that adapter instead of the local HTTP transport, or deploy a separately authenticated database API. Reuse the parameterized SQL and migration in `migrations/001_chunks.sql`; provide `DATABASE_URL` only in server settings. Do not expose a database administrator credential in client code or add `NEXT_PUBLIC_` to it.
+`lib/db.ts` now selects the server-only transport. When `DATABASE_URL` is set, a real node-postgres Pool is wrapped by `postgresAdapter`; otherwise the existing PGlite owner at `DATA_SERVICE_URL` (default port 3301) receives only the fixed parameterized read queries. Search and chunk routes use this client. Set `DATABASE_URL` on the hosted server so it never needs a laptop transport. The Pool has a per-instance connection limit and query/connect timeouts; a real Supabase connection and migration remain untested. Keep credentials server-side.
 
 1. Create/choose the authorized Supabase project tomorrow; obtain its PostgreSQL connection URL.
 2. Enable pgvector and apply `migrations/001_chunks.sql` to an isolated project schema/database.
 3. Ingest the committed chunks using the same pinned MiniLM vectors; compare row count, corpus hash, dimensionality, and representative vector/full-text results with local evidence.
-4. Keep ingestion as a local/admin operation. Do not publish the current unauthenticated loopback `/ingest` endpoint to the Internet.
+4. Keep ingestion as an admin operation. The data owner's `POST /ingest` denies every request unless `INGEST_TOKEN` is configured and the request supplies its exact bearer token. Set the same token in the data-owner and `pnpm ingest` process environments. Leaving it unset disables ingestion; existing passage search still works. The loopback transport is not the hosted database path.
 5. Use a bounded server-side query adapter and database connection pooling appropriate for the selected host. PGlite's filesystem directory is a local development implementation, not a deployable Supabase replacement.
 
 ## Build and environment
@@ -29,7 +29,8 @@ Local build: `pnpm install --frozen-lockfile`, `pnpm build`. Local start: `pnpm 
 | `DATA_SERVICE_URL` | Current private local data transport | `http://127.0.0.1:3301` |
 | `RAG_API_URL` | MCP client's retrieval endpoint | `http://127.0.0.1:3300` |
 | `MODEL_CACHE_DIR` | Writable pinned-model cache directory | `.cache/transformers` under the app |
-| `DATABASE_URL` | Future server-only PostgreSQL adapter | Not used until adapter is wired and verified |
+| `DATABASE_URL` | Server-only node-postgres connection through `postgresAdapter` | Unset selects PGlite transport; hosted connection untested |
+| `INGEST_TOKEN` | Data-owner and ingestion CLI bearer credential | Unset denies ingestion |
 | Hosted chat key/model settings | Future answer generation provider only | None required for retrieval |
 
 ## Hosted acceptance checklist

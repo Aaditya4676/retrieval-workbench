@@ -3,7 +3,8 @@ import { vector } from "@electric-sql/pglite-pgvector";
 import { createServer } from "node:http";
 import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { searchDatabase, chunkColumns } from "../lib/database";
+import { searchDatabase, chunkColumns, sqlStatements } from "../lib/database";
+import { authorizedIngest } from "../lib/ingest-auth";
 import { searchInput } from "../lib/types";
 await mkdir(".data", { recursive: true });
 const db = await PGlite.create({
@@ -16,6 +17,19 @@ const server = createServer(async (request, response) => {
   response.setHeader("Content-Type", "application/json");
   try {
     const url = new URL(request.url ?? "/", "http://127.0.0.1:3301");
+    if (
+      request.method === "POST" &&
+      url.pathname === "/ingest" &&
+      !authorizedIngest(request.headers.authorization, process.env.INGEST_TOKEN)
+    ) {
+      response.statusCode = 401;
+      response.end(
+        JSON.stringify({
+          error: "Ingestion requires the configured INGEST_TOKEN bearer token.",
+        }),
+      );
+      return;
+    }
     if (request.method === "GET" && url.pathname === "/health") {
       const result = await db.query<{ count: number }>(
         "SELECT COUNT(*)::integer AS count FROM chunks",
@@ -47,6 +61,22 @@ const server = createServer(async (request, response) => {
       if (body.length > 5_000_000) throw new Error("Request too large");
     }
     const input = JSON.parse(body || "{}");
+    if (request.method === "POST" && url.pathname === "/query") {
+      if (
+        !Object.values(sqlStatements).includes(input.sql) ||
+        (input.params !== undefined && !Array.isArray(input.params))
+      ) {
+        response.statusCode = 400;
+        response.end(
+          JSON.stringify({
+            error: "Only the fixed parameterized read queries are supported.",
+          }),
+        );
+        return;
+      }
+      response.end(JSON.stringify(await db.query(input.sql, input.params)));
+      return;
+    }
     if (request.method === "POST" && url.pathname === "/ingest") {
       await db.transaction(async (tx) => {
         for (const chunk of input.chunks)
