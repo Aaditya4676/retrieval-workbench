@@ -1,1 +1,15 @@
-{"mcpServers":{"retrieval-workbench":{"command":"C:/nvm4w/nodejs/node.exe","args":["--import","tsx","Z:/STUDY/res/Portfolio/apps/rag/packages/mcp-server/index.ts"],"cwd":"Z:/STUDY/res/Portfolio/apps/rag","env":{"RAG_API_URL":"http://127.0.0.1:3300"}}}}
+{
+  "mcpServers": {
+    "retrieval-workbench": {
+      "command": "node",
+      "args": [
+        "--import",
+        "<repo-file-url>/node_modules/tsx/dist/loader.mjs",
+        "<repo>/packages/mcp-server/index.ts"
+      ],
+      "env": {
+        "RAG_API_URL": "http://127.0.0.1:3300"
+      }
+    }
+  }
+}
