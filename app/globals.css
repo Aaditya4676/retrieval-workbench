@@ -185,6 +185,10 @@ select {
   border-color: var(--color-accent);
   font-weight: var(--weight-semibold);
 }
+.primary:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
 .help {
   margin-bottom: var(--space-0);
 }
