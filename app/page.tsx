@@ -2,6 +2,9 @@ import Workbench from "./workbench";
 import manifest from "@/corpus/manifest.json";
 import evaluation from "@/evals/results.json";
 export const dynamic = "force-dynamic";
+// Answer generation needs a reachable model endpoint. Without one the button
+// could only ever fail, so the panel is hidden rather than shown broken.
+const generationEnabled = Boolean(process.env.ANSWER_BASE_URL);
 export default async function Page({
   searchParams,
 }: {
@@ -11,6 +14,7 @@ export default async function Page({
   return (
     <Workbench
       count={manifest.chunks}
+      generationEnabled={generationEnabled}
       evaluation={evaluation.summary}
       initialQuery={
         typeof params.q === "string" ? params.q.slice(0, 800) : undefined

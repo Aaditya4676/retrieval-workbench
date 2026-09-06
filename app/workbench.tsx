@@ -32,11 +32,13 @@ export default function Workbench({
   evaluation,
   initialQuery,
   initialMode,
+  generationEnabled,
 }: {
   count: number;
   evaluation: Summary[];
   initialQuery?: string;
   initialMode: string;
+  generationEnabled: boolean;
 }) {
   const [query, setQuery] = useState(initialQuery ?? samples[0]);
   const [mode, setMode] = useState(initialMode);
@@ -307,6 +309,7 @@ export default function Workbench({
                 question is answerable.
               </p>
             </aside>
+            {generationEnabled && (
             <AnswerPanel
               query={query}
               mode={mode}
@@ -320,6 +323,7 @@ export default function Workbench({
               }}
               onInspect={inspect}
             />
+            )}
           </div>
         </div>
         {response?.embedding && (
