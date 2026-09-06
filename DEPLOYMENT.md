@@ -26,6 +26,7 @@ Local build: `pnpm install --frozen-lockfile`, `pnpm build`. Local start: `pnpm 
 
 | Variable | Purpose | Local default |
 | --- | --- | --- |
+| `NEXT_PUBLIC_PORTFOLIO_URL` | Portfolio link; set before building | `http://127.0.0.1:3100` |
 | `DATA_SERVICE_URL` | Current private local data transport | `http://127.0.0.1:3301` |
 | `RAG_API_URL` | MCP client's retrieval endpoint | `http://127.0.0.1:3300` |
 | `MODEL_CACHE_DIR` | Writable pinned-model cache directory | `.cache/transformers` under the app |

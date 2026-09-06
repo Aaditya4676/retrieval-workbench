@@ -93,7 +93,7 @@ export default function Workbench({
         Skip to search
       </a>
       <header className="site-header">
-        <a href="http://127.0.0.1:3100">Aaditya Khedekar</a>
+        <a href={process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "http://127.0.0.1:3100"}>Aaditya Khedekar</a>
         <nav aria-label="Project navigation">
           <a href="#evaluation">Evaluation</a>
           <a href="#method">How it works</a>
@@ -389,7 +389,7 @@ export default function Workbench({
       </main>
       <footer>
         Built by Aaditya Khedekar.{" "}
-        <a href="http://127.0.0.1:3100">Return to portfolio</a>
+        <a href={process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "http://127.0.0.1:3100"}>Return to portfolio</a>
       </footer>
     </>
   );
