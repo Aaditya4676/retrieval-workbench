@@ -1,6 +1,6 @@
-# Tomorrow's deployment handoff
+# Deployment
 
-No deployment, remote repository, API purchase, cloud database, or model-account login was performed tonight. The running local app is not evidence that Linux native inference or Supabase already works.
+No deployment, remote repository, API purchase, cloud database, or model-account login has been performed. The running local app is not evidence that Linux native inference or Supabase already works.
 
 ## Preserve the embedder
 
@@ -14,7 +14,7 @@ The ignored local cache lives at `.cache/transformers`; a fresh host does not re
 
 `lib/db.ts` now selects the server-only transport. When `DATABASE_URL` is set, a real node-postgres Pool is wrapped by `postgresAdapter`; otherwise the existing PGlite owner at `DATA_SERVICE_URL` (default port 3301) receives only the fixed parameterized read queries. Search and chunk routes use this client. Set `DATABASE_URL` on the hosted server so it never needs a laptop transport. The Pool has a per-instance connection limit and query/connect timeouts; a real Supabase connection and migration remain untested. Keep credentials server-side.
 
-1. Create/choose the authorized Supabase project tomorrow; obtain its PostgreSQL connection URL.
+1. Create the Supabase project; obtain its PostgreSQL connection URL.
 2. Enable pgvector and apply `migrations/001_chunks.sql` to an isolated project schema/database.
 3. Ingest the committed chunks using the same pinned MiniLM vectors; compare row count, corpus hash, dimensionality, and representative vector/full-text results with local evidence.
 4. Keep ingestion as an admin operation. The data owner's `POST /ingest` denies every request unless `INGEST_TOKEN` is configured and the request supplies its exact bearer token. Set the same token in the data-owner and `pnpm ingest` process environments. Leaving it unset disables ingestion; existing passage search still works. The loopback transport is not the hosted database path.
@@ -38,12 +38,12 @@ Local build: `pnpm install --frozen-lockfile`, `pnpm build`. Local start: `pnpm 
 ## Hosted acceptance checklist
 
 - Build from a clean Linux dependency installation and prove a cold and warm query embedding in the actual hosted Next route.
-- Verify that the model revision, normalization, dimension and corpus hash match tonight's final retrieval evaluation. Retrieval results should remain comparable; rerun as a new verification artifact if the database/query code changes.
+- Verify that the model revision, normalization, dimension and corpus hash match the recorded retrieval evaluation. Retrieval results should remain comparable; rerun as a new verification artifact if the database/query code changes.
 - Confirm database persistence, vector/full-text parity and private credentials.
 - Apply a persistent public request quota and bounded input/output/concurrency before exposing expensive inference; the loopback demonstration does not implement a public quota.
 - Configure the chosen hosted chat model separately. Measure grounded-answer/citation coverage and latency anew; do not relabel retrieval hit@5 as generation accuracy.
 - Repeat browser keyboard/accessibility checks and public source links. Replace localhost portfolio/demo links with verified public URLs.
-- Run both MCP tools against the hosted API, then capture a real Codex/Claude conversation using them. Stdio remains a locally spawned server; it is not an HTTP deployment endpoint.
+- Run both MCP tools against the hosted API, then capture a real MCP client session using them. Stdio remains a locally spawned server; it is not an HTTP deployment endpoint.
 
 The final retrieval measurements are in `evidence/retrieval-eval.json`; preserve them as the local reference. Do not overwrite their model/corpus metadata or claim a hosted result before checking it.
 

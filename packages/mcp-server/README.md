@@ -27,7 +27,7 @@ Inspector's web UI can be launched with the same `--config mcp.inspector.json`. 
 
 ## Codex example
 
-The installed `codex mcp add --help` confirms the current stdio command shape below. This is an example for tomorrow; it was **not executed**, because it writes client configuration.
+The installed `codex mcp add --help` confirms the current stdio command shape below. This is an example for later; it was **not executed**, because it writes client configuration.
 
 ```powershell
 codex mcp add retrieval-workbench --env RAG_API_URL=http://127.0.0.1:3300 -- node --import "<repo-file-url>/node_modules/tsx/dist/loader.mjs" "<repo>/packages/mcp-server/index.ts"
@@ -43,11 +43,11 @@ From this repository, a project-scoped configuration avoids changing unrelated p
 claude mcp add --transport stdio --scope project retrieval-workbench -- node --import "<repo-file-url>/node_modules/tsx/dist/loader.mjs" "<repo>/packages/mcp-server/index.ts"
 ```
 
-This configuration example follows [Claude Code's MCP documentation](https://code.claude.com/docs/en/mcp). It was not installed or tested in Claude Code tonight.
+This configuration example follows [Claude Code's MCP documentation](https://code.claude.com/docs/en/mcp). It was not installed or tested in Claude Code.
 
 ## Claude Desktop example
 
-Merge this entry into the desktop client's configuration tomorrow, after reviewing its existing entries; do not replace the whole file. The [official local-server guide](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/docs/2026-07-28/develop/connect-local-servers.mdx) describes the configuration location and restart flow.
+Merge this entry into the desktop client's configuration later, after reviewing its existing entries; do not replace the whole file. The [official local-server guide](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/docs/2026-07-28/develop/connect-local-servers.mdx) describes the configuration location and restart flow.
 
 ```json
 {
@@ -65,5 +65,5 @@ Merge this entry into the desktop client's configuration tomorrow, after reviewi
 }
 ```
 
-All examples require the local Next/data servers to be running. Tomorrow `RAG_API_URL` can target the deployed retrieval API; keep any future authentication token server-side and never write it to protocol logs.
+All examples require the local Next/data servers to be running. Once deployed, `RAG_API_URL` can target the hosted retrieval API; keep any future authentication token server-side and never write it to protocol logs.
 

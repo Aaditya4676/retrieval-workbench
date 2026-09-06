@@ -19,7 +19,7 @@ The limitation is as informative as the score: complete coverage on the two ques
 ## Decisions that mattered
 
 - **Prove the deployed code path locally.** The production Next route computes the query vector itself; a separate embedding script passing would not establish that native ONNX execution was packaged correctly in the application.
-- **Keep the database owner singular.** A loopback PGlite service holds the database directory while the app and tools make requests. SQL uses PostgreSQL full-text and pgvector; tomorrow's Supabase connection still needs hosted validation.
+- **Keep the database owner singular.** A loopback PGlite service holds the database directory while the app and tools make requests. SQL uses PostgreSQL full-text and pgvector; the hosted Supabase connection still needs hosted validation.
 - **Combine ranks, not incompatible scores.** RRF uses rank positions from keyword and cosine-distance lists. Hybrid can still miss necessary evidence; the interface and labels make that visible.
 
 ## What I learned
@@ -28,7 +28,7 @@ Hit@5 can look encouraging while a two-source answer is impossible from the retr
 
 ## Evidence and next step
 
-Local demo: http://127.0.0.1:3300. Evidence lives in `evidence/retrieval-eval.json`, `evidence/production-route-proof.json`, `evidence/mcp-client.json`, and the two screenshot/audit passes. All final retrieval requests use the same Next production route. Public demo/source links, Supabase, hosted chat generation evaluation, and a Codex/Claude conversational demonstration remain tomorrow's checks.
+Local demo: http://127.0.0.1:3300. Evidence lives in `evidence/retrieval-eval.json`, `evidence/production-route-proof.json`, `evidence/mcp-client.json`, and the two screenshot/audit passes. All final retrieval requests use the same Next production route. Public demo/source links, Supabase, hosted chat generation evaluation, and a conversational MCP client demonstration remain the hosted checks.
 
 Before extending this project, I would create a held-out multi-source set and compare a bounded query-decomposition approach. I would keep the permanent MiniLM embedder and separately measure generated citations once a hosted answer model is selected.
 
@@ -38,4 +38,4 @@ The local app also uses the already installed Ollama `qwen2.5-coder:7b` for answ
 
 I encountered a concrete runtime issue: the full length-constrained decoder schema stopped the local runner, while a structural decoder schema succeeded with the same context. I retained all length and citation validation in the application and preserved the failed probe.
 
-The separate local generation pass completed all sixty application requests. Expected-source citation coverage was 7/18 with keyword retrieval and 12/18 with vector or hybrid; complete two-source coverage remained 0/2. Seven of 48 outputs observed at citation validation failed source-ID or exact-quote checks and were withheld; twelve keyword requests had no passages and skipped the answer model. Both unsupported controls received no-citation responses in each mode. These are mechanical citation measures on a small development set, not generated-answer accuracy. The raw events, exact Ollama model digest, quantization and laptop hardware are recorded in `evidence/generation-eval.json`. Tomorrow's hosted answer model requires a new generation evaluation while the permanent MiniLM retrieval reference remains unchanged.
+The separate local generation pass completed all sixty application requests. Expected-source citation coverage was 7/18 with keyword retrieval and 12/18 with vector or hybrid; complete two-source coverage remained 0/2. Seven of 48 outputs observed at citation validation failed source-ID or exact-quote checks and were withheld; twelve keyword requests had no passages and skipped the answer model. Both unsupported controls received no-citation responses in each mode. These are mechanical citation measures on a small development set, not generated-answer accuracy. The raw events, exact Ollama model digest, quantization and laptop hardware are recorded in `evidence/generation-eval.json`. The hosted answer model requires a new generation evaluation while the permanent MiniLM retrieval reference remains unchanged.

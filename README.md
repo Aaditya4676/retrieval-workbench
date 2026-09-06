@@ -4,9 +4,9 @@ A local documentation search app that compares keyword, vector, and hybrid retri
 
 ## Demo moment
 
-Open [the local app](http://127.0.0.1:3300), search the prefilled pagination question, and select **Inspect passage** to see the exact stored text. Switch to keyword search, inspect the changed ranking, then open **Measured retrieval** and run `pnpm verify:mcp` in a terminal. [Exact demo script](DEMO_SCRIPT.md).
+Open [the local app](http://127.0.0.1:3300), search the prefilled pagination question, and select **Inspect passage** to see the exact stored text. Switch to keyword search, inspect the changed ranking, then open **Measured retrieval** and run `pnpm verify:mcp` in a terminal.
 
-Public URL: pending tomorrow's deployment. Source publication: pending. [A real 59-second retrieval recording](evidence/demo.webm) and [protocol screenshots](evidence/screenshots/mcp-inspector-search.png) are available locally. Both a real MCP SDK client and MCP Inspector completed initialize → list tools → search_docs → get_chunk over stdio. The requested Codex/Claude conversational demonstration is still pending, and Inspector is identified as Inspector throughout.
+Public URL: not yet deployed. Source publication: pending. A local retrieval recording and protocol screenshots are available locally. Both a real MCP SDK client and MCP Inspector completed initialize → list tools → search_docs → get_chunk over stdio. A conversational MCP client demonstration is still pending.
 
 ## Core idea
 
@@ -14,7 +14,7 @@ Useful retrieval is a measurable prerequisite for grounded answers. We freeze so
 
 ## Three decisions
 
-1. **Ship MiniLM and run it in the Next route.** Reject a remote embedding API and an external embedding sidecar: local inference remains reproducible without a key and proves native-model packaging in the actual application. The pinned model revision is `751bff37182d3f1213fa05d7196b954e230abad9`, q8, 384 dimensions, mean pooling, L2 normalization. This is the permanent embedding model, including tomorrow's intended host.
+1. **Ship MiniLM and run it in the Next route.** Reject a remote embedding API and an external embedding sidecar: local inference remains reproducible without a key and proves native-model packaging in the actual application. The pinned model revision is `751bff37182d3f1213fa05d7196b954e230abad9`, q8, 384 dimensions, mean pooling, L2 normalization. This is the permanent embedding model, including later's intended host.
 2. **One PGlite owner, exact vector scans.** Reject multiple processes opening the same database directory, and reject an approximate vector index for 132 chunks. The separate loopback process makes persistence ownership explicit; the SQL is PostgreSQL/pgvector-compatible. Supabase connectivity is not yet verified.
 3. **Freeze labels and show failures.** Reject changing labels to make hybrid search win. Hit@5 and MRR@5 use all eighteen answerable questions, including misses as zero; unsupported controls and complete two-source coverage are reported separately.
 
@@ -35,7 +35,7 @@ Measured 6 September 2026 in India (raw timestamp 2026-09-05T21:37:56.511Z), Win
 
 [Raw final retrieval results](evidence/retrieval-eval.json), [frozen labels](evals/questions.json), [model/corpus hash](corpus/manifest.json), [production route proof](evidence/production-route-proof.json), [MCP round-trip evidence](evidence/mcp-client.json).
 
-MRR uses the reciprocal rank of the first expected chunk, or zero for a miss. The complete-source score requires every listed expected ID. Unsupported controls have no expected IDs and are excluded from the answerable denominator; their returned results are reported rather than treated as correct rejections. Retrieval evaluations are final for this model and corpus. Local generation is measured separately below; rerun generation evaluations after tomorrow's hosted chat model.
+MRR uses the reciprocal rank of the first expected chunk, or zero for a miss. The complete-source score requires every listed expected ID. Unsupported controls have no expected IDs and are excluded from the answerable denominator; their returned results are reported rather than treated as correct rejections. Retrieval evaluations are final for this model and corpus. Local generation is measured separately below; rerun generation evaluations after the hosted chat model.
 
 ## What I would change with more time
 
@@ -112,7 +112,7 @@ The one full local generation evaluation completed 60 application requests: the 
 
 Seven of 48 outputs observed at citation validation failed the source-ID or exact-quote check (14.6%) and were withheld. The denominator counts validated model finals plus explicit citation-validation errors; twelve keyword requests had no passages and skipped generation. Completed responses include those no-passage messages. There were no other failed requests in this pass. Every failure remains in the eighteen-answerable citation-coverage denominator. Coverage checks whether a final answer cited at least one expected chunk; it does not establish semantic entailment or overall answer accuracy. The two unsupported controls are too few to establish a general abstention policy.
 
-Measured on 6 September 2026 in India with Ollama 0.17.1, `qwen2.5-coder:7b`, GGUF 7.6B Q4_K_M, digest `dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364`. [Read-only runtime metadata](evidence/ollama-model-metadata.json) records the Intel i5-11400H, 24 GB RAM and RTX 3050 laptop GPU; the loaded-model snapshot reported a 4096-token context and about 3.28 GB in VRAM. Mean application request times were 8.0 s keyword, 29.6 s vector and 27.2 s hybrid on the shared laptop, including the fast no-passage requests. These are observations, not latency guarantees. Local generation results are provisional and must be rerun for tomorrow's hosted chat model; the permanent MiniLM retrieval measurements remain final.
+Measured on 6 September 2026 in India with Ollama 0.17.1, `qwen2.5-coder:7b`, GGUF 7.6B Q4_K_M, digest `dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364`. [Read-only runtime metadata](evidence/ollama-model-metadata.json) records the Intel i5-11400H, 24 GB RAM and RTX 3050 laptop GPU; the loaded-model snapshot reported a 4096-token context and about 3.28 GB in VRAM. Mean application request times were 8.0 s keyword, 29.6 s vector and 27.2 s hybrid on the shared laptop, including the fast no-passage requests. These are observations, not latency guarantees. Local generation results are provisional and must be rerun for the hosted chat model; the permanent MiniLM retrieval measurements remain final.
 
 ## Sources and design
 

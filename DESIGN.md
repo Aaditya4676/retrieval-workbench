@@ -28,4 +28,4 @@ Only inspecting a new source and opening a disclosure animate: a short opacity/p
 
 ## Verification
 
-The lane owns source audit, contrast checks, lint, strict typecheck and the existing focused tests. The coordinator owns serialized production builds, service lifecycle and real light/dark screenshots. The accompanying redesign review records completed checks separately from pending visual critique. Frozen labels, retrieval results, generation results, corpus and backend/MCP logic remain untouched.
+This repository owns source audit, contrast checks, lint, strict typecheck and the existing focused tests. The build owns serialized production builds, service lifecycle and real light/dark screenshots. The accompanying redesign review records completed checks separately from pending visual critique. Frozen labels, retrieval results, generation results, corpus and backend/MCP logic remain untouched.

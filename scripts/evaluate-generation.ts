@@ -23,7 +23,7 @@ const metadata = {
   startedAt: new Date().toISOString(),
   status: "partial",
   model:
-    "qwen2.5-coder:7b via local Ollama; generation results are provisional for tomorrow's hosted model",
+    "qwen2.5-coder:7b via local Ollama; generation results are provisional until a hosted model is measured",
   retrievalReferenceSha256: createHash("sha256")
     .update(reference)
     .digest("hex"),
@@ -36,7 +36,7 @@ const metadata = {
 };
 for (const mode of ["keyword", "vector", "hybrid"]) {
   for (const question of questions) {
-    // The coordinator can pause further inference between bounded requests for a measurement window.
+    // Further inference can be paused between bounded requests for a measurement window.
     while (true) {
       const window = await readFile(
         "../../coordination/performance-window.json",
