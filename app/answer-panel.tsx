@@ -68,7 +68,8 @@ export default function AnswerPanel({
           if (event.type === "draft") setDraft(event.answer);
           if (event.type === "final") {
             setAnswer(event);
-            setDraft("");
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+              setDraft("");
             receivedFinal = true;
           }
           if (event.type === "error") throw new Error(event.error);
@@ -126,37 +127,50 @@ export default function AnswerPanel({
       {question && (answer || draft) && (
         <p className="help">Answer for “{question}”</p>
       )}
-      {draft && (
-        <div className="answer-copy">
-          <p className="help">Unvalidated draft</p>
-          <p>{draft}</p>
-        </div>
-      )}
-      {answer && (
-        <div className="answer-copy">
-          <p>{answer.answer}</p>
-          {answer.citations.length > 0 && (
-            <ul>
-              {answer.citations.map((citation, index) => (
-                <li key={`${citation.chunkId}-${index}`}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const source = sources.find(
-                        (chunk) => chunk.id === citation.chunkId,
-                      );
-                      if (source) onInspect(source);
-                    }}
-                  >
-                    Inspect cited passage {index + 1}
-                  </button>
-                  <blockquote>{citation.quote}</blockquote>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      <div className="answer-stack">
+        {draft && (
+          <div
+            className={`answer-copy answer-draft${answer ? " is-retiring" : ""}`}
+            aria-hidden={answer ? true : undefined}
+            inert={Boolean(answer)}
+            onAnimationEnd={(event) => {
+              if (
+                event.target === event.currentTarget &&
+                event.animationName === "answer-draft-out"
+              )
+                setDraft("");
+            }}
+          >
+            <p className="help">Unvalidated draft</p>
+            <p>{draft}</p>
+          </div>
+        )}
+        {answer && (
+          <div className="answer-copy answer-final">
+            <p>{answer.answer}</p>
+            {answer.citations.length > 0 && (
+              <ul className="answer-citations">
+                {answer.citations.map((citation, index) => (
+                  <li key={`${citation.chunkId}-${index}`}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const source = sources.find(
+                          (chunk) => chunk.id === citation.chunkId,
+                        );
+                        if (source) onInspect(source);
+                      }}
+                    >
+                      Inspect cited passage {index + 1}
+                    </button>
+                    <blockquote>{citation.quote}</blockquote>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      </div>
       {error && (
         <p className="error" role="alert">
           {error}

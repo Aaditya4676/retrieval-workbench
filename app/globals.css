@@ -473,6 +473,35 @@ footer {
   margin-top: var(--space-4);
   overflow-wrap: anywhere;
 }
+.answer-stack {
+  display: grid;
+  grid-template-areas: var(--answer-stack-area);
+  align-items: start;
+}
+.answer-stack > .answer-copy {
+  grid-area: answer;
+}
+.answer-draft {
+  animation: response-arrival var(--motion-fast) var(--motion-ease);
+}
+.answer-draft.is-retiring {
+  pointer-events: none;
+  animation: answer-draft-out var(--motion-answer) var(--motion-ease) forwards;
+}
+.answer-final {
+  animation: response-arrival var(--motion-answer) var(--motion-ease);
+}
+.answer-citations button {
+  animation: response-arrival var(--motion-fast) var(--motion-ease);
+}
+@keyframes answer-draft-out {
+  from {
+    opacity: var(--opacity-visible);
+  }
+  to {
+    opacity: var(--opacity-hidden);
+  }
+}
 .answer-copy ul {
   padding-left: var(--space-4);
   margin: var(--space-0);

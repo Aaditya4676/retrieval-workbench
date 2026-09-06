@@ -88,6 +88,8 @@
   --motion-inspect: 150ms;
   --motion-disclosure: 120ms;
   --motion-fast: 140ms;
+  --motion-answer: 200ms;
+  --answer-stack-area: "answer";
   --motion-progress: 1000ms;
   --ease-progress: linear;
   --progress-height: 2px;
@@ -128,6 +130,7 @@
     --motion-inspect: var(--motion-reduced);
     --motion-disclosure: var(--motion-reduced);
     --motion-fast: var(--motion-reduced);
+    --motion-answer: var(--motion-reduced);
     --motion-progress: var(--motion-reduced);
     --progress-segment: var(--size-full);
     --inspect-offset: var(--size-zero);
