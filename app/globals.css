@@ -289,6 +289,18 @@ details[open] > :not(summary) {
   border-block-end: var(--border-width) solid var(--color-border);
   border-inline-start: var(--border-strong) solid var(--color-transparent);
   border-radius: var(--radius-result);
+  transition: background-color var(--motion-fast) var(--motion-ease);
+}
+.result-list.has-response {
+  animation: response-arrival var(--motion-fast) var(--motion-ease);
+}
+@keyframes response-arrival {
+  from {
+    opacity: var(--opacity-hidden);
+  }
+  to {
+    opacity: var(--opacity-visible);
+  }
 }
 .result-list > li.selected {
   border-inline-start-color: var(--color-accent);

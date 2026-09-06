@@ -2,7 +2,7 @@
   "direction": "research-reading-desk",
   "scope": "independent RAG identity",
   "tokenFile": "app/design-tokens.css",
-  "tokenSha256": "c57b550d36f4537349ff0523670df9ead96c668efb4802ec60395328ff33d54c",
+  "tokenSha256": "03633a38f6f5caef06ab9a6f12662097d4d2caa8103724cc2d1568b049055e88",
   "systemTheme": true,
   "historicalSharedCanonicalHash": "286415b8d5e3c1ed47afd9429687d2a005a685d7d6030ec342525b4f49df9d5e",
   "notes": "The user-authorized independent redesign supersedes the shared token switch contract. Literata and Source Sans 3 are self-hosted with OFL notices; source review is separate from coordinator-owned production screenshots."

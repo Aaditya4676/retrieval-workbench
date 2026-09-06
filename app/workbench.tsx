@@ -47,6 +47,7 @@ export default function Workbench({
   const [response, setResponse] = useState<SearchResponse | null>(null);
   const [selected, setSelected] = useState<Result | null>(null);
   const [submitted, setSubmitted] = useState("");
+  const [responseVersion, setResponseVersion] = useState(0);
   const detail = useRef<HTMLElement>(null);
   async function search(event?: FormEvent, nextQuery = query) {
     event?.preventDefault();
@@ -54,7 +55,6 @@ export default function Workbench({
     setSearching(true);
     setError("");
     setSelected(null);
-    setSubmitted(nextQuery);
     window.history.replaceState(
       null,
       "",
@@ -70,6 +70,8 @@ export default function Workbench({
       const json = await result.json();
       if (!result.ok) throw new Error(json.error);
       setResponse(json);
+      setSubmitted(nextQuery);
+      setResponseVersion((version) => version + 1);
     } catch (failure) {
       setError(
         failure instanceof TypeError
@@ -208,7 +210,10 @@ export default function Workbench({
                   : "No passages came back from this corpus. Try a question about the included Zustand or TanStack Query documentation."}
               </p>
             )}
-            <ol className="result-list">
+            <ol
+              key={`${submitted}:${responseVersion}`}
+              className={`result-list${response ? " has-response" : ""}`}
+            >
               {response?.results.map((result) => (
                 <li
                   key={result.id}
@@ -294,6 +299,7 @@ export default function Workbench({
               onSources={(sources) => {
                 setResponse(sources);
                 setSubmitted(query);
+                setResponseVersion((version) => version + 1);
                 setSelected(null);
               }}
               onInspect={inspect}
