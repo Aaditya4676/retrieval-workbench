@@ -8,3 +8,19 @@ node_modules/
 evidence/*.webm
 evidence/videos/
 evidence/*server.log
+
+# Deployment CLI (contains project IDs)
+.vercel/
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.swp
+
+# Logs
+*.log
+coverage/
+playwright-report/
+test-results/
