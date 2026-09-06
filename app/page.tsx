@@ -1,6 +1,6 @@
 import Workbench from "./workbench";
 import manifest from "@/corpus/manifest.json";
-import fs from "node:fs";
+import evaluation from "@/evals/results.json";
 export const dynamic = "force-dynamic";
 export default async function Page({
   searchParams,
@@ -8,13 +8,10 @@ export default async function Page({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = await searchParams;
-  const evaluation = fs.existsSync("evals/results.json")
-    ? JSON.parse(fs.readFileSync("evals/results.json", "utf8"))
-    : null;
   return (
     <Workbench
       count={manifest.chunks}
-      evaluation={evaluation?.summary ?? []}
+      evaluation={evaluation.summary}
       initialQuery={
         typeof params.q === "string" ? params.q.slice(0, 800) : undefined
       }
