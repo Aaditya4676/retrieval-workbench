@@ -63,7 +63,7 @@ try {
       );
     const fonts = await page.evaluate(() => ({
       body: document.fonts.check('16px "Source Sans 3"'),
-      heading: document.fonts.check('32px "Space Grotesk"'),
+      heading: document.fonts.check('32px "Literata"'),
     }));
     if (errors.length) throw new Error(errors.join("\n"));
     findings.push({

@@ -118,5 +118,5 @@ Measured on 6 September 2026 in India with Ollama 0.17.1, `qwen2.5-coder:7b`, GG
 
 The corpus includes original MIT notices in `corpus/licenses` and immutable source links in `corpus/sources.json`. [Transformers.js model](https://huggingface.co/Xenova/all-MiniLM-L6-v2), [PGlite extensions](https://pglite.dev/extensions/), [MCP TypeScript SDK v1](https://ts.sdk.modelcontextprotocol.io/).
 
-UI direction: Interface workbench, canonical token release `286415b8d5e3c1ed47afd9429687d2a005a685d7d6030ec342525b4f49df9d5e`. `app/design-tokens.css` is a verbatim release copy. All theme colors, type, spacing and radii reference these tokens; both licensed font families ship locally. Replace this token file to switch the preserved design directions, then rebuild and review screenshots.
+UI direction: **Research reading desk**, an independent Literata / Source Sans 3 identity with neutral lilac paper, a muted plum accent and automatic system dark mode. `app/design-tokens.css` owns every theme and layout value; native browser theme colors derive from its light/dark surface tokens. Fonts and their licenses ship locally. [Design decisions](DESIGN.md) distinguish this redesign from the preserved historical shared-token release; the earlier screenshots remain evidence of that earlier build.
 

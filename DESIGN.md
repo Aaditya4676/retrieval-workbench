@@ -1,63 +1,31 @@
-# Interface workbench
+# Research reading desk
 
-Chosen direction for Aaditya's portfolio and related tools. The alternatives and their exact token files remain in `work/design-directions/signal-room` and `work/design-directions/field-notes`. All use the same structural markup and variable names; switching a copied token file changes palette, typography, scale, density, radii, and the hero artifact's treatment.
+The RAG workbench now has an independent identity: Literata for headings and exact-source reading, Source Sans 3 for controls and measurements, neutral white/lilac paper with a muted plum accent. The selected passage is the main reading surface; ranked passages are the adjacent index. This is distinct from the portfolio, canvas and federation tools.
 
-## Decision and review
+The compact plan and its review were written before implementation in `work/redesign/rag/PLAN.md` at the Portfolio root. The original shared Interface workbench contract and three-direction screenshots remain historical evidence; replacing this app's new token source with that old contract is no longer the redesign workflow.
 
-I rendered and inspected all three directions at 1280 and 390 pixels. Interface workbench is selected because it makes the React/performance subject visible without depending on terminal decoration, an oversized list of metrics, or a stock illustration. The cool light background and blue active step keep the portfolio readable alongside the denser project tools. Signal room is more expressive but its wider body face adds wrapping on mobile. Field notes is calm and useful as a morning alternative, but loses some separation between the engineering artifact and the surrounding content.
+## Typography and source
 
-First-pass correction: the desktop Space Grotesk headline wrapped into five lines. Reducing its maximum from 76 to 64 pixels preserves the intended three-line introduction without changing the markup. The final prototype files contain the corrected tokens. No horizontal page overflow was found at either requested width; both local font files loaded. Color contrast is measured in `work/design-directions/contrast-evidence.json`.
+Literata's variable Latin WOFF2 is self-hosted at `public/fonts/literata-latin.woff2`, obtained from the official Google Fonts CSS service and fonts.gstatic.com. It covers normal weights 200–900, with optical sizing. Its SIL OFL notice is retained as `literata-OFL.txt`. Source Sans 3 and its existing license remain local. No runtime font request goes to Google.
 
-Before final portfolio acceptance, replace the prototype's purely descriptive artifact with one bounded inspectable interaction if it helps the real site. Do not invent timings. Remove the redundant footer slogan from that artifact; the step labels already communicate the concept. The portfolio owner retains discretion to refine composition within the shared token vocabulary and must visually verify the result.
+The serif title is intentionally restrained. Exact passages receive a bounded reading measure and more line height; operating controls, chunk IDs and numeric comparisons remain sans serif. The original source text is unchanged and rendered as plain text.
 
-## Token contract
+## Token source and system dark mode
 
-Canonical file: `contracts/design-tokens.css`. Each repository owns a verbatim copy, imported before component styles. Preserve the original release hash in each repo. Font assets and SIL OFL license files are in `work/design-directions/fonts` and must be copied locally; no runtime Google Fonts dependency.
+`app/design-tokens.css` is now owned by this application. Theme colors, dimensions, font roles, scale, weights, tracking, line heights, radii, focus, opacity and durations all come from it. Font-face declarations describe the asset itself; component styles consume token roles.
 
-Palette: surface `#edf3f6`, panel `#ffffff`, ink `#172d3d`, muted `#4c6474`, accent `#154fc4`, border `#b8cbd6`. Exactly one accent. State distinctions also use words/icons/border treatment rather than introducing more colors. Muted text is checked on both surface and panel. Use `color-control-border` for input boundaries; the lighter `color-border` is for decorative separators.
+The light desk is `#f7f5fa`, paper `#ffffff`, lilac wash `#f0ebf4`, ink `#29252f`, muted text `#66616f` and plum `#694f77`. The system dark desk is `#201d24`, paper `#28242e`, raised surface `#322b39`, ink `#f1edf5`, muted text `#b9b0c4` and plum `#d6bce9`. Borders, selected results, errors and focus use explicit semantic tokens.
 
-Type: Space Grotesk for headings, Source Sans 3 for body and controls. Theme roles and weights are tokenized. The base scale runs from 13px metadata to a fluid 44–64px hero, with the complete scale in the CSS file. Use normal mixed-case labels, no monospace small text. Font-face declarations describe bundled assets; component typography always consumes variables.
+A `prefers-color-scheme: dark` media rule changes the token roles, including native `color-scheme`. Forms explicitly consume panel/ink colors. There is no visible theme control, localStorage setting or hydration-time theme effect. Next's two media-qualified theme-color metadata entries derive from the same CSS surface tokens, so browser chrome does not maintain a duplicate palette. Include this CSS source in hosted file tracing.
 
-Every color, font family/size/weight/line-height/tracking, spacing value and radius in components/styles must reference the token file. Numeric content coordinates (canvas positions), grid fractions, and CSS structural keywords are data/structure, not theme values. Media thresholds, if needed, should be generated from named configuration in the token source; prefer intrinsically responsive wrapping/grid without hardcoded breakpoints. Do not use framework-default spacing/color/radius utilities that bypass this contract. Ask the coordinator for missing semantic keys; do not fork the palette locally.
+## Layout and motion
 
-Spacing: quarter-rem scale through 8rem, fluid page gutters and hero/section spacing. Radii: 4px controls, 10px grouped internal content, 18px hero artifact; no radius applied indiscriminately. Sizes, focus widths, borders, control heights, reading widths, and project-tool dimensions are also included. Motion: one user-triggered hero interaction at most; other motion answers an action. Honor reduced motion. Keep project tools unrotated and dense, with no hero treatment.
+The compact search surface precedes a two-column desk. Ranked passages occupy the smaller left column; the larger right column contains exact source inspection and then the optional answer panel. Intrinsic flex wrapping stacks them on narrow screens without JavaScript measurements. Existing labels, search/answer logic, source IDs and evaluation content remain unchanged.
 
-## Layout
+Selected results have both a tint and an inline boundary. The source paper has a narrow plum edge and generous reading space. The app does not add repeated dashboard cards, gradients, decorative eyebrows, numbered sections or an oversized metric hero.
 
-Left-aligned introduction and selected work, with the one expressive browser-update artifact alongside the introduction and a natural single-column flow on narrow screens.
+Only inspecting a new source and opening a disclosure animate: a short opacity/position acknowledgement for the selected source and a shorter opacity response for disclosures. There is no initial page motion, scroll reveal, hover lift or idle loop. Reduced motion sets these token durations to zero.
 
-```text
-Name / frontend engineer                       Work / contact
+## Verification
 
-I build interfaces.                 Under the interface
-And what makes                      Input
-them work.                            Render
-                                       Paint
-Brief context + explore work
-
-Selected work with direct local demo / case-study links
-Project investigations weighted by content, not identical cards
-Experience                                      Contact / resume
-```
-
-## Principles
-
-- Make the work inspectable: visible demos, decisions, and source status.
-- Let React performance and systems behavior shape the content; avoid generic SaaS promises.
-- Prefer three concrete investigations over a wall of technology badges.
-- Keep experience factual and project measurements traceable to evidence.
-- The same readable controls must work in the portfolio, canvas and retrieval tool.
-
-## Banned defaults from the brief
-
-- Cream background + high-contrast serif + terracotta/clay accent; near-black + a single acid-green or vermilion accent; violet gradients; Inter everywhere.
-- The SaaS card kit: content chopped into identical rounded cards, one radius on everything, the same soft grey shadow under each, gradient washes as decoration, glassmorphism.
-- Template chrome: tracked-out ALL-CAPS eyebrow labels above headings, meta strings joined with middle dots, monospace for small labels, arrows appended to links and buttons, a single accented word in a headline.
-- Numbered markers on content that is not actually a sequence.
-- Fade-and-slide-up entrances on every section and hover lifts on every card. One deliberate moment on the portfolio; motion that answers a user action elsewhere.
-- Big-number-with-small-label hero stats.
-- Lorem ipsum, emoji as icons, stock illustration.
-
-## Morning switch
-
-Replace each app's copied token file with the complete `tokens.css` from the desired direction. Both bundled font families remain available, so the switch needs no font dependency or component changes. Rebuild and rerun the existing screenshot checks at all three widths. The coordinator supplies a root switch script after the apps settle. This changes visual treatment, not application content or behavior.
+The lane owns source audit, contrast checks, lint, strict typecheck and the existing focused tests. The coordinator owns serialized production builds, service lifecycle and real light/dark screenshots. The accompanying redesign review records completed checks separately from pending visual critique. Frozen labels, retrieval results, generation results, corpus and backend/MCP logic remain untouched.

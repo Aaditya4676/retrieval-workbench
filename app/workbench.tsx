@@ -93,7 +93,13 @@ export default function Workbench({
         Skip to search
       </a>
       <header className="site-header">
-        <a href={process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "http://127.0.0.1:3100"}>Aaditya Khedekar</a>
+        <a
+          href={
+            process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "http://127.0.0.1:3100"
+          }
+        >
+          Aaditya Khedekar
+        </a>
         <nav aria-label="Project navigation">
           <a href="#evaluation">Evaluation</a>
           <a href="#method">How it works</a>
@@ -180,18 +186,6 @@ export default function Workbench({
             {error}
           </p>
         )}
-        <AnswerPanel
-          query={query}
-          mode={mode}
-          busy={busy}
-          onBusy={setGenerating}
-          onSources={(sources) => {
-            setResponse(sources);
-            setSubmitted(query);
-            setSelected(null);
-          }}
-          onInspect={inspect}
-        />
         <div className="workspace">
           <section aria-labelledby="results-heading" className="results">
             <h2 id="results-heading">Ranked passages</h2>
@@ -259,33 +253,47 @@ export default function Workbench({
               ))}
             </ol>
           </section>
-          <aside
-            ref={detail}
-            tabIndex={-1}
-            className="source-panel"
-            aria-labelledby="source-heading"
-          >
-            <h2 id="source-heading">Source inspection</h2>
-            {selected ? (
-              <>
-                <p className="chunk-id">{selected.id}</p>
-                <h3>{selected.heading}</h3>
-                <p className="source-text">{selected.text}</p>
-                <a href={selected.source} target="_blank" rel="noreferrer">
-                  Open the pinned source on GitHub
-                </a>
-              </>
-            ) : (
-              <p className="empty">
-                Select a ranked passage. Its complete, committed text will
-                appear here so you can verify the evidence.
+          <div className="reading-column">
+            <aside
+              ref={detail}
+              tabIndex={-1}
+              className="source-panel"
+              aria-labelledby="source-heading"
+            >
+              <h2 id="source-heading">Source inspection</h2>
+              {selected ? (
+                <div key={selected.id} className="source-document">
+                  <p className="chunk-id">{selected.id}</p>
+                  <h3>{selected.heading}</h3>
+                  <p className="source-text">{selected.text}</p>
+                  <a href={selected.source} target="_blank" rel="noreferrer">
+                    Open the pinned source on GitHub
+                  </a>
+                </div>
+              ) : (
+                <p className="empty">
+                  Select a ranked passage. Its complete, committed text will
+                  appear here so you can verify the evidence.
+                </p>
+              )}
+              <p className="source-caution">
+                Retrieval finds related passages. It does not prove that a
+                question is answerable.
               </p>
-            )}
-            <p className="source-caution">
-              Retrieval finds related passages. It does not prove that a
-              question is answerable.
-            </p>
-          </aside>
+            </aside>
+            <AnswerPanel
+              query={query}
+              mode={mode}
+              busy={busy}
+              onBusy={setGenerating}
+              onSources={(sources) => {
+                setResponse(sources);
+                setSubmitted(query);
+                setSelected(null);
+              }}
+              onInspect={inspect}
+            />
+          </div>
         </div>
         {response?.embedding && (
           <details className="execution">
@@ -390,7 +398,13 @@ export default function Workbench({
       </main>
       <footer>
         Built by Aaditya Khedekar.{" "}
-        <a href={process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "http://127.0.0.1:3100"}>Return to portfolio</a>
+        <a
+          href={
+            process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? "http://127.0.0.1:3100"
+          }
+        >
+          Return to portfolio
+        </a>
       </footer>
     </>
   );
