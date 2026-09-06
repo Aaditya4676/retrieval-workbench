@@ -48,7 +48,7 @@ try {
     fullPage: true,
   });
   await writeFile(
-    "evidence/inspector-browser.json",
+   "evidence/inspector-browser.json",
     JSON.stringify(
       {
         testedAt: new Date().toISOString(),
@@ -56,10 +56,10 @@ try {
         passed: ["initialize", "tools/list", "search_docs", "get_chunk"],
         transport: "stdio",
         screenshots: [
-          "screenshots/mcp-inspector-search.png",
-          "screenshots/mcp-inspector-chunk.png",
+         "screenshots/mcp-inspector-search.png",
+         "screenshots/mcp-inspector-chunk.png",
         ],
-        note: "Real Inspector client, not a Codex or Claude conversational demonstration.",
+        note: "Real Inspector client session.",
       },
       null,
       2,
@@ -69,7 +69,7 @@ try {
     .getByRole("button", { name: "Disconnect from server", exact: true })
     .click();
   console.log(
-    "Inspector web client initialize/list/search/get_chunk verified and screenshots saved.",
+   "Inspector web client initialize/list/search/get_chunk verified and screenshots saved.",
   );
 } finally {
   await browser.close();

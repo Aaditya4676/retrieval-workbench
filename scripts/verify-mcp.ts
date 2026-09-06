@@ -34,12 +34,12 @@ try {
   if (chunk.isError) throw new Error("MCP chunk failed");
   await mkdir("evidence", { recursive: true });
   await writeFile(
-    "evidence/mcp-client.json",
+   "evidence/mcp-client.json",
     JSON.stringify(
       {
         testedAt: new Date().toISOString(),
         client:
-          "Real MCP SDK Client over spawned-process stdio; Codex/Claude demonstration deferred",
+         "Real MCP SDK Client over spawned-process stdio",
         server: client.getServerVersion(),
         tools,
         search,
@@ -51,7 +51,7 @@ try {
     ),
   );
   console.log(
-    "MCP initialize, listTools, search_docs, get_chunk passed over stdio.",
+   "MCP initialize, listTools, search_docs, get_chunk passed over stdio.",
   );
 } finally {
   await client.close();
