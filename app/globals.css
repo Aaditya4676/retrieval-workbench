@@ -341,6 +341,7 @@ th {
   font-weight: var(--weight-semibold);
 }
 .method ul {
+  list-style: disc;
   padding-left: var(--space-6);
   margin-block: var(--space-4);
 }

@@ -363,7 +363,7 @@ export default function Workbench({
           </p>
         </section>
         <section id="method" className="method">
-          <h2>One retrieval path, three ways in</h2>
+          <h2>How it works</h2>
           <p>
             The browser, evaluation runner, and MCP client call the same Next.js
             search API. Semantic queries become real MiniLM embeddings inside
