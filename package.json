@@ -19,7 +19,8 @@
     "verify:browser": "tsx scripts/verify-browser.ts",
     "eval:generation": "tsx scripts/evaluate-generation.ts",
     "verify:generation": "tsx scripts/verify-generation.ts",
-    "record": "tsx scripts/record-demo.ts"
+    "record": "tsx scripts/record-demo.ts",
+    "ingest:postgres": "tsx scripts/ingest-postgres.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.8",

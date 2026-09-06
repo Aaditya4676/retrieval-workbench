@@ -16,7 +16,7 @@ The ignored local cache lives at `.cache/transformers`; a fresh host does not re
 
 1. Create the Supabase project; obtain its PostgreSQL connection URL.
 2. Enable pgvector and apply `migrations/001_chunks.sql` to an isolated project schema/database.
-3. Ingest the committed chunks using the same pinned MiniLM vectors; compare row count, corpus hash, dimensionality, and representative vector/full-text results with local evidence.
+3. Seed the database with `pnpm ingest:postgres`, run from a machine with `DATABASE_URL` set to the target connection string. That script applies `migrations/001_chunks.sql` and upserts every chunk over a real PostgreSQL connection, reusing the cached MiniLM vectors. `pnpm ingest` is the local-only path: it posts to the loopback PGlite service and cannot reach a hosted database.
 4. Keep ingestion as an admin operation. The data owner's `POST /ingest` denies every request unless `INGEST_TOKEN` is configured and the request supplies its exact bearer token. Set the same token in the data-owner and `pnpm ingest` process environments. Leaving it unset disables ingestion; existing passage search still works. The loopback transport is not the hosted database path.
 5. Use a bounded server-side query adapter and database connection pooling appropriate for the selected host. PGlite's filesystem directory is a local development implementation, not a deployable Supabase replacement.
 
