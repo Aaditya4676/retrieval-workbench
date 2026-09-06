@@ -87,6 +87,12 @@
 
   --motion-inspect: 150ms;
   --motion-disclosure: 120ms;
+  --motion-progress: 1000ms;
+  --ease-progress: linear;
+  --progress-height: 2px;
+  --progress-segment: 35%;
+  --progress-travel-start: -100%;
+  --progress-travel-end: 300%;
   --motion-reduced: 0ms;
   --motion-ease: ease-out;
   --inspect-offset: 0.1875rem;
@@ -119,6 +125,8 @@
   :root {
     --motion-inspect: var(--motion-reduced);
     --motion-disclosure: var(--motion-reduced);
+    --motion-progress: var(--motion-reduced);
+    --progress-segment: var(--size-full);
     --inspect-offset: var(--size-zero);
   }
 }

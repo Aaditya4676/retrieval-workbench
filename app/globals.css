@@ -234,6 +234,32 @@ details[open] > :not(summary) {
   margin-block: var(--space-6) var(--space-8);
   color: var(--color-muted);
 }
+.search-progress {
+  height: var(--progress-height);
+  overflow: hidden;
+}
+.search-progress__bar {
+  display: block;
+  width: var(--progress-segment);
+  height: var(--size-full);
+  background: var(--color-accent);
+  animation: request-progress var(--motion-progress) var(--ease-progress)
+    infinite;
+}
+@keyframes request-progress {
+  from {
+    transform: translateX(var(--progress-travel-start));
+  }
+  to {
+    transform: translateX(var(--progress-travel-end));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .search-progress__bar {
+    animation: none;
+    transform: none;
+  }
+}
 .error {
   border: var(--border-strong) solid var(--color-danger);
   border-radius: var(--radius-sm);

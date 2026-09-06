@@ -174,6 +174,11 @@ export default function Workbench({
             ))}
           </details>
         </section>
+        {busy && (
+          <div className="search-progress" aria-hidden="true">
+            <span className="search-progress__bar" />
+          </div>
+        )}
         <div className="status" role="status" aria-live="polite">
           {searching
             ? "Searching the committed corpus…"
