@@ -23,7 +23,7 @@ interface SearchResponse {
   } | null;
 }
 const samples = [
-  "How can pagination keep showing the previous page while the next page loads?",
+  "Zustand nested objects merging set",
   "How do Zustand nested object updates differ from TanStack Query optimistic updates made directly in the UI?",
   "Compare Zustand persist partialize and TanStack Query gcTime: what do they control?",
 ];
@@ -204,8 +204,9 @@ export default function Workbench({
             )}
             {response?.results.length === 0 && (
               <p className="empty">
-                No terms matched. Try fewer specific terms or switch to vector
-                search.
+                {response.mode === "keyword"
+                  ? "Keyword search requires every query term to match in one passage. Try fewer terms or switch to vector search."
+                  : "No passages came back from this corpus. Try a question about the included Zustand or TanStack Query documentation."}
               </p>
             )}
             <ol className="result-list">
