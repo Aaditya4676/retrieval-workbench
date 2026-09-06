@@ -49,7 +49,7 @@ export default function Workbench({
   const [submitted, setSubmitted] = useState("");
   const [responseVersion, setResponseVersion] = useState(0);
   const detail = useRef<HTMLElement>(null);
-  async function search(event?: FormEvent, nextQuery = query) {
+  async function search(event?: FormEvent, nextQuery = query, nextMode = mode) {
     event?.preventDefault();
     if (busy) return;
     setSearching(true);
@@ -58,13 +58,13 @@ export default function Workbench({
     window.history.replaceState(
       null,
       "",
-      `?${new URLSearchParams({ q: nextQuery, mode })}`,
+      `?${new URLSearchParams({ q: nextQuery, mode: nextMode })}`,
     );
     try {
       const result = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: nextQuery, mode, k: 5 }),
+        body: JSON.stringify({ query: nextQuery, mode: nextMode, k: 5 }),
         signal: AbortSignal.timeout(180000),
       });
       const json = await result.json();
@@ -204,11 +204,25 @@ export default function Workbench({
               </p>
             )}
             {response?.results.length === 0 && (
-              <p className="empty">
-                {response.mode === "keyword"
-                  ? "Keyword search requires every query term to match in one passage. Try fewer terms or switch to vector search."
-                  : "No passages came back from this corpus. Try a question about the included Zustand or TanStack Query documentation."}
-              </p>
+              <div className="empty">
+                <p>
+                  {response.mode === "keyword"
+                    ? "Keyword search requires every query term to match in one passage. Try fewer terms or search by meaning."
+                    : "No passages came back from this corpus. Try a question about the included Zustand or TanStack Query documentation."}
+                </p>
+                {response.mode === "keyword" && (
+                  <button
+                    type="button"
+                    disabled={busy || query.trim().length < 2}
+                    onClick={() => {
+                      setMode("vector");
+                      void search(undefined, query, "vector");
+                    }}
+                  >
+                    Search with vector instead
+                  </button>
+                )}
+              </div>
             )}
             <ol
               key={`${submitted}:${responseVersion}`}
@@ -220,9 +234,11 @@ export default function Workbench({
                   className={selected?.id === result.id ? "selected" : ""}
                 >
                   <div className="result-meta">
-                    {result.document.startsWith("zustand")
-                      ? "Zustand"
-                      : "TanStack Query"}
+                    <span className="library-chip">
+                      {result.document.startsWith("zustand")
+                        ? "Zustand"
+                        : "TanStack Query"}
+                    </span>
                     <span>{result.tokens} tokens</span>
                   </div>
                   <h3>
